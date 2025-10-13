@@ -52,18 +52,19 @@ Mkfile.old
 dkms.conf
 
 # Log Files
-.log
-.key
-.history
+*.log.*
+*.log
+*.key
+*.history
 
 # Waveform
-.dsn
-.trn
-.vdc
+*.dsn
+*.trn
+*.vcd
 
 # SimVision directory
-.simvision
+.simvision/
 
 # Test Files
-.csv
-.txt
+*.csv
+*.txt
