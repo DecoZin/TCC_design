@@ -50,3 +50,20 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+# Log Files
+.log
+.key
+.history
+
+# Waveform
+.dsn
+.trn
+.vdc
+
+# SimVision directory
+.simvision
+
+# Test Files
+.csv
+.txt
