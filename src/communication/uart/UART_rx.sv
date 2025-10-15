@@ -7,6 +7,7 @@
 // Author: André Lamego
 // Date: 2025-04-08
 // ---------------------------------------------------------
+`timescale 1ns / 1ps
 
 `ifndef UART_RX_SV
 `define UART_RX_SV
@@ -24,7 +25,7 @@ module UART_rx #(
 );
 
     // Internal signal
-    localparam int CLKS_PER_BIT = CLK_F / BAUD; // Calculate clock cycles per bit
+    localparam int CLKS_PER_BIT = $rtoi(CLK_F / BAUD); // Calculate clock cycles per bit
     localparam int COUNTER_WIDTH = $clog2(CLKS_PER_BIT); // Dynamically calculate the counter width
 
     // Enumerated state machine
@@ -64,7 +65,7 @@ module UART_rx #(
                 end
 
                 START_BIT: begin
-                    if (clk_counter == (CLKS_PER_BIT - 1) / 2) begin
+                    if ({ ($bits(CLKS_PER_BIT)-$bits(clk_counter ))'('0),clk_counter } == (CLKS_PER_BIT - 1) / 2) begin
                         if (i_rx_serial == 1'b0) begin
                             clk_counter <= '0; // Reset counter
                             state       <= DATA_BITS;
@@ -77,7 +78,7 @@ module UART_rx #(
                 end
 
                 DATA_BITS: begin
-                    if (clk_counter == CLKS_PER_BIT - 1) begin
+                    if ({ ($bits(CLKS_PER_BIT)-$bits(clk_counter ))'('0),clk_counter } == CLKS_PER_BIT - 1) begin
                         clk_counter          <= '0;
                         shift_reg[bit_index] <= i_rx_serial; // Store received bit
 
@@ -92,7 +93,7 @@ module UART_rx #(
                 end
 
                 STOP_BIT: begin
-                    if (clk_counter == CLKS_PER_BIT - 1) begin
+                    if ({ ($bits(CLKS_PER_BIT)-$bits(clk_counter ))'('0),clk_counter } == CLKS_PER_BIT - 1) begin
                         if (i_rx_serial == 1'b1) begin // Validate stop bit
                             o_valid <= 1'b1; // Data is valid
                             o_rx_data <= shift_reg; // Output received data

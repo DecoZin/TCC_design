@@ -7,6 +7,7 @@
 // Author: André Lamego
 // Date: 2025-04-08
 // ---------------------------------------------------------
+`timescale 1ns / 1ps
 
 `ifndef UART_TX_SV
 `define UART_TX_SV
@@ -27,7 +28,7 @@ module UART_tx #(
 );
 
     // Internal signal
-    localparam int CLKS_PER_BIT = CLK_F / BAUD; // Calculate clock cycles per bit
+    localparam int CLKS_PER_BIT = $rtoi(CLK_F / BAUD); // Calculate clock cycles per bit
     localparam int COUNTER_WIDTH = $clog2(CLKS_PER_BIT); // Dynamically calculate the counter width
 
 // Enumerated state machine
@@ -75,7 +76,7 @@ module UART_tx #(
                     o_tx_serial <= 0;               // Start bit is 0
 
                     // Wait CLKS_PER_BIT-1 clock cycles for start bit to finish
-                    if (clk_counter < CLKS_PER_BIT-1) begin
+                    if ({ ($bits(CLKS_PER_BIT)-$bits(clk_counter ))'('0),clk_counter } < CLKS_PER_BIT-1) begin
                         clk_counter <= clk_counter + 1;
                     end else begin
                         clk_counter <= 0;
@@ -86,7 +87,7 @@ module UART_tx #(
                 DATA_BITS: begin
                     o_tx_serial <= r_tx_data[bit_index]; // Transmit current bit
 
-                    if (clk_counter < CLKS_PER_BIT-1) begin
+                    if ({ ($bits(CLKS_PER_BIT)-$bits(clk_counter ))'('0),clk_counter } < CLKS_PER_BIT-1) begin
                         clk_counter <= clk_counter + 1;
                     end else begin
                         clk_counter <= 0;
@@ -105,7 +106,7 @@ module UART_tx #(
                     o_tx_serial <= 1;               // Stop bit is 1
 
                     // Wait CLKS_PER_BIT-1 clock cycles for Stop bit to finish
-                    if (clk_counter < CLKS_PER_BIT-1) begin
+                    if ({ ($bits(CLKS_PER_BIT)-$bits(clk_counter ))'('0),clk_counter } < CLKS_PER_BIT-1) begin
                         clk_counter <= clk_counter + 1;
                     end else begin
                         clk_counter <= 0;

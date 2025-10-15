@@ -24,3 +24,14 @@ help:
 	@echo "vsim: Opens a waveform viewer, using a default file named waveform.vcd. Usage:"
 	@echo "		make vsim"
 	@echo ""
+	@echo "verilator: Build a verilator project. Usage:"
+	@echo "		make verilator TOP=uart_tb"
+	@echo ""
+	@echo "verilator_run: Run a verilator project. Usage:"
+	@echo "		make verilator_run TOP=uart_tb" 
+
+verilator:
+	~/Utils/oss-cad-suite/bin/verilator --binary -f ./test/$(_TOP).f -f ./config.f --top $(_TOP) --Mdir ./$(_TOP)_verilator
+
+verilator_run:
+	./$(_TOP)_verilator/V$(_TOP) | tee log/$(_TOP).log

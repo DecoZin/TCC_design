@@ -56,6 +56,7 @@ module UART #(
     logic valid, tx_valid;
     logic [7:0] data;
     logic tx_fifo_wr_en_q;
+    logic transmit;
 
     // ---------------------------------------------------------
     // Instantiate the UART RX module

@@ -44,7 +44,7 @@ task automatic DEBUG_ERRW(input string msg);
 endtask
 
 task automatic displayTask();
-    $display("[%t] Task: displayTask() called.", $time);
+    DEBUG_INFO("TASK", "displayTask() called.");
 endtask //automatic
 
 task automatic generate_clock(
@@ -81,7 +81,7 @@ task automatic send_uart_byte(
 );
     integer i;
     begin
-        $display("[%t] Sending UART byte: %h", $time, data);
+        DEBUG_INFO("UART", $sformatf("Sending byte: %h", data));
         rx_serial = 0; // Start bit
         #(bit_period); // Wait for 1 bit period
 

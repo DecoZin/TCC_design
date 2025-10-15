@@ -15,14 +15,20 @@ module uart_tb;
     logic o_tx_serial_ext;
     logic o_valid_rx;
     logic o_done;
+    logic o_rx_ready;
+    logic o_tx_full;
+    logic [2:0] uart_rx_state;
+    logic [2:0] uart_tx_state;
+    logic [1:0] rx_fifo_fe;
+    logic [1:0] tx_fifo_fe;
     logic sel;
     logic [7:0] o_rx_sys_data;
     logic [7:0] byte_stream [];
 
     localparam real BAUD_RATE = 9600; // Baud rate
     localparam real CLK_FREQ = 50_000_000; // Clock frequency in Hz
-    localparam real BIT_PERIOD = 1e9 / BAUD_RATE; // = 104166.66 ns (when timescale is 1ns)
-    localparam real CLK_PERIOD = 1e9 / CLK_FREQ; // in ns
+    localparam int BIT_PERIOD = $rtoi(1e9 / BAUD_RATE); // = 104166.66 ns (when timescale is 1ns)
+    localparam int CLK_PERIOD = $rtoi(1e9 / CLK_FREQ); // in ns
 
     // Instantiate the UART module
     UART #(.BAUD(BAUD_RATE), .CLK_F(CLK_FREQ)) uut (
@@ -39,7 +45,14 @@ module uart_tb;
         .o_tx_serial_ext(o_tx_serial_ext),
         .o_rx_sys_data(o_rx_sys_data),
         .o_valid_rx(o_valid_rx),
-        .o_done(o_done)
+        .o_done(o_done),
+        .o_rx_ready(o_rx_ready),
+        .o_tx_full(o_tx_full),
+
+        .uart_rx_state(uart_rx_state),
+        .uart_tx_state(uart_tx_state),
+        .rx_fifo_fe(rx_fifo_fe),
+        .tx_fifo_fe(tx_fifo_fe)
     );
 
 
@@ -74,11 +87,11 @@ module uart_tb;
 
     // Generate the clock signals
     initial fork
-        generate_clock(clk, CLK_PERIOD / 2);
+        generate_clock(clk, {{32{$rtoi(CLK_PERIOD / 2)[31]}},$rtoi(CLK_PERIOD / 2)});
     join_none
 
     initial fork
-        generate_clock(baud, BIT_PERIOD);
+        generate_clock(baud, {{32{BIT_PERIOD[31]}},BIT_PERIOD});
     join_none
 
     // Continuous monitoring of the TX pin
@@ -86,25 +99,25 @@ module uart_tb;
     byte received;
 
     always @(negedge o_tx_serial_ext) begin
-        $display("[%t] Falling edge detected (start bit)", $time);
+        DEBUG_INFO("UART", "Falling edge detected (start bit)");
         #(BIT_PERIOD + 10);
 
         for (i = 0; i < 8; i++) begin
-            received[i] = o_tx_serial_ext;
+            received[i] <= o_tx_serial_ext;
             #(BIT_PERIOD);
         end
 
         if (o_tx_serial_ext !== 1) begin
-            $display("[%t] UART ERROR: Stop bit not high", $time);
+            DEBUG_ERR("UART", "UART ERROR: Stop bit not high");
         end else begin
-            $display("[%t] UART Received: %h", $time, received);
+            DEBUG_INFO("UART", $sformatf("UART Received: %h", received));
         end
 
         #(BIT_PERIOD); // Wait stop bit
     end
 
     initial begin
-        $display("[%t] Testbench started!.", $time);
+        DEBUG_INFO("TB", "Testbench started!.");
         sel = 1; // Loopback mode
         i_rx_serial_ext = 1;
         i_valid_tx = 0;
@@ -114,23 +127,16 @@ module uart_tb;
         reset_n(rst_n);
         #200;
 
-        // Enable timers
-        timer0_en = 1;
-        timer0_mode = 0;
-        timer0_clear = 0;
-        timer1_en = 1;
-        timer1_mode = 1;
-        timer1_clear = 0;
-
         // Send a byte to UART module
-        send_uart_byte(i_rx_serial_ext, 8'h55, BIT_PERIOD); // Send 0x55
+        send_uart_byte(i_rx_serial_ext, 8'h55, {{32{BIT_PERIOD[31]}},BIT_PERIOD}); // Send 0x55
         #(10 * BIT_PERIOD); // Wait for transmission to complete
 
         // TX Response
         #(10*BIT_PERIOD);
         sel = 0; // Normal mode
-        $display("[%t] Sending internal UART byte: 33", $time);
+        DEBUG_INFO("TB", "Sending internal UART byte: 33");
         i_valid_tx = 1;
+        #(CLK_PERIOD);
         #(CLK_PERIOD);
         i_valid_tx = 0;
 
@@ -140,8 +146,9 @@ module uart_tb;
         // Loopback mode again
         #20;
         sel = 1;
-        byte_stream = '{8'h00, 8'h01, 8'h02, 8'h03, 8'h04, 8'h05, 8'h06, 8'h07, 8'h08, 8'h09, 8'h0A}; // Example byte stream
-        send_uart_stream(i_rx_serial_ext, byte_stream, 11, BIT_PERIOD); 
+        // Example byte stream
+        byte_stream = '{8'h00, 8'h01, 8'h02, 8'h03, 8'h04, 8'h05, 8'h06, 8'h07, 8'h08, 8'h09, 8'h0A}; 
+        send_uart_stream(i_rx_serial_ext, byte_stream, 11, {{32{BIT_PERIOD[31]}},BIT_PERIOD}); 
         #(10*BIT_PERIOD);
 
         // End simulation

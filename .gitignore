@@ -56,6 +56,7 @@ dkms.conf
 *.log
 *.key
 *.history
+!log/*
 
 # Waveform
 *.dsn
@@ -64,6 +65,9 @@ dkms.conf
 
 # SimVision directory
 .simvision/
+
+# Verilator run
+*_verilator/
 
 # Test Files
 *.csv

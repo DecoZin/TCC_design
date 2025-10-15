@@ -36,7 +36,7 @@ module fifo #(
             wr_ptr <= 0;
         end else if (i_wr_en && !full) begin
             mem[wr_ptr] <= i_wr_data;
-            wr_ptr <= (wr_ptr == DEPTH-1) ? 0 : wr_ptr + 1; // Wrap-around logic
+            wr_ptr <= ({ ($bits(DEPTH)-$bits(wr_ptr ))'('0),wr_ptr } == DEPTH-1) ? 0 : wr_ptr + 1; // Wrap-around logic
         end
     end
 
@@ -48,7 +48,7 @@ module fifo #(
             o_ready_pulse <= 0;
         end else if (i_rd_en && !empty) begin
             o_rd_data <= mem[rd_ptr];
-            rd_ptr <= (rd_ptr == DEPTH-1) ? 0 : rd_ptr + 1;
+            rd_ptr <= ({ ($bits(DEPTH)-$bits(rd_ptr ))'('0),rd_ptr } == DEPTH-1) ? 0 : rd_ptr + 1;
             o_ready_pulse <= 1;  // Pulse high for 1 cycle when reading valid data
         end else begin
             o_ready_pulse <= 0;
@@ -69,7 +69,7 @@ module fifo #(
     end
 
     // Status flags
-    assign full  = (count == DEPTH);
+    assign full  = ({ ($bits(DEPTH)-$bits(count ))'('0),count } == DEPTH);
     assign empty = (count == 0);
 
     always_ff @(posedge clk or negedge rst_n) begin

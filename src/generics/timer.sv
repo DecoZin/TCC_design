@@ -4,6 +4,8 @@
 // Author: André Lamego
 // Date: 2025-04-17
 // ---------------------------------------------------------
+`timescale 1ns / 1ps
+
 `ifndef TIMER_SV
 `define TIMER_SV
 

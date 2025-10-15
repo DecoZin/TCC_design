@@ -1,0 +1,19 @@
+[INFO][TB][        0] Testbench started!.
+[INFO][UART][        0] Sending byte: 55
+[INFO][UART][   989000] Falling edge detected (start bit)
+[INFO][UART][  1927000] UART Received: 55
+[INFO][TB][  3125000] Sending internal UART byte: 33
+[INFO][UART][  3125000] Falling edge detected (start bit)
+[INFO][UART][  4062000] UART Received: 33
+[INFO][UART][  4166000] Sending byte: 00
+[INFO][UART][  5156000] Falling edge detected (start bit)
+[INFO][UART][  5260000] Sending byte: 01
+[INFO][UART][  6094000] UART Received: 00
+[INFO][UART][  6250000] Falling edge detected (start bit)
+[INFO][UART][  6354000] Sending byte: 02
+[INFO][UART][  7187000] UART Received: 01
+...
+[INFO][UART][ 15104000] Sending byte: 0a
+[INFO][UART][ 15937000] UART Received: 09
+[INFO][UART][ 16094000] Falling edge detected (start bit)
+[INFO][UART][ 17031000] UART Received: 0a
