@@ -5,7 +5,8 @@
 // Author: Revised by ChatGPT (based on André Lamego draft)
 // Date: 2025-10-07
 // ----------------------------------------------------------------------------
-`timescale 1ns / 1ps
+`timescale 1ns / 100ps
+
 `ifndef BLE_CONNECTION_MONITOR
 `define BLE_CONNECTION_MONITOR
 

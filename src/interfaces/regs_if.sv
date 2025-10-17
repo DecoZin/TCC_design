@@ -4,7 +4,7 @@
 // Author: André Lamego
 // Date: 2025-05-06
 // ---------------------------------------------------------
-`timescale 1ns / 1ps
+`timescale 1ns / 100ps
 
 `ifndef REGS_IF_SV
 `define REGS_IF_SV
@@ -18,18 +18,69 @@ interface regs_if #(
 );
 
     localparam ADDR_WIDTH = $clog2(DATA_DEPTH); // Address width
-    logic [DATA_WIDTH-1:0] read_data;  // Data to read
-    logic data_ready;  // Read ack signal
-    logic write_done; // Write ack signal
-    logic write_en; // Write enable signal
-    logic read_en;  // Read enable signal
-    logic [ADDR_WIDTH-1:0] addr; // Address to write/read data
-    logic [DATA_WIDTH-1:0] write_data; // Data to write
 
+    logic [DATA_WIDTH-1:0] read_data;  
+    logic data_ready;
+    logic write_done;
+    logic write_en;
+    logic read_en;
+    logic [ADDR_WIDTH-1:0] addr;
+    logic [DATA_WIDTH-1:0] write_data;
+
+    // =========================================================
+    // TASKS inside the interface — Verilator-compatible
+    // =========================================================
+
+    // Write to memory-mapped register
+    task automatic write_mem(
+        input logic [ADDR_WIDTH-1:0] addr_val,
+        input logic [DATA_WIDTH-1:0] data_val
+    );
+        write_en   = 1;
+        read_en    = 0;
+        addr       = addr_val;
+        write_data = data_val;
+        @(posedge clk);
+        #1;
+        write_en = 0;
+        @(posedge clk);
+    endtask
+
+    // Read from memory-mapped register
+    task automatic read_mem(
+        input  logic [ADDR_WIDTH-1:0] addr_val,
+        output logic [DATA_WIDTH-1:0] data_out
+    );
+        int timeout = 1000;
+
+        addr     = addr_val;
+        read_en  = 1;
+        write_en = 0;
+        @(posedge clk);
+        #1;
+
+        while (data_ready == 0 && timeout > 0) begin
+            @(posedge clk);
+            timeout--;
+        end
+
+        if (timeout == 0) begin
+            $display("\033[1;31m[ERROR][MEM] Timeout waiting for data_ready at address %0d!\033[0m", addr_val);
+            $finish;
+        end
+
+        data_out = read_data;
+        read_en  = 0;
+        @(posedge clk);
+    endtask
+
+    // =========================================================
+    // Modports
+    // =========================================================
     modport master (
-        input read_data,
-        input data_ready,
-        input write_done,
+        input  read_data,
+        input  data_ready,
+        input  write_done,
         output write_en,
         output read_en,
         output addr,
@@ -40,47 +91,12 @@ interface regs_if #(
         output read_data,
         output data_ready,
         output write_done,
-        input write_en,
-        input read_en,
-        input addr,
-        input write_data
-    );
-
-endinterface //regs_if
-
-interface regs_int_if #(
-    parameter DATA_WIDTH = 8,    // Data width for each register
-    parameter DATA_DEPTH = 16    // Total number of registers
-)(
-    input logic clk,
-    input logic rst_n
-);
-
-    // Define a type for register data
-    typedef logic [DATA_WIDTH-1:0] reg_data_t;
-    typedef reg_data_t reg_file_t[DATA_DEPTH];  // Array of registers
-
-    // Registers and control signals
-    logic load_regs; // Transfer data from REGI to the registers 
-    reg_file_t regi;      // Initial values for the registers (input from master)
-    reg_file_t rego;      // Output register values (sent to master)
-    logic [DATA_DEPTH-1:0] mode_mask;  // Control mask for read/write operations (1 = read-only, 0 = read/write)
-
-    modport master (
-        output regi,       // Master writes to registers (outputs initial values)
-        output load_regs,  // Master indicates register assignment
-        output mode_mask,   // Master controls read/write mode (input control signal)
-        input  rego       // Master reads from registers (inputs output values)
-    );
-
-    modport slave (
-        input  regi,       // Slave receives register data (input values from master)
-        input  load_regs,  // Slave assigns registers based on regi
-        input  mode_mask,   // Slave provides read/write control (outputs control signals)
-        output rego       // Slave provides register outputs (outputs values to master)
+        input  write_en,
+        input  read_en,
+        input  addr,
+        input  write_data
     );
 
 endinterface
-
 
 `endif // REGS_IF_SV

@@ -4,7 +4,7 @@
 // Author: André Lamego
 // Date: 2025-05-08
 // ---------------------------------------------------------
-`timescale 1ns / 1ps
+`timescale 1ns / 100ps
 
 module register_file_tb;
     import ei_mem_pkg::*;

@@ -1,3 +1,5 @@
+SHELL := /bin/bash
+
 TOP?=
 ifneq ($(TOP),)
 	_TOP = $(TOP)
@@ -30,8 +32,10 @@ help:
 	@echo "verilator_run: Run a verilator project. Usage:"
 	@echo "		make verilator_run TOP=uart_tb" 
 
-verilator:
+verilator:  verilator_compile verilator_run
+
+verilator_compile:
 	~/Utils/oss-cad-suite/bin/verilator --binary -f ./test/$(_TOP).f -f ./config.f --top $(_TOP) --Mdir ./$(_TOP)_verilator
 
 verilator_run:
-	./$(_TOP)_verilator/V$(_TOP) | tee log/$(_TOP).log
+	./$(_TOP)_verilator/V$(_TOP) | tee >(sed 's/\x1b\[1;31m//g; s/\x1b\[1;32m//g; s/\x1b\[1;33m//g; s/\x1b\[0m//g' > log/$(_TOP).log)

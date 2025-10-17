@@ -6,7 +6,7 @@
 // Author: André Lamego
 // Date: 2025-10-08
 // ----------------------------------------------------------------------------
-`timescale 1ns / 1ps
+`timescale 1ns / 100ps
 
 module proc_if_ext #(
     parameter ADDR_WIDTH = 8,

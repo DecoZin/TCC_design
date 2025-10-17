@@ -4,7 +4,7 @@
 // Author: André Lamego
 // Date: 2025-05-06
 // ---------------------------------------------------------
-`timescale 1ns / 1ps
+`timescale 1ns / 100ps
 
 `ifndef TMR_IF_SV
 `define TMR_IF_SV

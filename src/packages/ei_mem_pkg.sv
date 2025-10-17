@@ -5,6 +5,8 @@
 // Author: André Lamego
 // Date: 2025-05-06
 // ---------------------------------------------------------
+`timescale 1ns / 100ps
+
 `ifndef EI_MEM_PKG_SV
 `define EI_MEM_PKG_SV
     
@@ -14,6 +16,9 @@ package ei_mem_pkg;
     typedef enum logic [5:0] { // Adjust the bit width as needed
         EIR_TEST,
         EIR_SLP_MODE,
+        EIR_SLP_TMR0,
+        EIR_SLP_TMR1,
+        EIR_SLP_TMR2,
         EIR_PROGRAMMER,
         EIR_ADV_INT,
         EIR_ADV_TMR0,

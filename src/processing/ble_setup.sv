@@ -4,6 +4,8 @@
 // Author: André Lamego
 // Date: 2025-03-07
 // ------------------------------------------------
+`timescale 1ns / 100ps
+
 `ifndef BLE_SETUP_SV
 `define BLE_SETUP_SV
 

@@ -4,7 +4,7 @@
 // Author: André Lamego
 // Date: 2025-04-30
 // ---------------------------------------------------------
-`timescale 1ns / 1ps
+`timescale 1ns / 100ps
 
 `ifndef REGISTER_FILE_SV
 `define REGISTER_FILE_SV

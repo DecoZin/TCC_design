@@ -4,6 +4,8 @@
 // Author: André Lamego
 // Date: 2025-05-06
 // ---------------------------------------------------------
+`timescale 1ns / 100ps
+
 `ifndef TASKS_SV
 `define TASKS_SV
 

@@ -5,6 +5,7 @@
 // Author: André Lamego
 // Date: 2025-05-06
 // ---------------------------------------------------------
+`timescale 1ns / 100ps
 
 `ifndef CMD_MEM_PKG_SV
 `define CMD_MEM_PKG_SV

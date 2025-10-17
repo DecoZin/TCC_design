@@ -1,0 +1,49 @@
+[INFO][ TB][     0 ns] Testbench started!.
+[INFO][DUT][    10 ns] FSM: IDLE
+[INFO][DUT][    30 ns] FSM: IDLE
+[INFO][TMR][    60 ns] Testing Deep Sleep Timer, set to 1ms...
+[INFO][ TB][  1090 ns] Wake up after 1 ms.
+[INFO][TMR][  1110 ns] Testing Deep Sleep Timer, set to 1ms... Done.
+[INFO][DUT][  1110 ns] FSM: IDLE -> PROGRAMMING
+[INFO][DUT][  1210 ns] Testing programming signals...
+[INFO][DUT][  1210 ns] Testing error code '1'.
+[INFO][DUT][  1290 ns] FSM: PROGRAMMING -> ERROR_ACK
+[INFO][DUT][  1290 ns] Received error code: 1
+[INFO][DUT][  1310 ns] FSM: ERROR_ACK -> PROGRAMMING
+[INFO][DUT][  1350 ns] Testing error code '2'.
+[INFO][DUT][  1370 ns] FSM: PROGRAMMING -> ERROR_ACK
+[INFO][DUT][  1370 ns] Received error code: 2
+[INFO][DUT][  1390 ns] FSM: ERROR_ACK -> PROGRAMMING
+[INFO][DUT][  1430 ns] Testing error code '3'.
+[INFO][DUT][  1450 ns] FSM: PROGRAMMING -> ERROR_ACK
+[INFO][DUT][  1450 ns] Received error code: 3
+[INFO][DUT][  1470 ns] FSM: ERROR_ACK -> PROGRAMMING
+[INFO][DUT][  1510 ns] Testing programming signals... Done.
+[INFO][DUT][  1530 ns] FSM: PROGRAMMING -> IDLE
+[INFO][DUT][  2570 ns] Testing setup signals...
+[INFO][ TB][  2570 ns] Wake up after 1 ms.
+[INFO][DUT][  2590 ns] FSM: IDLE -> SETUP
+[INFO][DUT][  2670 ns] Testing setup signals... Done.
+[INFO][DUT][  2670 ns] Simulating failure setup...
+[INFO][DUT][  2690 ns] FSM: SETUP -> IDLE
+[INFO][DUT][  2710 ns] Simulating failure setup... Done.
+[INFO][ TB][  3730 ns] Wake up after 1 ms.
+[INFO][DUT][  3750 ns] Simulating successful setup...
+[INFO][DUT][  3750 ns] FSM: IDLE -> SETUP
+[INFO][DUT][  3770 ns] FSM: SETUP -> ADVERTISEMENT
+[INFO][DUT][  3790 ns] Simulating successful setup... Done.
+[INFO][DUT][  3810 ns] Testing advertisement signals...
+[INFO][DUT][  3830 ns] Testing advertisement signals... Done.
+[INFO][DUT][  3830 ns] Testing connected signals...
+[INFO][DUT][  3850 ns] FSM: ADVERTISEMENT -> CONNECTED
+[INFO][DUT][  3870 ns] Testing connected signals... Done.
+[INFO][DUT][  3910 ns] Testing direct connection...
+[INFO][DUT][  3910 ns] FSM: CONNECTED -> IDLE
+[INFO][DUT][  3930 ns] FSM: IDLE -> CONNECTED
+[INFO][DUT][  3950 ns] Testing direct connection... Done.
+[INFO][ TB][  3950 ns] Testbench finished.
+TEST PASSED!
+- test/ble_setup_controller_tb.sv:342: Verilog $finish
+- S i m u l a t i o n   R e p o r t: Verilator 5.033 devel
+- Verilator: $finish at 4us; walltime 0.011 s; speed 1.048 ms/s
+- Verilator: cpu 0.004 s on 1 threads; alloced 221 MB

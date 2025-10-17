@@ -4,7 +4,7 @@
 // Author: André Lamego
 // Date: 2025-05-27
 // ---------------------------------------------------------
-`timescale 1ns / 1ps
+`timescale 1ns / 100ps
 
 `ifndef UART_SV
 `define UART_SV

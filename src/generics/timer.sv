@@ -4,7 +4,7 @@
 // Author: André Lamego
 // Date: 2025-04-17
 // ---------------------------------------------------------
-`timescale 1ns / 1ps
+`timescale 1ns / 100ps
 
 `ifndef TIMER_SV
 `define TIMER_SV
@@ -19,7 +19,7 @@ module timer #(
     input  logic        rst_n
 );
 
-    localparam int micro_counter = CLOCK_F / 1000000; // Clock cycles per microsecond
+    localparam int micro_counter = $rtoi(CLOCK_F / 1000000); // Clock cycles per microsecond
 
     logic [7:0] counter_us; // Counter register to get 1µs
     logic [19:0] counter;   // Counter register to get the time in µs
@@ -39,11 +39,11 @@ module timer #(
                 counter_us <= 0;
                 done <= 0;
             end else if (if_t.enable) begin
-                if (counter_us < micro_counter-1) begin
+                if ({ ($bits(micro_counter)-$bits(counter_us ))'('0),counter_us } < micro_counter-1) begin
                     counter_us <= counter_us + 1;
                 end else begin
                     counter_us <= 0;
-                    if (counter < if_t.time_count && counter < MAX_TIME_US) begin
+                    if ({ ($bits(if_t.time_count)-$bits(counter ))'('0),counter } < if_t.time_count - 1 && { ($bits(MAX_TIME_US)-$bits(counter ))'('0),counter } < MAX_TIME_US) begin
                         counter <= counter + 1;
                     end else begin
                         done <= 1; // Signal that the time has elapsed
@@ -68,21 +68,8 @@ module timer #(
 
     always_comb begin
         reload = if_t.mode && rising_done;
+        if_t.done = rising_done;
     end
-
-    always_ff @(posedge clk or negedge rst_n) begin
-        if (!rst_n) begin
-            if_t.done <= 0;
-        end else begin
-            if (if_t.mode) begin
-                // Auto-reload: pulse when rising_done occurs
-                if_t.done <= rising_done;
-            end else begin
-                // One-shot: same behavior, just no reload
-                if_t.done <= rising_done;
-            end
-        end
-    end        
         
 endmodule
 

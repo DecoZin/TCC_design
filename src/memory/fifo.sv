@@ -4,6 +4,8 @@
 // Author: André Lamego
 // Date: 2025-04-08
 // ---------------------------------------------------------
+`timescale 1ns / 100ps
+
 `ifndef FIFO_SV
 `define FIFO_SV
 

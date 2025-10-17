@@ -4,7 +4,7 @@
 // Author: André Lamego
 // Date: 2025-05-12
 // ---------------------------------------------------------------------
-`timescale 1ns / 1ps
+`timescale 1ns / 100ps
 
 `ifndef CMD_MEMORY_SV
 `define CMD_MEMORY_SV
