@@ -45,7 +45,7 @@ module UART #(
     logic       rx_fifo_wr_en;              // RX FIFO write enable
     logic       rx_fifo_rd_en;              // RX FIFO read enable
     logic       tx_fifo_wr_en;              // TX FIFO write enable
-    logic       tx_fifo_rd_en;              // TX FIFO read enable
+    wire        tx_fifo_rd_en;              // TX FIFO read enable
     logic       rx_fifo_full, rx_fifo_empty;
     logic       tx_fifo_full, tx_fifo_empty;
 
@@ -104,17 +104,17 @@ module UART #(
 
     // ---------------------------------------------------------
     // Instantiate the UART TX module
-    logic busy;
 
     UART_tx #(.BAUD(BAUD), .CLK_F(CLK_F)) uart_tx_inst (
         .clk(clk),
         .rst_n(rst_n),
-        .i_tx_data(tx_fifo_rd_data),         // Data from TX FIFO
-        .i_valid(tx_valid),                  // Valid when TX FIFO is not empty
+        .i_tx_data(tx_fifo_rd_data),    // Data from TX FIFO
+        .i_valid(tx_valid),             // Valid when TX FIFO is not empty
+        .i_data_ready(tx_ready_pulse),  // Data ready to be used
+        .o_tx_rd_en(tx_fifo_rd_en),     // TX FIFO read enable
         .o_tx_serial(o_tx_serial_ext),
-        .o_busy(busy),
         .o_done(o_done),
-        .t_state(uart_tx_state)             // Connect state signal
+        .t_state(uart_tx_state)         // Connect state signal
     );
 
     // ---------------------------------------------------------
@@ -128,9 +128,9 @@ module UART #(
         .clk(clk),
         .rst_n(rst_n),
         .i_wr_en(tx_fifo_wr_en),        // Write when system provides data
-        .i_wr_data(tx_fifo_wr_data),      // Data from system
-        .i_rd_en(tx_fifo_rd_en),          // Read when UART_tx is ready
-        .o_rd_data(tx_fifo_rd_data),      // Data to UART_tx
+        .i_wr_data(tx_fifo_wr_data),    // Data from system
+        .i_rd_en(tx_fifo_rd_en),        // Read when UART_tx is ready
+        .o_rd_data(tx_fifo_rd_data),    // Data to UART_tx
         .o_full(tx_fifo_full),
         .o_empty(tx_fifo_empty),
         .o_ready_pulse(tx_ready_pulse)
@@ -141,20 +141,8 @@ module UART #(
     assign tx_fifo_fe = {tx_fifo_full, tx_fifo_empty};
     assign valid = sync_test_mux ? !rx_fifo_empty : i_valid_tx;
     assign transmit = sync_test_mux ? sync_transmit : 1'b1; 
-    assign tx_fifo_wr_en = valid && (!tx_fifo_full && transmit);  
-    assign tx_fifo_rd_en = !busy && !tx_fifo_empty;
-
-    // ---------------------------------------------------------
-    // Timing adjustment for FIFO write enable
-    always_ff @(posedge clk or negedge rst_n) begin
-        if (!rst_n) begin
-            tx_valid <= 0;
-            tx_fifo_wr_en_q <= 0;
-        end else begin
-            tx_valid <= !tx_fifo_empty;
-            tx_fifo_wr_en_q <= tx_fifo_wr_en;
-        end
-    end
+    assign tx_fifo_wr_en = valid && (!tx_fifo_full && transmit);
+    assign tx_valid = !tx_fifo_empty;
 
 endmodule
 

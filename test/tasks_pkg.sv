@@ -20,35 +20,35 @@ package tasks_pkg;
     endtask
 
     task automatic DEBUG_INFO(input string tag, msg);
-        $display("\033[1;32m[INFO][%3s]\033[0m[%6t ns] %s", tag, ($time/10), msg);
+        $display("\033[1;32m[INFO][%4s]\033[0m[%9t ns] %s", tag, ($time/10), msg);
     endtask
 
     task automatic DEBUG_WARN(input string tag, msg);
-        $display("\033[1;33m[WARN][%3s]\033[0m[%6t ns] %s", tag, ($time/10), msg);
+        $display("\033[1;33m[WARN][%4s]\033[0m[%9t ns] %s", tag, ($time/10), msg);
     endtask
 
     task automatic DEBUG_ERR(
         input string tag, msg,
         ref logic fail_flag
         );
-        $display("\033[1;31m[ERROR][%3s][%6t ns] %s\033[0m", tag, ($time/10), msg);
+        $display("\033[1;31m[ERRO][%4s][%9t ns] %s\033[0m", tag, ($time/10), msg);
         set_failure(fail_flag);
     endtask
 
     // DEBUG WRITE
     task automatic DEBUG_INFOWT(input string tag, msg);
-        $write("\033[1;32m[INFO][%3s]\033[0m[%6t ns] %s", tag, ($time/10), msg);
+        $write("\033[1;32m[INFO][%4s]\033[0m[%9t ns] %s", tag, ($time/10), msg);
     endtask
 
     task automatic DEBUG_WARNWT(input string tag, msg);
-        $write("\033[1;33m[WARN][%3s]\033[0m[%6t ns] %s", tag, ($time/10), msg);
+        $write("\033[1;33m[WARN][%4s]\033[0m[%9t ns] %s", tag, ($time/10), msg);
     endtask
 
     task automatic DEBUG_ERRWT(
         input string tag, msg,
         ref logic fail_flag
         );
-        $write("\033[1;31m[ERROR][%3s][%6t ns] %s\033[0m", tag, ($time/10), msg);
+        $write("\033[1;31m[ERRO][%4s][%9t ns] %s\033[0m", tag, ($time/10), msg);
         set_failure(fail_flag);
     endtask
 
@@ -94,8 +94,9 @@ package tasks_pkg;
 
     task automatic reset_n(
         ref logic rst_n,
-        input  time duration = 20
+        input  int duration = 20
     );
+        DEBUG_INFO("TASK", "Resetting system.");
         rst_n = 0;
         #(duration);
         rst_n = 1;
@@ -104,11 +105,17 @@ package tasks_pkg;
     task automatic send_uart_byte(
         ref logic  rx_serial,
         input  logic [7:0] data,
-        input  time  bit_period = 104167 // 9600 baud rate for 1ns timescale
+        input  int  bit_period = 104167 // 9600 baud rate for 1ns timescale
     );
         integer i;
         begin
-            DEBUG_INFO("UART TASK", $sformatf("Sending UART byte: %h (%c)", data, data));
+            if (data == 8'h0D) begin
+                DEBUG_INFO("UART TASK", "Sending UART byte: 0x0D (\\r)");
+            end else if (data == 8'h0A) begin
+                DEBUG_INFO("UART TASK", "Sending UART byte: 0x0A (\\n)");
+            end else begin
+                DEBUG_INFO("UART TASK", $sformatf("Sending UART byte: %h (%c)", data, data));
+            end
             rx_serial = 0; // Start bit
             #(bit_period); // Wait for 1 bit period
 
@@ -124,7 +131,7 @@ package tasks_pkg;
 
     task automatic monitor_uart_rx(
             input logic tx, 
-            input time bit_period,
+            input int bit_period,
             input bit clk,
             ref logic fail_flag
         );
@@ -163,7 +170,7 @@ package tasks_pkg;
         ref    logic rx_serial,
         input  logic [7:0] data_array[],
         input  int num_bytes,
-        input  time bit_period = 104167
+        input  int bit_period = 104167
     );
         int i;
         begin
@@ -177,7 +184,7 @@ package tasks_pkg;
     task automatic send_uart_string(
         ref logic rx_serial,
         input string str,
-        input time bit_period = 104167
+        input int bit_period = 104167
     );
         int i;
         begin

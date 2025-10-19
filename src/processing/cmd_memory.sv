@@ -115,12 +115,6 @@ module cmd_memory #(
         end
     end 
 
-    function void assign_string_to_regi(input string str, input int start_idx);
-        for (int i = 0; i < str.len(); i++) begin
-            if_top_link.regi[start_idx + i] = str[i];
-        end
-    endfunction
-
     always_ff @(posedge clk or negedge rst_n) begin
         if ( !rst_n ) begin
             index <= 4'd0;

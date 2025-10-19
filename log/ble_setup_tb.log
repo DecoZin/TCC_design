@@ -1,0 +1,113 @@
+[INFO][  TB][        0 ns] Testbench started!.
+[INFO][TASK][       20 ns] Resetting system.
+[INFO][ DUT][       30 ns] FSM: IDLE
+[INFO][ DUT][       60 ns] Number of commands:  0
+[INFO][  TB][       60 ns] Simulating Setting up...
+[INFO][ DUT][       90 ns] FSM: IDLE -> GET_CMD_NUMBER
+[INFO][ DUT][      120 ns] Number of commands:  0
+[WARN][ DUT][      130 ns] Expected Failure Detected by DUT!
+[INFO][ DUT][      130 ns] FSM: GET_CMD_NUMBER -> IDLE
+[INFO][ DUT][      170 ns] FSM: IDLE -> GET_CMD_NUMBER
+[INFO][  TB][      200 ns] Simulating Setting up... Done.
+[INFO][ DUT][      210 ns] FSM: GET_CMD_NUMBER -> SEND_CMD
+[INFO][ DUT][      370 ns] FSM: SEND_CMD -> WAIT_ACK
+[INFO][  TB][      390 ns] Simulating Sending Commands...
+[INFO][ DUT][      390 ns] Sending: "AT\r\n"
+[INFO][UART][   937860 ns] UART Received: A
+[INFO][UART][  1979520 ns] UART Received: T
+[INFO][UART][  3021180 ns] UART Received: \r
+[INFO][UART][  4062840 ns] UART Received: \n
+[INFO][  TB][  4167030 ns] Simulating Sending Commands... Done.
+[INFO][  TB][  4167030 ns] Testing Acknowledge Timeout...
+[WARN][ DUT][  6266970 ns] Acknowledgement Timeout Hit!
+[INFO][  TB][  6266990 ns] Testing Acknowledge Timeout... Done.
+[INFO][  TB][  6266990 ns] Testing Retry to Send Commands...
+[INFO][ DUT][  6266990 ns] Sending: "AT\r\n"
+[INFO][ DUT][  6266990 ns] FSM: WAIT_ACK -> SEND_CMD
+[INFO][ DUT][  6267150 ns] FSM: SEND_CMD -> WAIT_ACK
+[INFO][UART][  7204640 ns] UART Received: A
+[INFO][UART][  8246300 ns] UART Received: T
+[INFO][UART][  9287960 ns] UART Received: \r
+[INFO][UART][ 10329620 ns] UART Received: \n
+[INFO][  TB][ 10433630 ns] Testing Retry to Send Commands... Done.
+[INFO][  TB][ 10433630 ns] Testing Receiving Acknowledgement Ok...
+[INFO][  TB][ 10433630 ns] Sending acknowledgement: "OK\r\n"
+[INFO][UART TASK][ 10433630 ns] Sending UART byte: 4f (O)
+[INFO][ DUT][ 11423230 ns] FSM: WAIT_ACK -> GET_ACK
+[INFO][ DUT][ 11423290 ns] FSM: GET_ACK -> WAIT_ACK
+[INFO][UART TASK][ 11527370 ns] Sending UART byte: 4b (K)
+[INFO][ DUT][ 12516990 ns] FSM: WAIT_ACK -> GET_ACK
+[INFO][ DUT][ 12517010 ns] Received: OK
+[INFO][ DUT][ 12517050 ns] FSM: GET_ACK -> EVALUATE_ACK
+[INFO][ DUT][ 12517070 ns] FSM: EVALUATE_ACK -> FLUSH_RX
+[INFO][UART TASK][ 12621110 ns] Sending UART byte: 0x0D (\r)
+[INFO][UART TASK][ 13714850 ns] Sending UART byte: 0x0A (\n)
+[WARN][ DUT][ 16804490 ns] Acknowledgement Timeout Hit!
+[INFO][ DUT][ 16804510 ns] FSM: FLUSH_RX -> SEND_CMD
+[INFO][ DUT][ 16804870 ns] FSM: SEND_CMD -> WAIT_ACK
+[INFO][  TB][ 16891920 ns] Testing Receiving Acknowledgement Ok... Done.
+[INFO][  TB][ 16891920 ns] Testing Sending Last Command...
+[INFO][ DUT][ 16891920 ns] Sending: "AT+NAME\r\n"
+[INFO][UART][ 17742160 ns] UART Received: A
+[INFO][UART][ 18783820 ns] UART Received: T
+[INFO][UART][ 19825480 ns] UART Received: +
+[INFO][UART][ 20867140 ns] UART Received: N
+[INFO][UART][ 21908800 ns] UART Received: A
+[INFO][UART][ 22950460 ns] UART Received: M
+[INFO][UART][ 23992120 ns] UART Received: E
+[INFO][UART][ 25033780 ns] UART Received: \r
+[INFO][UART][ 26075440 ns] UART Received: \n
+[INFO][  TB][ 26266860 ns] Sending acknowledgement: "OK\r\n"
+[INFO][UART TASK][ 26266860 ns] Sending UART byte: 4f (O)
+[INFO][ DUT][ 27256470 ns] FSM: WAIT_ACK -> GET_ACK
+[INFO][ DUT][ 27256530 ns] FSM: GET_ACK -> WAIT_ACK
+[INFO][UART TASK][ 27360600 ns] Sending UART byte: 4b (K)
+[INFO][ DUT][ 28350210 ns] FSM: WAIT_ACK -> GET_ACK
+[INFO][ DUT][ 28350230 ns] Received: OK
+[INFO][ DUT][ 28350270 ns] FSM: GET_ACK -> EVALUATE_ACK
+[INFO][ DUT][ 28350290 ns] FSM: EVALUATE_ACK -> FLUSH_RX
+[INFO][UART TASK][ 28454340 ns] Sending UART byte: 0x0D (\r)
+[INFO][UART TASK][ 29548090 ns] Sending UART byte: 0x0A (\n)
+[WARN][ DUT][ 32637730 ns] Acknowledgement Timeout Hit!
+[INFO][ DUT][ 32637750 ns] FSM: FLUSH_RX -> SEND_CMD
+[INFO][ DUT][ 32637750 ns] Setup Done!
+[INFO][ DUT][ 32637770 ns] FSM: SEND_CMD -> IDLE
+[INFO][  TB][ 32725150 ns] Testing Sending Last Command... Done.
+[INFO][  TB][ 32725150 ns] Testing Receiving Acknowledgement Error...
+[INFO][ DUT][ 32725190 ns] FSM: IDLE -> GET_CMD_NUMBER
+[INFO][ DUT][ 32725230 ns] FSM: GET_CMD_NUMBER -> SEND_CMD
+[INFO][ DUT][ 32725390 ns] FSM: SEND_CMD -> WAIT_ACK
+[INFO][ DUT][ 32725410 ns] Sending: "AT\r\n"
+[INFO][UART][ 33662880 ns] UART Received: A
+[INFO][UART][ 34704540 ns] UART Received: T
+[INFO][UART][ 35746200 ns] UART Received: \r
+[INFO][UART][ 36787860 ns] UART Received: \n
+[INFO][UART TASK][ 36892050 ns] Sending UART byte: 45 (E)
+[INFO][ DUT][ 37881650 ns] FSM: WAIT_ACK -> GET_ACK
+[INFO][ DUT][ 37881710 ns] FSM: GET_ACK -> WAIT_ACK
+[INFO][UART TASK][ 37985790 ns] Sending UART byte: 52 (R)
+[INFO][ DUT][ 38975410 ns] FSM: WAIT_ACK -> GET_ACK
+[INFO][ DUT][ 38975470 ns] FSM: GET_ACK -> WAIT_ACK
+[INFO][UART TASK][ 39079530 ns] Sending UART byte: 52 (R)
+[INFO][ DUT][ 40069150 ns] FSM: WAIT_ACK -> GET_ACK
+[INFO][ DUT][ 40069210 ns] FSM: GET_ACK -> WAIT_ACK
+[INFO][UART TASK][ 40173270 ns] Sending UART byte: 4f (O)
+[INFO][ DUT][ 41162890 ns] FSM: WAIT_ACK -> GET_ACK
+[INFO][ DUT][ 41162950 ns] FSM: GET_ACK -> WAIT_ACK
+[INFO][UART TASK][ 41267020 ns] Sending UART byte: 52 (R)
+[INFO][ DUT][ 42256630 ns] FSM: WAIT_ACK -> GET_ACK
+[WARN][ DUT][ 42256650 ns] Received: ERROR
+[INFO][ DUT][ 42256690 ns] FSM: GET_ACK -> EVALUATE_ACK
+[INFO][ DUT][ 42256710 ns] FSM: EVALUATE_ACK -> FLUSH_RX
+[INFO][UART TASK][ 42360760 ns] Sending UART byte: 0x0D (\r)
+[INFO][UART TASK][ 43454500 ns] Sending UART byte: 0x0A (\n)
+[WARN][ DUT][ 46544130 ns] Acknowledgement Timeout Hit!
+[INFO][ DUT][ 46544150 ns] FSM: FLUSH_RX -> SEND_CMD
+[INFO][ DUT][ 46544310 ns] FSM: SEND_CMD -> WAIT_ACK
+[INFO][  TB][ 46631570 ns] Testing Receiving Acknowledgement Error... Done.
+[INFO][  TB][ 46631670 ns] Testbench finished.
+TEST PASSED!
+- test/ble_setup_tb.sv:377: Verilog $finish
+- S i m u l a t i o n   R e p o r t: Verilator 5.033 devel
+- Verilator: $finish at 47ms; walltime 3.047 s; speed 15.335 ms/s
+- Verilator: cpu 3.041 s on 1 threads; alloced 221 MB

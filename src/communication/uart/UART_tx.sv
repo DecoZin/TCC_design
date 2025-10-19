@@ -20,8 +20,9 @@ module UART_tx #(
     input  logic        rst_n,
     input  logic [7:0]  i_tx_data,
     input  logic        i_valid,
+    input  logic        i_data_ready,
+    output logic        o_tx_rd_en,
     output logic        o_tx_serial,
-    output logic        o_busy,
     output logic        o_done,
     output logic [2:0]  t_state // Add this line to expose the state signal
 
@@ -36,8 +37,7 @@ module UART_tx #(
         IDLE        = 3'b000,
         START_BIT   = 3'b001,
         DATA_BITS   = 3'b010,
-        STOP_BIT    = 3'b011,
-        CLEANUP     = 3'b100
+        STOP_BIT    = 3'b011
     } state_t;
 
     state_t state;
@@ -45,42 +45,49 @@ module UART_tx #(
 
     // Internal registers
     logic [COUNTER_WIDTH-1:0] clk_counter; // Clock counter for baud rate generation
-    logic [2:0] bit_index;    // Bit index for data bits
-    logic [7:0] r_tx_data;    // Register to hold the data to be transmitted
+    logic [2:0] bit_index;  // Bit index for data bits
+    logic [7:0] r_tx_data;  // Register to hold the data to be transmitted
+    logic got_data;         // Flag to indicate that valid data has been received
 
     always_ff @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
             state       <= IDLE;
-            o_tx_serial <= 1;                // Idle state for UART is high
-            o_busy      <= 0;                // Not busy at reset
-            o_done      <= 0;                // Not done at reset
+            o_tx_rd_en  <= 0;
+            o_tx_serial <= 1; // Idle state for UART is high
+            o_done      <= 0; // Not done at reset
             clk_counter <= 0;
             bit_index   <= 0;
             r_tx_data   <= 8'b0;
+            got_data    <= 0;
         end else begin
-            o_done <= 0;                       // Default to not done
+            o_done <= 0;        // Default to not done
+            o_tx_rd_en  <= 0;   // Default to not read from FIFO
             case (state)
                 IDLE: begin
+                    got_data    <= 0;
                     o_tx_serial <= 1;               // Drive Line High for Idle
                     clk_counter <= 0;
                     bit_index   <= 0;
-
                     if (i_valid == 1) begin
-                        r_tx_data <= i_tx_data;
-                        o_busy    <= 1;
-                        state     <= START_BIT;
+                        o_tx_rd_en <= 1;
+                        state <= START_BIT;
                     end
                 end // case: IDLE
-
+                
                 START_BIT: begin
-                    o_tx_serial <= 0;               // Start bit is 0
-
-                    // Wait CLKS_PER_BIT-1 clock cycles for start bit to finish
-                    if ({ ($bits(CLKS_PER_BIT)-$bits(clk_counter ))'('0),clk_counter } < CLKS_PER_BIT-1) begin
-                        clk_counter <= clk_counter + 1;
-                    end else begin
-                        clk_counter <= 0;
-                        state       <= DATA_BITS;
+                    if (i_data_ready == 1) begin
+                        r_tx_data <= i_tx_data;
+                        got_data  <= 1;
+                    end
+                    if (got_data == 1) begin
+                        o_tx_serial <= 0;               // Start bit is 0
+                        // Wait CLKS_PER_BIT-1 clock cycles for start bit to finish
+                        if ({ ($bits(CLKS_PER_BIT)-$bits(clk_counter ))'('0),clk_counter } < CLKS_PER_BIT-1) begin
+                            clk_counter <= clk_counter + 1;
+                        end else begin
+                            clk_counter <= 0;
+                            state       <= DATA_BITS;
+                        end
                     end
                 end // case: START_BIT
 
@@ -111,25 +118,19 @@ module UART_tx #(
                     end else begin
                         clk_counter <= 0;
                         o_done      <= 1;           // Transmission complete
-                        o_busy      <= 0;           // Not busy anymore
-                        state       <= CLEANUP;
+                        state       <= IDLE;
                     end
                 end // case: STOP_BIT
-
-                CLEANUP: begin
-                    state       <= IDLE;
-                    clk_counter <= 0;
-                    r_tx_data   <= 8'b0;
-                end
 
                 default: begin
                     state       <= IDLE;
                     o_tx_serial <= 1;
-                    o_busy      <= 0;
+                    o_tx_rd_en  <= 0;
                     o_done      <= 0;
+                    r_tx_data   <= 8'b0;
                     clk_counter <= 0;
                     bit_index   <= 0;
-                    r_tx_data   <= 8'b0;
+                    got_data    <= 0;
                 end
             endcase
         end
