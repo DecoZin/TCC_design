@@ -1,0 +1,419 @@
+[INFO][  TB][        0 ns] Testbench started!
+[INFO][TASK][       20 ns] Resetting system.
+[INFO][READ_MEM][      130 ns] Reading default commands
+[INFO][READ_MEM][      130 ns] Number of commands: 7
+[INFO][READ_MEM][     1410 ns] Command 0: AT\r\n
+[INFO][READ_MEM][     2690 ns] Command 1: AT+NAME\r\n
+[INFO][READ_MEM][     3970 ns] Command 2: AT+PIN\r\n
+[INFO][READ_MEM][     5250 ns] Command 3: AT+BAUD\r\n
+[INFO][READ_MEM][     6530 ns] Command 4: AT+ROLE0\r\n
+[INFO][READ_MEM][     7810 ns] Command 5: AT+RESET\r\n
+[INFO][READ_MEM][     9090 ns] Command 6: AT+ADVEN\r\n
+[INFO][READ_MEM][    10370 ns] Command 7: 
+[INFO][READ_MEM][    11650 ns] Command 8: 
+[INFO][READ_MEM][    12930 ns] Command 9: 
+[INFO][READ_MEM][    14210 ns] Command 10: 
+[INFO][READ_MEM][    15490 ns] Command 11: 
+[INFO][READ_MEM][    16770 ns] Command 12: 
+[INFO][READ_MEM][    18050 ns] Command 13: 
+[INFO][READ_MEM][    19330 ns] Command 14: 
+[INFO][READ_MEM][    20610 ns] Command 15: 
+[INFO][WRITE_MEM][    20610 ns] Writing commands to memory.
+[INFO][WRITE_MEM][    20610 ns] Clearing Command Memory.
+[INFO][UART TASK][    20610 ns] Sending UART byte: 43 (C)
+[INFO][UART TASK][  1114360 ns] Sending UART byte: 52 (R)
+[INFO][WRITE_MEM][  2208150 ns] Number of commands: 0
+[INFO][UART TASK][  2208150 ns] Sending UART byte: 41 (A)
+[WARN][CMD_ERR][  3197810 ns] Invalid address!
+[INFO][UART TASK][  3301900 ns] Sending UART byte: 54 (T)
+[WARN][CMD_ERR][  4291570 ns] Invalid address!
+[INFO][UART TASK][  4395650 ns] Sending UART byte: 2b (+)
+[WARN][CMD_ERR][  5385330 ns] Invalid address!
+[INFO][UART TASK][  5489400 ns] Sending UART byte: 54 (T)
+[WARN][CMD_ERR][  6479070 ns] Invalid address!
+[INFO][UART TASK][  6583160 ns] Sending UART byte: 45 (E)
+[WARN][CMD_ERR][  7572830 ns] Invalid address!
+[INFO][UART TASK][  7676910 ns] Sending UART byte: 53 (S)
+[WARN][CMD_ERR][  8666590 ns] Invalid address!
+[INFO][UART TASK][  8770660 ns] Sending UART byte: 54 (T)
+[WARN][CMD_ERR][  9760330 ns] Invalid address!
+[INFO][UART TASK][  9864420 ns] Sending UART byte: 30 (0)
+[INFO][UART TASK][ 10958170 ns] Sending UART byte: 0x0D (\r)
+[WARN][CMD_ERR][ 11947850 ns] Invalid address!
+[INFO][UART TASK][ 12051920 ns] Sending UART byte: 0x0A (\n)
+[WARN][CMD_ERR][ 13041590 ns] Invalid address!
+[INFO][UART TASK][ 13145680 ns] Sending UART byte: 41 (A)
+[WARN][CMD_ERR][ 14135350 ns] Invalid address!
+[INFO][UART TASK][ 14239430 ns] Sending UART byte: 54 (T)
+[WARN][CMD_ERR][ 15229110 ns] Invalid address!
+[INFO][UART TASK][ 15333180 ns] Sending UART byte: 2b (+)
+[WARN][CMD_ERR][ 16322850 ns] Invalid address!
+[INFO][UART TASK][ 16426930 ns] Sending UART byte: 54 (T)
+[WARN][CMD_ERR][ 17416610 ns] Invalid address!
+[INFO][UART TASK][ 17520690 ns] Sending UART byte: 45 (E)
+[WARN][CMD_ERR][ 18510370 ns] Invalid address!
+[INFO][UART TASK][ 18614440 ns] Sending UART byte: 53 (S)
+[WARN][CMD_ERR][ 19604110 ns] Invalid address!
+[INFO][UART TASK][ 19708190 ns] Sending UART byte: 54 (T)
+[WARN][CMD_ERR][ 20697870 ns] Invalid address!
+[INFO][UART TASK][ 20801950 ns] Sending UART byte: 30 (0)
+[INFO][UART TASK][ 21895700 ns] Sending UART byte: 31 (1)
+[INFO][UART TASK][ 22989450 ns] Sending UART byte: 0x0D (\r)
+[WARN][CMD_ERR][ 23979110 ns] Missing space!
+[INFO][UART TASK][ 24083210 ns] Sending UART byte: 0x0A (\n)
+[WARN][CMD_ERR][ 25072870 ns] Invalid address!
+[INFO][UART TASK][ 25176960 ns] Sending UART byte: 30 (0)
+[INFO][UART TASK][ 26270710 ns] Sending UART byte: 30 (0)
+[INFO][UART TASK][ 27364460 ns] Sending UART byte: 20 ( )
+[INFO][UART TASK][ 28458220 ns] Sending UART byte: 41 (A)
+[INFO][UART TASK][ 29551970 ns] Sending UART byte: 54 (T)
+[INFO][UART TASK][ 30645720 ns] Sending UART byte: 2b (+)
+[INFO][UART TASK][ 31739480 ns] Sending UART byte: 54 (T)
+[INFO][UART TASK][ 32833230 ns] Sending UART byte: 45 (E)
+[INFO][UART TASK][ 33926980 ns] Sending UART byte: 53 (S)
+[INFO][UART TASK][ 35020740 ns] Sending UART byte: 54 (T)
+[INFO][UART TASK][ 36114490 ns] Sending UART byte: 3d (=)
+[INFO][UART TASK][ 37208240 ns] Sending UART byte: 31 (1)
+[INFO][UART TASK][ 38301990 ns] Sending UART byte: 0x0D (\r)
+[INFO][UART TASK][ 39395750 ns] Sending UART byte: 0x0A (\n)
+[INFO][UART TASK][ 40489500 ns] Sending UART byte: 30 (0)
+[INFO][UART TASK][ 41583250 ns] Sending UART byte: 31 (1)
+[INFO][UART TASK][ 42677010 ns] Sending UART byte: 20 ( )
+[INFO][UART TASK][ 43770760 ns] Sending UART byte: 41 (A)
+[INFO][UART TASK][ 44864510 ns] Sending UART byte: 54 (T)
+[INFO][UART TASK][ 45958270 ns] Sending UART byte: 2b (+)
+[INFO][UART TASK][ 47052020 ns] Sending UART byte: 54 (T)
+[INFO][UART TASK][ 48145770 ns] Sending UART byte: 45 (E)
+[INFO][UART TASK][ 49239520 ns] Sending UART byte: 53 (S)
+[INFO][UART TASK][ 50333280 ns] Sending UART byte: 54 (T)
+[INFO][UART TASK][ 51427030 ns] Sending UART byte: 32 (2)
+[INFO][UART TASK][ 52520780 ns] Sending UART byte: 3d (=)
+[INFO][UART TASK][ 53614540 ns] Sending UART byte: 32 (2)
+[INFO][UART TASK][ 54708290 ns] Sending UART byte: 0x0D (\r)
+[INFO][UART TASK][ 55802040 ns] Sending UART byte: 0x0A (\n)
+[INFO][UART TASK][ 56895800 ns] Sending UART byte: 32 (2)
+[INFO][UART TASK][ 57989550 ns] Sending UART byte: 32 (2)
+[INFO][UART TASK][ 59083300 ns] Sending UART byte: 20 ( )
+[WARN][CMD_ERR][ 60072970 ns] Invalid address!
+[INFO][UART TASK][ 60177050 ns] Sending UART byte: 41 (A)
+[WARN][CMD_ERR][ 61166730 ns] Invalid address!
+[INFO][UART TASK][ 61270810 ns] Sending UART byte: 54 (T)
+[WARN][CMD_ERR][ 62260490 ns] Invalid address!
+[INFO][UART TASK][ 62364560 ns] Sending UART byte: 2b (+)
+[WARN][CMD_ERR][ 63354230 ns] Invalid address!
+[INFO][UART TASK][ 63458310 ns] Sending UART byte: 54 (T)
+[WARN][CMD_ERR][ 64447990 ns] Invalid address!
+[INFO][UART TASK][ 64552070 ns] Sending UART byte: 45 (E)
+[WARN][CMD_ERR][ 65541750 ns] Invalid address!
+[INFO][UART TASK][ 65645820 ns] Sending UART byte: 53 (S)
+[WARN][CMD_ERR][ 66635490 ns] Invalid address!
+[INFO][UART TASK][ 66739570 ns] Sending UART byte: 54 (T)
+[WARN][CMD_ERR][ 67729250 ns] Invalid address!
+[INFO][UART TASK][ 67833330 ns] Sending UART byte: 32 (2)
+[INFO][UART TASK][ 68927080 ns] Sending UART byte: 3d (=)
+[WARN][CMD_ERR][ 69916750 ns] Invalid address!
+[INFO][UART TASK][ 70020830 ns] Sending UART byte: 32 (2)
+[INFO][UART TASK][ 71114580 ns] Sending UART byte: 0x0D (\r)
+[WARN][CMD_ERR][ 72104250 ns] Invalid address!
+[INFO][UART TASK][ 72208340 ns] Sending UART byte: 0x0A (\n)
+[WARN][CMD_ERR][ 73198010 ns] Invalid address!
+[INFO][UART TASK][ 73302090 ns] Sending UART byte: 30 (0)
+[INFO][UART TASK][ 74395840 ns] Sending UART byte: 32 (2)
+[INFO][UART TASK][ 75489600 ns] Sending UART byte: 20 ( )
+[INFO][UART TASK][ 76583350 ns] Sending UART byte: 41 (A)
+[INFO][UART TASK][ 77677100 ns] Sending UART byte: 54 (T)
+[INFO][UART TASK][ 78770860 ns] Sending UART byte: 2b (+)
+[INFO][UART TASK][ 79864610 ns] Sending UART byte: 56 (V)
+[INFO][UART TASK][ 80958360 ns] Sending UART byte: 45 (E)
+[INFO][UART TASK][ 82052110 ns] Sending UART byte: 52 (R)
+[INFO][UART TASK][ 83145870 ns] Sending UART byte: 59 (Y)
+[INFO][UART TASK][ 84239620 ns] Sending UART byte: 5f (_)
+[INFO][UART TASK][ 85333370 ns] Sending UART byte: 4c (L)
+[INFO][UART TASK][ 86427130 ns] Sending UART byte: 4f (O)
+[INFO][UART TASK][ 87520880 ns] Sending UART byte: 4e (N)
+[INFO][UART TASK][ 88614630 ns] Sending UART byte: 47 (G)
+[INFO][UART TASK][ 89708390 ns] Sending UART byte: 5f (_)
+[INFO][UART TASK][ 90802140 ns] Sending UART byte: 43 (C)
+[INFO][UART TASK][ 91895890 ns] Sending UART byte: 4f (O)
+[INFO][UART TASK][ 92989640 ns] Sending UART byte: 4d (M)
+[INFO][UART TASK][ 94083400 ns] Sending UART byte: 4d (M)
+[INFO][UART TASK][ 95177150 ns] Sending UART byte: 41 (A)
+[INFO][UART TASK][ 96270900 ns] Sending UART byte: 4e (N)
+[INFO][UART TASK][ 97364660 ns] Sending UART byte: 44 (D)
+[INFO][UART TASK][ 98458410 ns] Sending UART byte: 5f (_)
+[INFO][UART TASK][ 99552160 ns] Sending UART byte: 4f (O)
+[INFO][UART TASK][100645920 ns] Sending UART byte: 56 (V)
+[INFO][UART TASK][101739670 ns] Sending UART byte: 45 (E)
+[INFO][UART TASK][102833420 ns] Sending UART byte: 52 (R)
+[INFO][UART TASK][103927170 ns] Sending UART byte: 5f (_)
+[INFO][UART TASK][105020930 ns] Sending UART byte: 33 (3)
+[INFO][UART TASK][106114680 ns] Sending UART byte: 32 (2)
+[INFO][UART TASK][107208430 ns] Sending UART byte: 5f (_)
+[INFO][UART TASK][108302190 ns] Sending UART byte: 43 (C)
+[INFO][UART TASK][109395940 ns] Sending UART byte: 48 (H)
+[WARN][CMD_ERR][110385590 ns] Command too wide!
+[INFO][UART TASK][110489690 ns] Sending UART byte: 41 (A)
+[WARN][CMD_ERR][111479370 ns] Invalid address!
+[INFO][UART TASK][111583450 ns] Sending UART byte: 52 (R)
+[WARN][CMD_ERR][112573110 ns] Invalid address!
+[INFO][UART TASK][112677200 ns] Sending UART byte: 53 (S)
+[WARN][CMD_ERR][113666870 ns] Invalid address!
+[INFO][UART TASK][113770950 ns] Sending UART byte: 3d (=)
+[WARN][CMD_ERR][114760630 ns] Invalid address!
+[INFO][UART TASK][114864700 ns] Sending UART byte: 33 (3)
+[INFO][UART TASK][115958460 ns] Sending UART byte: 0x0D (\r)
+[WARN][CMD_ERR][116948130 ns] Invalid address!
+[INFO][UART TASK][117052210 ns] Sending UART byte: 0x0A (\n)
+[WARN][CMD_ERR][118041890 ns] Invalid address!
+[INFO][WRITE_MEM][118145990 ns] Number of commands: 2
+[INFO][OVRW_CMD][118145990 ns] Overwriting commands.
+[INFO][OVRW_CMD][118146030 ns] Number of commands: 2
+[INFO][OVRW_CMD][118147310 ns] Command 0: AT+TEST=1\r\n                     
+[INFO][OVRW_CMD][118148590 ns] Command 1: AT+TEST2=2\r\n                    
+[INFO][UART TASK][118148590 ns] Sending UART byte: 30 (0)
+[INFO][UART TASK][119242340 ns] Sending UART byte: 31 (1)
+[INFO][UART TASK][120336090 ns] Sending UART byte: 20 ( )
+[INFO][UART TASK][121429840 ns] Sending UART byte: 41 (A)
+[INFO][UART TASK][122523600 ns] Sending UART byte: 54 (T)
+[INFO][UART TASK][123617350 ns] Sending UART byte: 2b (+)
+[INFO][UART TASK][124711100 ns] Sending UART byte: 54 (T)
+[INFO][UART TASK][125804860 ns] Sending UART byte: 45 (E)
+[INFO][UART TASK][126898610 ns] Sending UART byte: 53 (S)
+[INFO][UART TASK][127992360 ns] Sending UART byte: 54 (T)
+[INFO][UART TASK][129086120 ns] Sending UART byte: 33 (3)
+[INFO][UART TASK][130179870 ns] Sending UART byte: 3d (=)
+[INFO][UART TASK][131273620 ns] Sending UART byte: 33 (3)
+[INFO][UART TASK][132367370 ns] Sending UART byte: 0x0D (\r)
+[INFO][UART TASK][133461130 ns] Sending UART byte: 0x0A (\n)
+[INFO][OVRW_CMD][134554910 ns] Number of commands: 3
+[INFO][OVRW_CMD][134556190 ns] Command 0: AT+TEST=1\r\n                     
+[INFO][OVRW_CMD][134557470 ns] Command 1: AT+TEST3=3\r\n                    
+[INFO][OVRW_CMD][134558750 ns] Command 2: AT+PIN\r\n
+[INFO][ADD_CMD][134558750 ns] Adding commands.
+[INFO][UART TASK][134558750 ns] Sending UART byte: 30 (0)
+[INFO][UART TASK][135652500 ns] Sending UART byte: 33 (3)
+[INFO][UART TASK][136746250 ns] Sending UART byte: 20 ( )
+[INFO][UART TASK][137840000 ns] Sending UART byte: 41 (A)
+[INFO][UART TASK][138933760 ns] Sending UART byte: 54 (T)
+[INFO][UART TASK][140027510 ns] Sending UART byte: 2b (+)
+[INFO][UART TASK][141121260 ns] Sending UART byte: 54 (T)
+[INFO][UART TASK][142215020 ns] Sending UART byte: 45 (E)
+[INFO][UART TASK][143308770 ns] Sending UART byte: 53 (S)
+[INFO][UART TASK][144402520 ns] Sending UART byte: 54 (T)
+[INFO][UART TASK][145496280 ns] Sending UART byte: 35 (5)
+[INFO][UART TASK][146590030 ns] Sending UART byte: 3d (=)
+[INFO][UART TASK][147683780 ns] Sending UART byte: 35 (5)
+[INFO][UART TASK][148777530 ns] Sending UART byte: 0x0D (\r)
+[INFO][UART TASK][149871290 ns] Sending UART byte: 0x0A (\n)
+[INFO][ADD_CMD][150965070 ns] Number of commands: 4
+[INFO][UART TASK][150965070 ns] Sending UART byte: 30 (0)
+[INFO][UART TASK][152058820 ns] Sending UART byte: 34 (4)
+[INFO][UART TASK][153152570 ns] Sending UART byte: 20 ( )
+[INFO][UART TASK][154246320 ns] Sending UART byte: 41 (A)
+[INFO][UART TASK][155340080 ns] Sending UART byte: 54 (T)
+[INFO][UART TASK][156433830 ns] Sending UART byte: 2b (+)
+[INFO][UART TASK][157527580 ns] Sending UART byte: 54 (T)
+[INFO][UART TASK][158621340 ns] Sending UART byte: 45 (E)
+[INFO][UART TASK][159715090 ns] Sending UART byte: 53 (S)
+[INFO][UART TASK][160808840 ns] Sending UART byte: 54 (T)
+[INFO][UART TASK][161902600 ns] Sending UART byte: 36 (6)
+[INFO][UART TASK][162996350 ns] Sending UART byte: 3d (=)
+[INFO][UART TASK][164090100 ns] Sending UART byte: 36 (6)
+[INFO][UART TASK][165183850 ns] Sending UART byte: 0x0D (\r)
+[INFO][UART TASK][166277610 ns] Sending UART byte: 0x0A (\n)
+[INFO][ADD_CMD][167371390 ns] Number of commands: 5
+[INFO][UART TASK][167371390 ns] Sending UART byte: 30 (0)
+[INFO][UART TASK][168465140 ns] Sending UART byte: 35 (5)
+[INFO][UART TASK][169558890 ns] Sending UART byte: 20 ( )
+[INFO][UART TASK][170652640 ns] Sending UART byte: 41 (A)
+[INFO][UART TASK][171746400 ns] Sending UART byte: 54 (T)
+[INFO][UART TASK][172840150 ns] Sending UART byte: 2b (+)
+[INFO][UART TASK][173933900 ns] Sending UART byte: 54 (T)
+[INFO][UART TASK][175027660 ns] Sending UART byte: 45 (E)
+[INFO][UART TASK][176121410 ns] Sending UART byte: 53 (S)
+[INFO][UART TASK][177215160 ns] Sending UART byte: 54 (T)
+[INFO][UART TASK][178308920 ns] Sending UART byte: 37 (7)
+[INFO][UART TASK][179402670 ns] Sending UART byte: 3d (=)
+[INFO][UART TASK][180496420 ns] Sending UART byte: 37 (7)
+[INFO][UART TASK][181590170 ns] Sending UART byte: 0x0D (\r)
+[INFO][UART TASK][182683930 ns] Sending UART byte: 0x0A (\n)
+[INFO][ADD_CMD][183777710 ns] Number of commands: 6
+[INFO][UART TASK][183777710 ns] Sending UART byte: 30 (0)
+[INFO][UART TASK][184871460 ns] Sending UART byte: 36 (6)
+[INFO][UART TASK][185965210 ns] Sending UART byte: 20 ( )
+[INFO][UART TASK][187058960 ns] Sending UART byte: 41 (A)
+[INFO][UART TASK][188152720 ns] Sending UART byte: 54 (T)
+[INFO][UART TASK][189246470 ns] Sending UART byte: 2b (+)
+[INFO][UART TASK][190340220 ns] Sending UART byte: 54 (T)
+[INFO][UART TASK][191433980 ns] Sending UART byte: 45 (E)
+[INFO][UART TASK][192527730 ns] Sending UART byte: 53 (S)
+[INFO][UART TASK][193621480 ns] Sending UART byte: 54 (T)
+[INFO][UART TASK][194715240 ns] Sending UART byte: 38 (8)
+[INFO][UART TASK][195808990 ns] Sending UART byte: 3d (=)
+[INFO][UART TASK][196902740 ns] Sending UART byte: 38 (8)
+[INFO][UART TASK][197996490 ns] Sending UART byte: 0x0D (\r)
+[INFO][UART TASK][199090250 ns] Sending UART byte: 0x0A (\n)
+[INFO][ADD_CMD][200184030 ns] Number of commands: 7
+[INFO][UART TASK][200184030 ns] Sending UART byte: 30 (0)
+[INFO][UART TASK][201277780 ns] Sending UART byte: 37 (7)
+[INFO][UART TASK][202371530 ns] Sending UART byte: 20 ( )
+[INFO][UART TASK][203465280 ns] Sending UART byte: 41 (A)
+[INFO][UART TASK][204559040 ns] Sending UART byte: 54 (T)
+[INFO][UART TASK][205652790 ns] Sending UART byte: 2b (+)
+[INFO][UART TASK][206746540 ns] Sending UART byte: 54 (T)
+[INFO][UART TASK][207840300 ns] Sending UART byte: 45 (E)
+[INFO][UART TASK][208934050 ns] Sending UART byte: 53 (S)
+[INFO][UART TASK][210027800 ns] Sending UART byte: 54 (T)
+[INFO][UART TASK][211121560 ns] Sending UART byte: 39 (9)
+[INFO][UART TASK][212215310 ns] Sending UART byte: 3d (=)
+[INFO][UART TASK][213309060 ns] Sending UART byte: 39 (9)
+[INFO][UART TASK][214402810 ns] Sending UART byte: 0x0D (\r)
+[INFO][UART TASK][215496570 ns] Sending UART byte: 0x0A (\n)
+[INFO][ADD_CMD][216590350 ns] Number of commands: 8
+[INFO][UART TASK][216590350 ns] Sending UART byte: 30 (0)
+[INFO][UART TASK][217684100 ns] Sending UART byte: 38 (8)
+[INFO][UART TASK][218777850 ns] Sending UART byte: 20 ( )
+[INFO][UART TASK][219871600 ns] Sending UART byte: 41 (A)
+[INFO][UART TASK][220965360 ns] Sending UART byte: 54 (T)
+[INFO][UART TASK][222059110 ns] Sending UART byte: 2b (+)
+[INFO][UART TASK][223152860 ns] Sending UART byte: 54 (T)
+[INFO][UART TASK][224246620 ns] Sending UART byte: 45 (E)
+[INFO][UART TASK][225340370 ns] Sending UART byte: 53 (S)
+[INFO][UART TASK][226434120 ns] Sending UART byte: 54 (T)
+[INFO][UART TASK][227527880 ns] Sending UART byte: 31 (1)
+[INFO][UART TASK][228621630 ns] Sending UART byte: 30 (0)
+[INFO][UART TASK][229715380 ns] Sending UART byte: 3d (=)
+[INFO][UART TASK][230809130 ns] Sending UART byte: 31 (1)
+[INFO][UART TASK][231902890 ns] Sending UART byte: 30 (0)
+[INFO][UART TASK][232996640 ns] Sending UART byte: 0x0D (\r)
+[INFO][UART TASK][234090390 ns] Sending UART byte: 0x0A (\n)
+[INFO][ADD_CMD][235184190 ns] Number of commands: 9
+[INFO][UART TASK][235184190 ns] Sending UART byte: 30 (0)
+[INFO][UART TASK][236277940 ns] Sending UART byte: 39 (9)
+[INFO][UART TASK][237371690 ns] Sending UART byte: 20 ( )
+[INFO][UART TASK][238465440 ns] Sending UART byte: 41 (A)
+[INFO][UART TASK][239559200 ns] Sending UART byte: 54 (T)
+[INFO][UART TASK][240652950 ns] Sending UART byte: 2b (+)
+[INFO][UART TASK][241746700 ns] Sending UART byte: 54 (T)
+[INFO][UART TASK][242840460 ns] Sending UART byte: 45 (E)
+[INFO][UART TASK][243934210 ns] Sending UART byte: 53 (S)
+[INFO][UART TASK][245027960 ns] Sending UART byte: 54 (T)
+[INFO][UART TASK][246121720 ns] Sending UART byte: 31 (1)
+[INFO][UART TASK][247215470 ns] Sending UART byte: 31 (1)
+[INFO][UART TASK][248309220 ns] Sending UART byte: 3d (=)
+[INFO][UART TASK][249402970 ns] Sending UART byte: 31 (1)
+[INFO][UART TASK][250496730 ns] Sending UART byte: 31 (1)
+[INFO][UART TASK][251590480 ns] Sending UART byte: 0x0D (\r)
+[INFO][UART TASK][252684230 ns] Sending UART byte: 0x0A (\n)
+[INFO][ADD_CMD][253778030 ns] Number of commands: 10
+[INFO][UART TASK][253778030 ns] Sending UART byte: 31 (1)
+[INFO][UART TASK][254871780 ns] Sending UART byte: 30 (0)
+[INFO][UART TASK][255965530 ns] Sending UART byte: 20 ( )
+[INFO][UART TASK][257059280 ns] Sending UART byte: 41 (A)
+[INFO][UART TASK][258153040 ns] Sending UART byte: 54 (T)
+[INFO][UART TASK][259246790 ns] Sending UART byte: 2b (+)
+[INFO][UART TASK][260340540 ns] Sending UART byte: 54 (T)
+[INFO][UART TASK][261434300 ns] Sending UART byte: 45 (E)
+[INFO][UART TASK][262528050 ns] Sending UART byte: 53 (S)
+[INFO][UART TASK][263621800 ns] Sending UART byte: 54 (T)
+[INFO][UART TASK][264715560 ns] Sending UART byte: 31 (1)
+[INFO][UART TASK][265809310 ns] Sending UART byte: 32 (2)
+[INFO][UART TASK][266903060 ns] Sending UART byte: 3d (=)
+[INFO][UART TASK][267996810 ns] Sending UART byte: 31 (1)
+[INFO][UART TASK][269090570 ns] Sending UART byte: 32 (2)
+[INFO][UART TASK][270184320 ns] Sending UART byte: 0x0D (\r)
+[INFO][UART TASK][271278070 ns] Sending UART byte: 0x0A (\n)
+[INFO][ADD_CMD][272371870 ns] Number of commands: 11
+[INFO][UART TASK][272371870 ns] Sending UART byte: 31 (1)
+[INFO][UART TASK][273465620 ns] Sending UART byte: 31 (1)
+[INFO][UART TASK][274559370 ns] Sending UART byte: 20 ( )
+[INFO][UART TASK][275653120 ns] Sending UART byte: 41 (A)
+[INFO][UART TASK][276746880 ns] Sending UART byte: 54 (T)
+[INFO][UART TASK][277840630 ns] Sending UART byte: 2b (+)
+[INFO][UART TASK][278934380 ns] Sending UART byte: 54 (T)
+[INFO][UART TASK][280028140 ns] Sending UART byte: 45 (E)
+[INFO][UART TASK][281121890 ns] Sending UART byte: 53 (S)
+[INFO][UART TASK][282215640 ns] Sending UART byte: 54 (T)
+[INFO][UART TASK][283309400 ns] Sending UART byte: 31 (1)
+[INFO][UART TASK][284403150 ns] Sending UART byte: 33 (3)
+[INFO][UART TASK][285496900 ns] Sending UART byte: 3d (=)
+[INFO][UART TASK][286590650 ns] Sending UART byte: 31 (1)
+[INFO][UART TASK][287684410 ns] Sending UART byte: 33 (3)
+[INFO][UART TASK][288778160 ns] Sending UART byte: 0x0D (\r)
+[INFO][UART TASK][289871910 ns] Sending UART byte: 0x0A (\n)
+[INFO][ADD_CMD][290965710 ns] Number of commands: 12
+[INFO][UART TASK][290965710 ns] Sending UART byte: 31 (1)
+[INFO][UART TASK][292059460 ns] Sending UART byte: 32 (2)
+[INFO][UART TASK][293153210 ns] Sending UART byte: 20 ( )
+[INFO][UART TASK][294246960 ns] Sending UART byte: 41 (A)
+[INFO][UART TASK][295340720 ns] Sending UART byte: 54 (T)
+[INFO][UART TASK][296434470 ns] Sending UART byte: 2b (+)
+[INFO][UART TASK][297528220 ns] Sending UART byte: 54 (T)
+[INFO][UART TASK][298621980 ns] Sending UART byte: 45 (E)
+[INFO][UART TASK][299715730 ns] Sending UART byte: 53 (S)
+[INFO][UART TASK][300809480 ns] Sending UART byte: 54 (T)
+[INFO][UART TASK][301903240 ns] Sending UART byte: 31 (1)
+[INFO][UART TASK][302996990 ns] Sending UART byte: 34 (4)
+[INFO][UART TASK][304090740 ns] Sending UART byte: 3d (=)
+[INFO][UART TASK][305184490 ns] Sending UART byte: 31 (1)
+[INFO][UART TASK][306278250 ns] Sending UART byte: 34 (4)
+[INFO][UART TASK][307372000 ns] Sending UART byte: 0x0D (\r)
+[INFO][UART TASK][308465750 ns] Sending UART byte: 0x0A (\n)
+[INFO][ADD_CMD][309559550 ns] Number of commands: 13
+[INFO][UART TASK][309559550 ns] Sending UART byte: 31 (1)
+[INFO][UART TASK][310653300 ns] Sending UART byte: 33 (3)
+[INFO][UART TASK][311747050 ns] Sending UART byte: 20 ( )
+[INFO][UART TASK][312840800 ns] Sending UART byte: 41 (A)
+[INFO][UART TASK][313934560 ns] Sending UART byte: 54 (T)
+[INFO][UART TASK][315028310 ns] Sending UART byte: 2b (+)
+[INFO][UART TASK][316122060 ns] Sending UART byte: 54 (T)
+[INFO][UART TASK][317215820 ns] Sending UART byte: 45 (E)
+[INFO][UART TASK][318309570 ns] Sending UART byte: 53 (S)
+[INFO][UART TASK][319403320 ns] Sending UART byte: 54 (T)
+[INFO][UART TASK][320497080 ns] Sending UART byte: 31 (1)
+[INFO][UART TASK][321590830 ns] Sending UART byte: 35 (5)
+[INFO][UART TASK][322684580 ns] Sending UART byte: 3d (=)
+[INFO][UART TASK][323778330 ns] Sending UART byte: 31 (1)
+[INFO][UART TASK][324872090 ns] Sending UART byte: 35 (5)
+[INFO][UART TASK][325965840 ns] Sending UART byte: 0x0D (\r)
+[INFO][UART TASK][327059590 ns] Sending UART byte: 0x0A (\n)
+[INFO][ADD_CMD][328153390 ns] Number of commands: 14
+[INFO][UART TASK][328153390 ns] Sending UART byte: 31 (1)
+[INFO][UART TASK][329247140 ns] Sending UART byte: 34 (4)
+[INFO][UART TASK][330340890 ns] Sending UART byte: 20 ( )
+[INFO][UART TASK][331434640 ns] Sending UART byte: 41 (A)
+[INFO][UART TASK][332528400 ns] Sending UART byte: 54 (T)
+[INFO][UART TASK][333622150 ns] Sending UART byte: 2b (+)
+[INFO][UART TASK][334715900 ns] Sending UART byte: 54 (T)
+[INFO][UART TASK][335809660 ns] Sending UART byte: 45 (E)
+[INFO][UART TASK][336903410 ns] Sending UART byte: 53 (S)
+[INFO][UART TASK][337997160 ns] Sending UART byte: 54 (T)
+[INFO][UART TASK][339090920 ns] Sending UART byte: 31 (1)
+[INFO][UART TASK][340184670 ns] Sending UART byte: 36 (6)
+[INFO][UART TASK][341278420 ns] Sending UART byte: 3d (=)
+[INFO][UART TASK][342372170 ns] Sending UART byte: 31 (1)
+[INFO][UART TASK][343465930 ns] Sending UART byte: 36 (6)
+[INFO][UART TASK][344559680 ns] Sending UART byte: 0x0D (\r)
+[INFO][UART TASK][345653430 ns] Sending UART byte: 0x0A (\n)
+[INFO][ADD_CMD][346747230 ns] Number of commands: 15
+[INFO][ADD_CMD][346748510 ns] Command 0: AT+TEST=1\r\n                     
+[INFO][ADD_CMD][346749790 ns] Command 1: AT+TEST3=3\r\n                    
+[INFO][ADD_CMD][346751070 ns] Command 2: AT+PIN\r\n
+[INFO][ADD_CMD][346752350 ns] Command 3: AT+TEST5=5\r\n                    
+[INFO][ADD_CMD][346753630 ns] Command 4: AT+TEST6=6\r\n                    
+[INFO][ADD_CMD][346754910 ns] Command 5: AT+TEST7=7\r\n                    
+[INFO][ADD_CMD][346756190 ns] Command 6: AT+TEST8=8\r\n                    
+[INFO][ADD_CMD][346757470 ns] Command 7: AT+TEST9=9\r\n                    
+[INFO][ADD_CMD][346758750 ns] Command 8: AT+TEST10=10\r\n                  
+[INFO][ADD_CMD][346760030 ns] Command 9: AT+TEST11=11\r\n                  
+[INFO][ADD_CMD][346761310 ns] Command 10: AT+TEST12=12\r\n                  
+[INFO][ADD_CMD][346762590 ns] Command 11: AT+TEST13=13\r\n                  
+[INFO][ADD_CMD][346763870 ns] Command 12: AT+TEST14=14\r\n                  
+[INFO][ADD_CMD][346765150 ns] Command 13: AT+TEST15=15\r\n                  
+[INFO][ADD_CMD][346766430 ns] Command 14: AT+TEST16=16\r\n                  
+[INFO][  TB][346766530 ns] Testbench finished.
+TEST PASSED!
+- test/cmd_mem_tb.sv:246: Verilog $finish
+- S i m u l a t i o n   R e p o r t: Verilator 5.033 devel
+- Verilator: $finish at 347ms; walltime 14.175 s; speed 24.589 ms/s
+- Verilator: cpu 14.103 s on 1 threads; alloced 247 MB

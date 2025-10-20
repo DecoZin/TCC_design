@@ -29,6 +29,33 @@ package cmd_mem_pkg;
     localparam string HC05_CMD_ROLE      = $sformatf("AT+ROLE=0%c\n", 8'h0D);   // Set role to slave (peripheral)
     localparam string HC05_CMD_RESET     = $sformatf("AT+RESET%c\n", 8'h0D);    // Reset module
 
+    // Error code
+    typedef enum logic [1:0] { 
+        NO_ERR      = 2'd0,
+        ERR_CMD_WDH = 2'd1,
+        ERR_ADDR    = 2'd2,
+        ERR_SPACE   = 2'd3
+    } cmd_mem_error_t;
+
+    // FSM
+    typedef enum logic [4:0] {
+        RESET       = 5'd0,  // Load default values of commands to the memory
+        IDLE        = 5'd1,  // Waiting for a new byte
+        CLEAR       = 5'd2,  // Waiting for a new byte
+        GET_ADDR1   = 5'd3,  // Get the first part of the address
+        WAIT_ADDR2  = 5'd4,  // Wait for second ASCII address character
+        GET_ADDR2   = 5'd5,  // Get the second part of the address
+        WAIT_SPACE  = 5'd6,  // Wait for the space between adress and data 
+        GET_SPACE   = 5'd7,  // Get the space between adress and data
+        WAIT_DATA   = 5'd8,  // Wait for next string to be ready
+        GET_DATA    = 5'd9,  // Buffering command string
+        WAIT_LF     = 5'd10, // Buffering command string
+        CHECK_LF    = 5'd11, // Saw '\r', waiting for '\n'
+        STORE       = 5'd12  // Write buffer to memory
+
+    } cmd_mem_state_t;
+
+
 endpackage // cmd_mem_pkg
 
 `endif // CMD_MEM_PKG_SV

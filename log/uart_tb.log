@@ -1,19 +1,44 @@
 [INFO][TB][        0] Testbench started!.
 [INFO][UART][        0] Sending byte: 55
-[INFO][UART][   989000] Falling edge detected (start bit)
-[INFO][UART][  1927000] UART Received: 55
-[INFO][TB][  3125000] Sending internal UART byte: 33
-[INFO][UART][  3125000] Falling edge detected (start bit)
-[INFO][UART][  4062000] UART Received: 33
-[INFO][UART][  4166000] Sending byte: 00
-[INFO][UART][  5156000] Falling edge detected (start bit)
-[INFO][UART][  5260000] Sending byte: 01
-[INFO][UART][  6094000] UART Received: 00
-[INFO][UART][  6250000] Falling edge detected (start bit)
-[INFO][UART][  6354000] Sending byte: 02
-[INFO][UART][  7187000] UART Received: 01
-...
-[INFO][UART][ 15104000] Sending byte: 0a
-[INFO][UART][ 15937000] UART Received: 09
-[INFO][UART][ 16094000] Falling edge detected (start bit)
-[INFO][UART][ 17031000] UART Received: 0a
+[INFO][UART][     9890] Falling edge detected (start bit)
+[INFO][UART][    19270] UART Received: 55
+[INFO][TB][    31250] Sending internal UART byte: 33
+[INFO][UART][    31250] Falling edge detected (start bit)
+[INFO][UART][    40620] UART Received: 33
+[INFO][UART][    41660] Sending byte: 00
+[INFO][UART][    51560] Falling edge detected (start bit)
+[INFO][UART][    52600] Sending byte: 01
+[INFO][UART][    60940] UART Received: 00
+[INFO][UART][    62500] Falling edge detected (start bit)
+[INFO][UART][    63540] Sending byte: 02
+[INFO][UART][    71870] UART Received: 01
+[INFO][UART][    73440] Falling edge detected (start bit)
+[INFO][UART][    74480] Sending byte: 03
+[INFO][UART][    82810] UART Received: 02
+[INFO][UART][    84370] Falling edge detected (start bit)
+[INFO][UART][    85410] Sending byte: 04
+[INFO][UART][    93750] UART Received: 03
+[INFO][UART][    95310] Falling edge detected (start bit)
+[INFO][UART][    96350] Sending byte: 05
+[INFO][UART][   104690] UART Received: 04
+[INFO][UART][   106250] Falling edge detected (start bit)
+[INFO][UART][   107290] Sending byte: 06
+[INFO][UART][   115620] UART Received: 05
+[INFO][UART][   117190] Falling edge detected (start bit)
+[INFO][UART][   118230] Sending byte: 07
+[INFO][UART][   126560] UART Received: 06
+[INFO][UART][   128120] Falling edge detected (start bit)
+[INFO][UART][   129160] Sending byte: 08
+[INFO][UART][   137500] UART Received: 07
+[INFO][UART][   139060] Falling edge detected (start bit)
+[INFO][UART][   140100] Sending byte: 09
+[INFO][UART][   148440] UART Received: 08
+[INFO][UART][   150000] Falling edge detected (start bit)
+[INFO][UART][   151040] Sending byte: 0a
+[INFO][UART][   159370] UART Received: 09
+[INFO][UART][   160940] Falling edge detected (start bit)
+[INFO][UART][   170310] UART Received: 0a
+- test/uart_tb.sv:156: Verilog $finish
+- S i m u l a t i o n   R e p o r t: Verilator 5.033 devel
+- Verilator: $finish at 17ms; walltime 0.588 s; speed 29.746 ms/s
+- Verilator: cpu 0.580 s on 1 threads; alloced 221 MB

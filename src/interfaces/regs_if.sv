@@ -16,6 +16,7 @@ interface regs_if #(
     input logic clk,
     input logic rst_n
 );
+    import tasks_pkg::*;	
 
     localparam ADDR_WIDTH = $clog2(DATA_DEPTH); // Address width
 
@@ -48,8 +49,9 @@ interface regs_if #(
 
     // Read from memory-mapped register
     task automatic read_mem(
+        output logic [DATA_WIDTH-1:0] data_out,
         input  logic [ADDR_WIDTH-1:0] addr_val,
-        output logic [DATA_WIDTH-1:0] data_out
+        ref logic fail_flag
     );
         int timeout = 1000;
 
@@ -65,7 +67,7 @@ interface regs_if #(
         end
 
         if (timeout == 0) begin
-            $display("\033[1;31m[ERROR][MEM] Timeout waiting for data_ready at address %0d!\033[0m", addr_val);
+            DEBUG_ERR("MEM", $sformatf("Timeout waiting for data_ready at address %0d!", addr_val), fail_flag);
             $finish;
         end
 
