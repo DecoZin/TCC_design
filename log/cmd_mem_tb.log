@@ -17,7 +17,7 @@
 [INFO][READ_MEM][    16770 ns] Command 12: 
 [INFO][READ_MEM][    18050 ns] Command 13: 
 [INFO][READ_MEM][    19330 ns] Command 14: 
-[INFO][READ_MEM][    20610 ns] Command 15: 
+[INFO][READ_MEM][    20610 ns] Command 15:
 [INFO][WRITE_MEM][    20610 ns] Writing commands to memory.
 [INFO][WRITE_MEM][    20610 ns] Clearing Command Memory.
 [INFO][UART TASK][    20610 ns] Sending UART byte: 43 (C)

@@ -12,8 +12,8 @@
     
 package ei_mem_pkg;
 
-    // Registers
-    typedef enum logic [5:0] { // Adjust the bit width as needed
+    // Registers (43 registers in total)
+    typedef enum logic [5:0] { // Adjust the bit width as needed (64 registers possible)
         EIR_TEST,
         EIR_SLP_MODE,
         EIR_SLP_TMR0,

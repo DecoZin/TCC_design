@@ -1,0 +1,104 @@
+[INFO][  TB][        0 ns] Testbench started!.
+[INFO][TASK][       20 ns] Resetting system.
+[INFO][ DUT][       30 ns] FSM: IDLE
+[INFO][ DUT][       70 ns] FSM: S_IDLE -> S_WAIT_EVENT
+[INFO][  TB][       80 ns] Testing Connection...
+[INFO][  TB][       80 ns] Sending: "OK+CONN:010203040506\r\n...
+[INFO][UART TASK][       80 ns] Sending UART byte: 4f (O)
+[INFO][UART TASK][  1093820 ns] Sending UART byte: 4b (K)
+[INFO][UART TASK][  2187560 ns] Sending UART byte: 2b (+)
+[INFO][UART TASK][  3281300 ns] Sending UART byte: 43 (C)
+[INFO][UART TASK][  4375050 ns] Sending UART byte: 4f (O)
+[INFO][UART TASK][  5468790 ns] Sending UART byte: 4e (N)
+[INFO][UART TASK][  6562530 ns] Sending UART byte: 4e (N)
+[INFO][ DUT][  7552210 ns] FSM: S_WAIT_EVENT -> S_PARSE_MAC
+[INFO][UART TASK][  7656280 ns] Sending UART byte: 3a (:)
+[INFO][UART TASK][  8750020 ns] Sending UART byte: 30 (0)
+[INFO][UART TASK][  9843760 ns] Sending UART byte: 31 (1)
+[INFO][UART TASK][ 10937510 ns] Sending UART byte: 30 (0)
+[INFO][UART TASK][ 12031250 ns] Sending UART byte: 32 (2)
+[INFO][UART TASK][ 13124990 ns] Sending UART byte: 30 (0)
+[INFO][UART TASK][ 14218730 ns] Sending UART byte: 33 (3)
+[INFO][UART TASK][ 15312480 ns] Sending UART byte: 30 (0)
+[INFO][UART TASK][ 16406220 ns] Sending UART byte: 34 (4)
+[INFO][UART TASK][ 17499960 ns] Sending UART byte: 30 (0)
+[INFO][UART TASK][ 18593710 ns] Sending UART byte: 35 (5)
+[INFO][UART TASK][ 19687450 ns] Sending UART byte: 30 (0)
+[INFO][UART TASK][ 20781190 ns] Sending UART byte: 36 (6)
+[INFO][UART TASK][ 21874940 ns] Sending UART byte: 0x0D (\r)
+[INFO][UART TASK][ 22968680 ns] Sending UART byte: 0x0A (\n)
+[INFO][ DUT][ 23958350 ns] FSM: S_PARSE_MAC -> S_STORE_MAC
+[INFO][ DUT][ 23958370 ns] Register Write: ADDR: 0x0a, DATA: 0x01
+[INFO][ DUT][ 23958390 ns] Register Write: ADDR: 0x0b, DATA: 0x02
+[INFO][ DUT][ 23958410 ns] Register Write: ADDR: 0x0c, DATA: 0x03
+[INFO][ DUT][ 23958430 ns] Register Write: ADDR: 0x0d, DATA: 0x04
+[INFO][ DUT][ 23958450 ns] Register Write: ADDR: 0x0e, DATA: 0x05
+[INFO][ DUT][ 23958470 ns] Register Write: ADDR: 0x0f, DATA: 0x06
+[INFO][ DUT][ 23958490 ns] BLE Connected!
+[INFO][ DUT][ 23958510 ns] FSM: S_STORE_MAC -> S_CONNECTED
+[INFO][  TB][ 24062420 ns] Testing Connection... Done.
+[INFO][  TB][ 24166590 ns] Testing Disconnection...
+[INFO][  TB][ 24166590 ns] Sending: "OK+DISC\r\n...
+[INFO][UART TASK][ 24166590 ns] Sending UART byte: 4f (O)
+[INFO][UART TASK][ 25260330 ns] Sending UART byte: 4b (K)
+[INFO][UART TASK][ 26354070 ns] Sending UART byte: 2b (+)
+[INFO][UART TASK][ 27447820 ns] Sending UART byte: 44 (D)
+[INFO][UART TASK][ 28541560 ns] Sending UART byte: 49 (I)
+[INFO][UART TASK][ 29635300 ns] Sending UART byte: 53 (S)
+[INFO][UART TASK][ 30729050 ns] Sending UART byte: 43 (C)
+[INFO][ DUT][ 31718690 ns] FSM: S_CONNECTED -> S_HANDLE_DISCONNECT
+[WARN][ DUT][ 31718690 ns] BLE Disconnected!
+[INFO][ DUT][ 31718710 ns] FSM: S_HANDLE_DISCONNECT -> S_IDLE
+[INFO][ DUT][ 31718730 ns] FSM: S_IDLE -> S_WAIT_EVENT
+[INFO][UART TASK][ 31822790 ns] Sending UART byte: 0x0D (\r)
+[INFO][UART TASK][ 32916530 ns] Sending UART byte: 0x0A (\n)
+[INFO][  TB][ 34010270 ns] Testing Disconnection... Done.
+[INFO][  TB][ 34010290 ns] Testing Timeout...
+[INFO][UART TASK][ 35989190 ns] Sending UART byte: 4f (O)
+[WARN][ DUT][ 35989210 ns] Advertisement Timeout Hit!
+[WARN][ DUT][ 35989230 ns] Timeout Reported by DUT!
+[INFO][ DUT][ 35989230 ns] FSM: S_WAIT_EVENT -> S_IDLE
+[INFO][ DUT][ 35989250 ns] FSM: S_IDLE -> S_WAIT_EVENT
+[INFO][UART TASK][ 37082930 ns] Sending UART byte: 4b (K)
+[INFO][UART TASK][ 38176670 ns] Sending UART byte: 2b (+)
+[INFO][UART TASK][ 39270410 ns] Sending UART byte: 43 (C)
+[INFO][UART TASK][ 40364160 ns] Sending UART byte: 4f (O)
+[INFO][UART TASK][ 41457900 ns] Sending UART byte: 4e (N)
+[INFO][UART TASK][ 42551640 ns] Sending UART byte: 4e (N)
+[INFO][ DUT][ 43541310 ns] FSM: S_WAIT_EVENT -> S_PARSE_MAC
+[INFO][UART TASK][ 43645390 ns] Sending UART byte: 3a (:)
+[INFO][UART TASK][ 44739130 ns] Sending UART byte: 30 (0)
+[INFO][UART TASK][ 45832870 ns] Sending UART byte: 31 (1)
+[INFO][UART TASK][ 46926620 ns] Sending UART byte: 30 (0)
+[INFO][UART TASK][ 48020360 ns] Sending UART byte: 32 (2)
+[INFO][UART TASK][ 49114100 ns] Sending UART byte: 30 (0)
+[INFO][UART TASK][ 50207840 ns] Sending UART byte: 33 (3)
+[INFO][UART TASK][ 51301590 ns] Sending UART byte: 30 (0)
+[INFO][UART TASK][ 52395330 ns] Sending UART byte: 34 (4)
+[INFO][UART TASK][ 53489070 ns] Sending UART byte: 30 (0)
+[INFO][UART TASK][ 54582820 ns] Sending UART byte: 35 (5)
+[INFO][UART TASK][ 55676560 ns] Sending UART byte: 30 (0)
+[INFO][UART TASK][ 56770300 ns] Sending UART byte: 36 (6)
+[INFO][UART TASK][ 57864050 ns] Sending UART byte: 0x0D (\r)
+[INFO][UART TASK][ 58957790 ns] Sending UART byte: 0x0A (\n)
+[INFO][ DUT][ 59947470 ns] FSM: S_PARSE_MAC -> S_STORE_MAC
+[INFO][ DUT][ 59947490 ns] Register Write: ADDR: 0x0a, DATA: 0x01
+[INFO][ DUT][ 59947510 ns] Register Write: ADDR: 0x0b, DATA: 0x02
+[INFO][ DUT][ 59947530 ns] Register Write: ADDR: 0x0c, DATA: 0x03
+[INFO][ DUT][ 59947550 ns] Register Write: ADDR: 0x0d, DATA: 0x04
+[INFO][ DUT][ 59947570 ns] Register Write: ADDR: 0x0e, DATA: 0x05
+[INFO][ DUT][ 59947590 ns] Register Write: ADDR: 0x0f, DATA: 0x06
+[INFO][ DUT][ 59947610 ns] BLE Connected!
+[INFO][ DUT][ 59947630 ns] FSM: S_STORE_MAC -> S_CONNECTED
+[INFO][  TB][ 61509630 ns] Testing Timeout... Done.
+[WARN][ DUT][ 61509650 ns] Connection Timeout Hit!
+[INFO][ DUT][ 61509670 ns] FSM: S_CONNECTED -> S_HANDLE_DISCONNECT
+[WARN][ DUT][ 61509670 ns] BLE Disconnected!
+[INFO][ DUT][ 61509690 ns] FSM: S_HANDLE_DISCONNECT -> S_IDLE
+[INFO][ DUT][ 61509710 ns] FSM: S_IDLE -> S_WAIT_EVENT
+[INFO][  TB][ 61509730 ns] Testbench finished.
+TEST PASSED!
+- test/conn_monitor_tb.sv:325: Verilog $finish
+- S i m u l a t i o n   R e p o r t: Verilator 5.033 devel
+- Verilator: $finish at 62ms; walltime 3.131 s; speed 19.700 ms/s
+- Verilator: cpu 3.122 s on 1 threads; alloced 221 MB

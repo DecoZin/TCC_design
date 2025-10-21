@@ -1,9 +1,8 @@
 // ---------------------------------------------------------
-// Module: Command Memory Package
-// Description: Defines for commands and registers used to
-// setup the BLE module
+// Module: BLE Setup Package
+// Description: Types used in the BLE Setup
 // Author: André Lamego
-// Date: 2025-05-06
+// Date: 2025-10-20
 // ---------------------------------------------------------
 `timescale 1ns / 100ps
 

@@ -35,20 +35,14 @@ module connection_monitor (
     input  logic [23:0] reg_adv_time_count,  // advertisement timeout
     input  logic [23:0] reg_conn_time_count  // connected inactivity timeout
 );
+    import conn_monitor_types_pkg::*;
+    import ei_mem_pkg::*;
 
     // ------------------------------------------------------------------------
     // Local declarations
     // ------------------------------------------------------------------------
-    typedef enum logic [2:0] {
-        S_IDLE,
-        S_WAIT_EVENT,
-        S_PARSE_MAC,
-        S_STORE_MAC,
-        S_CONNECTED,
-        S_HANDLE_DISCONNECT
-    } state_t;
 
-    state_t state, next_state;
+    conn_monitor_state_t state, next_state;
 
     // Rolling buffers (monitor small window and mac accumulation)
     logic [7:0] rx_monitor_buffer [0:6]; // last 7 chars for pattern OK+CONN / OK+DISC
@@ -61,6 +55,8 @@ module connection_monitor (
 
     // MAC assembly
     logic [7:0] ascii_mac [0:11];    // 12 ASCII hex chars
+    assign ascii_mac = rx_mac_buffer[1:12];
+
     logic [7:0] mac_byte  [0:5];     // final 6 bytes
     logic [3:0] nibble_hi, nibble_lo;
     logic mac_valid;
@@ -134,13 +130,11 @@ module connection_monitor (
 
     always_comb begin
         // defaults
-        get_ack_byte = 1'b0;
         clear_tmr = 1'b0;
         if_tmr.enable = 1'b0;
         if_tmr.time_count = reg_adv_time_count;
         if_tmr.mode = 1'b0; // one-shot by default
         connect = 1'b0;
-        mac_valid = 1'b0;
         mac_write_in_progress = 1'b0;
 
         case (state)
@@ -189,18 +183,23 @@ module connection_monitor (
     // ------------------------------------------------------------------------
     // reading_byte used to assert get_ack_byte for handshake
     always_ff @(posedge clk or negedge rst_n) begin
-        if (!rst_n) begin
+        if (!rst_n || state == S_IDLE) begin
             integer i;
+            get_ack_byte <= 1'b0;
             for (i=0; i<7; i=i+1) rx_monitor_buffer[i] <= 8'd0;
             for (i=0; i<15; i=i+1) rx_mac_buffer[i] <= 8'd0;
             reading_byte <= 1'b0;
         end else begin
             // When a new byte arrives (ack_valid), we assert get_ack_byte for one cycle
-            if (ack_valid && !reading_byte) begin
-                get_ack_byte <= 1'b1;
-                reading_byte <= 1'b1;
+            if (state != S_CONNECTED) begin
+                if (ack_valid && !reading_byte) begin
+                    get_ack_byte <= 1'b1;
+                    reading_byte <= 1'b1;
+                end else begin
+                    get_ack_byte <= 1'b0;
+                end
             end else begin
-                get_ack_byte <= 1'b0;
+                reading_byte <= 1'b1;
             end
 
             // Accept the byte when ack_ready (or on the same cycle if ack_ready coexists)
@@ -248,9 +247,9 @@ module connection_monitor (
     // ASCII hex -> nibble function
     // ------------------------------------------------------------------------
     function automatic logic [3:0] ascii_hex_to_nibble(input logic [7:0] c);
-        if ((c >= "0") && (c <= "9")) ascii_hex_to_nibble = c - "0";
-        else if ((c >= "A") && (c <= "F")) ascii_hex_to_nibble = (c - "A") + 4'hA;
-        else if ((c >= "a") && (c <= "f")) ascii_hex_to_nibble = (c - "a") + 4'hA;
+        if ((c >= "0") && (c <= "9")) ascii_hex_to_nibble = 4'(c - "0");
+        else if ((c >= "A") && (c <= "F")) ascii_hex_to_nibble = 4'(c - "A") + 4'hA;
+        else if ((c >= "a") && (c <= "f")) ascii_hex_to_nibble = 4'(c - "a") + 4'hA;
         else ascii_hex_to_nibble = 4'hF; // invalid marker
         return ascii_hex_to_nibble;
     endfunction
@@ -271,14 +270,14 @@ module connection_monitor (
                 logic [3:0] hi, lo;
                 mac_valid <= 1'b1;
                 for (idx = 0; idx < 6; idx = idx + 1) begin
-                    hi = ascii_hex_to_nibble(rx_mac_buffer[1 + 2*idx]);
-                    lo = ascii_hex_to_nibble(rx_mac_buffer[1 + 2*idx + 1]);
+                    hi = ascii_hex_to_nibble(ascii_mac[1 + 2*idx]);
+                    lo = ascii_hex_to_nibble(ascii_mac[2*idx]);
                     // if invalid nibble, mark mac_valid false
                     if ((hi == 4'hF) || (lo == 4'hF)) begin
                         mac_byte[idx] <= 8'h00;
                         mac_valid <= 1'b0;
                     end else begin
-                        mac_byte[idx] <= {hi, lo}; // combine into 8-bit byte
+                        mac_byte[idx] <= {lo, hi}; // combine into 8-bit byte
                     end
                 end
             end else begin
@@ -332,16 +331,12 @@ module connection_monitor (
                         default: begin end
                     endcase
 
-                    // advance index after issuing write (assumes external logic latches on write_en)
-                    if (mac_write_idx == 3'd5) begin
+                    if (mac_write_idx > 3'd5) begin
                         mac_write_idx <= 3'd0;
                         mac_written <= 1'b1;
                         if_regs_inst.write_en <= 1'b0;
                     end else begin
                         mac_write_idx <= mac_write_idx + 1;
-                        // keep write_en high for one cycle per byte; will set to 0 next cycle
-                        // to simplify, we deassert here and assert next cycle
-                        if_regs_inst.write_en <= 1'b0;
                     end
                 end
             end else begin
