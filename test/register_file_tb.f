@@ -1,4 +1,4 @@
-./test/tasks.sv
-./src/packages/ei_mem_pkg.sv
-./test/register_file_tb.sv
+-f ./test/tasks_pkg.f
+-f ./src/packages/all_pkgs.f
 -f ./src/memory/register_file.f
+./test/register_file_tb.sv

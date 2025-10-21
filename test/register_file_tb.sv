@@ -8,31 +8,40 @@
 
 module register_file_tb;
     import ei_mem_pkg::*;
+    import tasks_pkg::*;
 
-    logic clk   = 0;
-    logic rst_n = 1;
+    // Local Parameters
+    localparam int CLK_FREQ_HZ   = 50_000_000;
+    localparam int CLK_PERIOD_NS = 1_000_000_000 / CLK_FREQ_HZ;
+    localparam int DATA_WIDTH = 8;
+    localparam int DATA_DEPTH = 64;
+    
+    // SIMULATION TIMEOUT
+    localparam int SIMULATION_TIMEOUT = 800*CLK_PERIOD_NS;
 
-    localparam real CLK_FREQ = 50_000_000; // Clock frequency in Hz
-    localparam real CLK_PERIOD = 1e9 / CLK_FREQ; // in ns
-    localparam DATA_WIDTH = 8;
-    localparam DATA_DEPTH = 64;
+    // Clock and Reset
+    logic clk;
+    logic rst_n = 1'b1;
+
+    // Error flag
+    logic test_fail = 1'b0;
 
     // Timer values for various registers
-    logic [23:0] adv_tmr = 24'd5_000_000;
-    logic [23:0] conn_tmr = 24'd10_000_000;
-    logic [23:0] opds_tmr = 24'd1_000_000;
-    logic [23:0] ack_tmr = 24'd10_000;
+    localparam logic [23:0] adv_tmr = 24'd5_000_000;
+    localparam logic [23:0] conn_tmr = 24'd10_000_000;
+    localparam logic [23:0] opds_tmr = 24'd1_000_000;
+    localparam logic [23:0] ack_tmr = 24'd10_000;
 
     // Interface instantiations
     regs_if #(
         .DATA_DEPTH(DATA_DEPTH),
         .DATA_WIDTH(DATA_WIDTH)
-    ) if_regs_inst();
+    ) if_regs_inst(.clk(clk), .rst_n(rst_n));
 
     regs_int_if #(
         .DATA_DEPTH(DATA_DEPTH),
         .DATA_WIDTH(DATA_WIDTH)
-    ) if_top_link();
+    ) if_top_link(.clk(clk), .rst_n(rst_n));
 
     // DUT instantiation
     register_file #(
@@ -45,10 +54,18 @@ module register_file_tb;
         .rst_n(rst_n)
     );
 
-    // Clock generation
+    // Clock Generation
     initial fork
-        generate_clock(clk, CLK_PERIOD / 2);
+        generate_clock(clk, {{32{$rtoi(CLK_PERIOD_NS / 2)[31]}},$rtoi(CLK_PERIOD_NS / 2)});
     join_none
+
+    // Global timeout for stuck simulation
+    initial begin
+        #SIMULATION_TIMEOUT;
+        DEBUG_ERR("TB", "Global timeout hit! Simulation stuck.", test_fail);
+        DEBUG_FAIL();
+        $finish;
+    end
 
     // Test procedure
     initial begin
@@ -102,15 +119,15 @@ module register_file_tb;
         DEBUG_INFO("TB", "Testbench started.");
         
         // Reset the DUT
-        #10;
+        #(CLK_PERIOD_NS);
         rst_n = 0;
         if_regs_inst.write_en = '0;
         if_regs_inst.read_en = '0;
         if_regs_inst.addr = '0;
         if_regs_inst.write_data = '0;
-        #(CLK_PERIOD);
+        #(CLK_PERIOD_NS);
         rst_n = 1;
-        #(CLK_PERIOD);
+        #(CLK_PERIOD_NS);
         
         // Testing write operation
         DEBUG_INFO("TB", "Testing write operation.");
@@ -118,7 +135,7 @@ module register_file_tb;
         for (int i = 0; i < DATA_DEPTH; i++) begin
             if_regs_inst.addr = i;
             if_regs_inst.write_data = i;
-            #(CLK_PERIOD);
+            #(CLK_PERIOD_NS);
         end
 
         // Testing read operation
@@ -127,9 +144,9 @@ module register_file_tb;
         if_regs_inst.read_en = 1'b1;
         for (int i = 0; i < DATA_DEPTH; i++) begin
             if_regs_inst.addr = i;
-            #(CLK_PERIOD);
+            #(CLK_PERIOD_NS);
             if (if_regs_inst.read_data != i && if_top_link.mode_mask[i] == 1'b0) begin
-                DEBUG_ERR("READ", $sformatf("Error: Expected %0d, got %0d at address %0d.", i, if_regs_inst.read_data, i));
+                DEBUG_ERR("READ", $sformatf("Error: Expected %0d, got %0d at address %0d.", i, if_regs_inst.read_data, i), test_fail);
                 error_cnt = error_cnt + 1;
             end else if (if_top_link.mode_mask[i] == 1'b1) begin
                 DEBUG_INFO("READ", $sformatf("Read-Only: Address %0d, got %0d.", i, if_regs_inst.read_data));
@@ -138,20 +155,24 @@ module register_file_tb;
             end
         end
         if (error_cnt > 0) begin
-            DEBUG_ERR("TB", $sformatf("Error count: %0d", error_cnt));
+            DEBUG_ERR("TB", $sformatf("Error count: %0d", error_cnt), test_fail);
+        end 
+        
+        #(5*CLK_PERIOD_NS);
+        DEBUG_INFO("TB", "Testbench finished.");
+        #(CLK_PERIOD_NS);
+        if (test_fail) begin
             DEBUG_FAIL();
         end else begin
-            DEBUG_INFO("TB", "No errors detected.");
             DEBUG_PASS();
         end
-        // End simulation
-        #20;
+        #1;
         $finish;
     end
 
     // Generate waveform dump for the simulation
     initial begin
-        $dumpfile("waveform.vcd");      // Specify the VCD file name
+        $dumpfile("waveform.fst");      // Specify the VCD file name
         $dumpvars(0, register_file_tb); // Dump all signals in the testbench
     end
 

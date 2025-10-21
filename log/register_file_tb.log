@@ -1,0 +1,73 @@
+[INFO][  TB][        0 ns] Testbench started.
+[INFO][  TB][       60 ns] Testing write operation.
+[INFO][  TB][     1340 ns] Testing read operation.
+[INFO][READ][     1360 ns] Read-Only: Address 0, got 170.
+[INFO][READ][     1380 ns] Read: Address 1, got 1.
+[INFO][READ][     1400 ns] Read: Address 2, got 2.
+[INFO][READ][     1420 ns] Read: Address 3, got 3.
+[INFO][READ][     1440 ns] Read: Address 4, got 4.
+[INFO][READ][     1460 ns] Read: Address 5, got 5.
+[INFO][READ][     1480 ns] Read: Address 6, got 6.
+[INFO][READ][     1500 ns] Read: Address 7, got 7.
+[INFO][READ][     1520 ns] Read: Address 8, got 8.
+[INFO][READ][     1540 ns] Read: Address 9, got 9.
+[INFO][READ][     1560 ns] Read: Address 10, got 10.
+[INFO][READ][     1580 ns] Read: Address 11, got 11.
+[INFO][READ][     1600 ns] Read: Address 12, got 12.
+[INFO][READ][     1620 ns] Read: Address 13, got 13.
+[INFO][READ][     1640 ns] Read: Address 14, got 14.
+[INFO][READ][     1660 ns] Read: Address 15, got 15.
+[INFO][READ][     1680 ns] Read: Address 16, got 16.
+[INFO][READ][     1700 ns] Read: Address 17, got 17.
+[INFO][READ][     1720 ns] Read: Address 18, got 18.
+[INFO][READ][     1740 ns] Read: Address 19, got 19.
+[INFO][READ][     1760 ns] Read: Address 20, got 20.
+[INFO][READ][     1780 ns] Read: Address 21, got 21.
+[INFO][READ][     1800 ns] Read: Address 22, got 22.
+[INFO][READ][     1820 ns] Read: Address 23, got 23.
+[INFO][READ][     1840 ns] Read: Address 24, got 24.
+[INFO][READ][     1860 ns] Read: Address 25, got 25.
+[INFO][READ][     1880 ns] Read: Address 26, got 26.
+[INFO][READ][     1900 ns] Read: Address 27, got 27.
+[INFO][READ][     1920 ns] Read: Address 28, got 28.
+[INFO][READ][     1940 ns] Read: Address 29, got 29.
+[INFO][READ][     1960 ns] Read-Only: Address 30, got 48.
+[INFO][READ][     1980 ns] Read: Address 31, got 31.
+[INFO][READ][     2000 ns] Read: Address 32, got 32.
+[INFO][READ][     2020 ns] Read: Address 33, got 33.
+[INFO][READ][     2040 ns] Read: Address 34, got 34.
+[INFO][READ][     2060 ns] Read: Address 35, got 35.
+[INFO][READ][     2080 ns] Read: Address 36, got 36.
+[INFO][READ][     2100 ns] Read: Address 37, got 37.
+[INFO][READ][     2120 ns] Read: Address 38, got 38.
+[INFO][READ][     2140 ns] Read: Address 39, got 39.
+[INFO][READ][     2160 ns] Read: Address 40, got 40.
+[INFO][READ][     2180 ns] Read: Address 41, got 41.
+[INFO][READ][     2200 ns] Read: Address 42, got 42.
+[INFO][READ][     2220 ns] Read: Address 43, got 43.
+[INFO][READ][     2240 ns] Read: Address 44, got 44.
+[INFO][READ][     2260 ns] Read: Address 45, got 45.
+[INFO][READ][     2280 ns] Read: Address 46, got 46.
+[INFO][READ][     2300 ns] Read: Address 47, got 47.
+[INFO][READ][     2320 ns] Read: Address 48, got 48.
+[INFO][READ][     2340 ns] Read: Address 49, got 49.
+[INFO][READ][     2360 ns] Read: Address 50, got 50.
+[INFO][READ][     2380 ns] Read: Address 51, got 51.
+[INFO][READ][     2400 ns] Read: Address 52, got 52.
+[INFO][READ][     2420 ns] Read: Address 53, got 53.
+[INFO][READ][     2440 ns] Read: Address 54, got 54.
+[INFO][READ][     2460 ns] Read: Address 55, got 55.
+[INFO][READ][     2480 ns] Read: Address 56, got 56.
+[INFO][READ][     2500 ns] Read: Address 57, got 57.
+[INFO][READ][     2520 ns] Read: Address 58, got 58.
+[INFO][READ][     2540 ns] Read: Address 59, got 59.
+[INFO][READ][     2560 ns] Read: Address 60, got 60.
+[INFO][READ][     2580 ns] Read: Address 61, got 61.
+[INFO][READ][     2600 ns] Read: Address 62, got 62.
+[INFO][READ][     2620 ns] Read: Address 63, got 63.
+[INFO][  TB][     2720 ns] Testbench finished.
+TEST PASSED!
+- test/register_file_tb.sv:170: Verilog $finish
+- S i m u l a t i o n   R e p o r t: Verilator 5.033 devel
+- Verilator: $finish at 3us; walltime 0.011 s; speed 743.786 us/s
+- Verilator: cpu 0.004 s on 1 threads; alloced 221 MB
