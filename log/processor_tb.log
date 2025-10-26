@@ -1,0 +1,359 @@
+[INFO][  TB][        0 ns] Testbench started!.
+[INFO][TASK][       20 ns] Resetting system.
+[INFO][ DUT][       30 ns] FSM: S_DISCONNECTED
+[INFO][ DUT][       70 ns] FSM: S_DISCONNECTED -> S_IDLE
+[INFO][  TB][       80 ns] Testing Commands...
+[INFO][  TB][       80 ns] Sending INTERREGW, to write data 0xF1 in register EIR_TEST.
+[INFO][  TB][       80 ns] Sending: "0x02 0x00 0xF1"...
+[INFO][UART TASK][       80 ns] Sending UART byte: 0x02
+[INFO][ DUT][   989690 ns] FSM: S_IDLE -> S_DECODE_CMD
+[INFO][ DUT][   989770 ns] Opcode Detected: OPC_INTERREGW
+[INFO][ DUT][   989770 ns] FSM: S_DECODE_CMD -> S_GET_OPDS
+[INFO][UART TASK][  1093820 ns] Sending UART byte: 0x00
+[INFO][UART TASK][  2187560 ns] Sending UART byte: 0xf1
+[INFO][ DUT][  3177230 ns] FSM: S_GET_OPDS -> S_MEM
+[INFO][ DUT][  3177250 ns] Special Registers Write: ADDR: 0x00, DATA: 0xf1
+[INFO][ DUT][  3177250 ns] FSM: S_MEM -> S_DELAY
+[INFO][ DUT][  3177290 ns] FSM: S_DELAY -> S_ACK
+[INFO][ DUT][  3177530 ns] FSM: S_ACK -> S_IDLE
+[INFO][UART][  4114920 ns] UART Received: W
+[INFO][UART][  5156580 ns] UART Received: R
+[INFO][UART][  6198240 ns] UART Received: I
+[INFO][UART][  7239900 ns] UART Received: T
+[INFO][UART][  8281560 ns] UART Received: E
+[INFO][UART][  9323220 ns] UART Received: +
+[INFO][UART][ 10364880 ns] UART Received: O
+[INFO][UART][ 11406540 ns] UART Received: K
+[INFO][UART][ 12448200 ns] UART Received: \r
+[INFO][UART][ 13489860 ns] UART Received: \n
+[INFO][  TB][ 14739560 ns] Sending INTERREGR, to read data from register EIR_TEST.
+[INFO][  TB][ 14739560 ns] Sending: "0x11 0x00"...
+[INFO][UART TASK][ 14739560 ns] Sending UART byte: 0x11
+[INFO][ DUT][ 15729170 ns] FSM: S_IDLE -> S_DECODE_CMD
+[INFO][ DUT][ 15729250 ns] Opcode Detected: OPC_INTERREGR
+[INFO][ DUT][ 15729250 ns] FSM: S_DECODE_CMD -> S_GET_OPDS
+[INFO][UART TASK][ 15833310 ns] Sending UART byte: 0x00
+[INFO][ DUT][ 16822990 ns] FSM: S_GET_OPDS -> S_MEM
+[INFO][ DUT][ 16823010 ns] FSM: S_MEM -> S_DELAY
+[INFO][ DUT][ 16823050 ns] FSM: S_DELAY -> S_ACK
+[INFO][ DUT][ 16823310 ns] FSM: S_ACK -> S_IDLE
+[INFO][UART][ 17760680 ns] UART Received: R
+[INFO][UART][ 18802340 ns] UART Received: E
+[INFO][UART][ 19844000 ns] UART Received: A
+[INFO][UART][ 20885660 ns] UART Received: D
+[INFO][UART][ 21927320 ns] UART Received: +
+[INFO][UART][ 22968980 ns] UART Received: O
+[INFO][UART][ 24010640 ns] UART Received: K
+[INFO][UART][ 25052300 ns] UART Received: :
+[INFO][UART][ 26093960 ns] UART Received: 0xf1
+[INFO][UART][ 27135620 ns] UART Received: \r
+[INFO][UART][ 28177280 ns] UART Received: \n
+[INFO][  TB][ 28385310 ns] Sending GLOBALREGW, to write data 0xF2 in register 0x00.
+[INFO][  TB][ 28385310 ns] Sending: "0x22 0x00 0xF2"...
+[INFO][UART TASK][ 28385310 ns] Sending UART byte: 0x22
+[INFO][ DUT][ 29374930 ns] FSM: S_IDLE -> S_DECODE_CMD
+[INFO][ DUT][ 29375010 ns] Opcode Detected: OPC_GLOBALREGW
+[INFO][ DUT][ 29375010 ns] FSM: S_DECODE_CMD -> S_GET_OPDS
+[INFO][UART TASK][ 29479050 ns] Sending UART byte: 0x00
+[INFO][UART TASK][ 30572800 ns] Sending UART byte: 0xf2
+[INFO][ DUT][ 31562470 ns] FSM: S_GET_OPDS -> S_MEM
+[INFO][ DUT][ 31562490 ns] Bus Write: ADDR: 0x000, DATA: 0xf2
+[INFO][ DUT][ 31562490 ns] FSM: S_MEM -> S_DELAY
+[INFO][ DUT][ 31562530 ns] FSM: S_DELAY -> S_ACK
+[INFO][ DUT][ 31562770 ns] FSM: S_ACK -> S_IDLE
+[INFO][UART][ 32500160 ns] UART Received: W
+[INFO][UART][ 33541820 ns] UART Received: R
+[INFO][UART][ 34583480 ns] UART Received: I
+[INFO][UART][ 35625140 ns] UART Received: T
+[INFO][UART][ 36666800 ns] UART Received: E
+[INFO][UART][ 37708460 ns] UART Received: +
+[INFO][UART][ 38750120 ns] UART Received: O
+[INFO][UART][ 39791780 ns] UART Received: K
+[INFO][UART][ 40833440 ns] UART Received: \r
+[INFO][UART][ 41875100 ns] UART Received: \n
+[INFO][  TB][ 43124800 ns] Sending GLOBALREGR, to read data from register 0x00.
+[INFO][  TB][ 43124800 ns] Sending: "0x31 0x00"...
+[INFO][UART TASK][ 43124800 ns] Sending UART byte: 31 (1)
+[INFO][ DUT][ 44114410 ns] FSM: S_IDLE -> S_DECODE_CMD
+[INFO][ DUT][ 44114490 ns] Opcode Detected: OPC_GLOBALREGR
+[INFO][ DUT][ 44114490 ns] FSM: S_DECODE_CMD -> S_GET_OPDS
+[INFO][UART TASK][ 44218540 ns] Sending UART byte: 0x00
+[INFO][ DUT][ 45208210 ns] FSM: S_GET_OPDS -> S_MEM
+[INFO][ DUT][ 45208230 ns] FSM: S_MEM -> S_DELAY
+[INFO][ DUT][ 45208270 ns] FSM: S_DELAY -> S_ACK
+[INFO][ DUT][ 45208530 ns] FSM: S_ACK -> S_IDLE
+[INFO][UART][ 46145900 ns] UART Received: R
+[INFO][UART][ 47187560 ns] UART Received: E
+[INFO][UART][ 48229220 ns] UART Received: A
+[INFO][UART][ 49270880 ns] UART Received: D
+[INFO][UART][ 50312540 ns] UART Received: +
+[INFO][UART][ 51354200 ns] UART Received: O
+[INFO][UART][ 52395860 ns] UART Received: K
+[INFO][UART][ 53437520 ns] UART Received: :
+[INFO][UART][ 54479180 ns] UART Received: 0xf2
+[INFO][UART][ 55520840 ns] UART Received: \r
+[INFO][UART][ 56562500 ns] UART Received: \n
+[INFO][  TB][ 56770550 ns] Sending JPEGREGW, to write data 0xF3 in register 0x00.
+[INFO][  TB][ 56770550 ns] Sending: "0x42 0x00 0xF3"...
+[INFO][UART TASK][ 56770550 ns] Sending UART byte: 42 (B)
+[INFO][ DUT][ 57760150 ns] FSM: S_IDLE -> S_DECODE_CMD
+[INFO][ DUT][ 57760230 ns] Opcode Detected: OPC_JPEGREGW
+[INFO][ DUT][ 57760230 ns] FSM: S_DECODE_CMD -> S_GET_OPDS
+[INFO][UART TASK][ 57864290 ns] Sending UART byte: 0x00
+[INFO][UART TASK][ 58958030 ns] Sending UART byte: 0xf3
+[INFO][ DUT][ 59947710 ns] FSM: S_GET_OPDS -> S_MEM
+[INFO][ DUT][ 59947730 ns] Bus Write: ADDR: 0x100, DATA: 0xf3
+[INFO][ DUT][ 59947730 ns] FSM: S_MEM -> S_DELAY
+[INFO][ DUT][ 59947770 ns] FSM: S_DELAY -> S_ACK
+[INFO][ DUT][ 59948010 ns] FSM: S_ACK -> S_IDLE
+[INFO][UART][ 60885400 ns] UART Received: W
+[INFO][UART][ 61927060 ns] UART Received: R
+[INFO][UART][ 62968720 ns] UART Received: I
+[INFO][UART][ 64010380 ns] UART Received: T
+[INFO][UART][ 65052040 ns] UART Received: E
+[INFO][UART][ 66093700 ns] UART Received: +
+[INFO][UART][ 67135360 ns] UART Received: O
+[INFO][UART][ 68177020 ns] UART Received: K
+[INFO][UART][ 69218680 ns] UART Received: \r
+[INFO][UART][ 70260340 ns] UART Received: \n
+[INFO][  TB][ 71510030 ns] Sending JPEGREGR, to read data from register 0x00.
+[INFO][  TB][ 71510030 ns] Sending: "0x51 0x00"...
+[INFO][UART TASK][ 71510030 ns] Sending UART byte: 51 (Q)
+[INFO][ DUT][ 72499650 ns] FSM: S_IDLE -> S_DECODE_CMD
+[INFO][ DUT][ 72499730 ns] Opcode Detected: OPC_JPEGREGR
+[INFO][ DUT][ 72499730 ns] FSM: S_DECODE_CMD -> S_GET_OPDS
+[INFO][UART TASK][ 72603780 ns] Sending UART byte: 0x00
+[INFO][ DUT][ 73593450 ns] FSM: S_GET_OPDS -> S_MEM
+[INFO][ DUT][ 73593470 ns] FSM: S_MEM -> S_DELAY
+[INFO][ DUT][ 73593510 ns] FSM: S_DELAY -> S_ACK
+[INFO][ DUT][ 73593770 ns] FSM: S_ACK -> S_IDLE
+[INFO][UART][ 74531140 ns] UART Received: R
+[INFO][UART][ 75572800 ns] UART Received: E
+[INFO][UART][ 76614460 ns] UART Received: A
+[INFO][UART][ 77656120 ns] UART Received: D
+[INFO][UART][ 78697780 ns] UART Received: +
+[INFO][UART][ 79739440 ns] UART Received: O
+[INFO][UART][ 80781100 ns] UART Received: K
+[INFO][UART][ 81822760 ns] UART Received: :
+[INFO][UART][ 82864420 ns] UART Received: 0xf3
+[INFO][UART][ 83906080 ns] UART Received: \r
+[INFO][UART][ 84947740 ns] UART Received: \n
+[INFO][  TB][ 85155780 ns] Sending DISPLAYREGW, to write data 0xF4 in register 0x00.
+[INFO][  TB][ 85155780 ns] Sending: "0x62 0x00 0xF4"...
+[INFO][UART TASK][ 85155780 ns] Sending UART byte: 62 (b)
+[INFO][ DUT][ 86145390 ns] FSM: S_IDLE -> S_DECODE_CMD
+[INFO][ DUT][ 86145470 ns] Opcode Detected: OPC_DISPLAYREGW
+[INFO][ DUT][ 86145470 ns] FSM: S_DECODE_CMD -> S_GET_OPDS
+[INFO][UART TASK][ 86249520 ns] Sending UART byte: 0x00
+[INFO][UART TASK][ 87343270 ns] Sending UART byte: 0xf4
+[INFO][ DUT][ 88332950 ns] FSM: S_GET_OPDS -> S_MEM
+[INFO][ DUT][ 88332970 ns] Bus Write: ADDR: 0x300, DATA: 0xf4
+[INFO][ DUT][ 88332970 ns] FSM: S_MEM -> S_DELAY
+[INFO][ DUT][ 88333010 ns] FSM: S_DELAY -> S_ACK
+[INFO][ DUT][ 88333250 ns] FSM: S_ACK -> S_IDLE
+[INFO][UART][ 89270640 ns] UART Received: W
+[INFO][UART][ 90312300 ns] UART Received: R
+[INFO][UART][ 91353960 ns] UART Received: I
+[INFO][UART][ 92395620 ns] UART Received: T
+[INFO][UART][ 93437280 ns] UART Received: E
+[INFO][UART][ 94478940 ns] UART Received: +
+[INFO][UART][ 95520600 ns] UART Received: O
+[INFO][UART][ 96562260 ns] UART Received: K
+[INFO][UART][ 97603920 ns] UART Received: \r
+[INFO][UART][ 98645580 ns] UART Received: \n
+[INFO][  TB][ 99895270 ns] Sending DISPLAYREGR, to read data from register 0x00.
+[INFO][  TB][ 99895270 ns] Sending: "0x71 0x00"...
+[INFO][UART TASK][ 99895270 ns] Sending UART byte: 71 (q)
+[INFO][ DUT][100884890 ns] FSM: S_IDLE -> S_DECODE_CMD
+[INFO][ DUT][100884970 ns] Opcode Detected: OPC_DISPLAYREGR
+[INFO][ DUT][100884970 ns] FSM: S_DECODE_CMD -> S_GET_OPDS
+[INFO][UART TASK][100989010 ns] Sending UART byte: 0x00
+[INFO][ DUT][101978690 ns] FSM: S_GET_OPDS -> S_MEM
+[INFO][ DUT][101978710 ns] FSM: S_MEM -> S_DELAY
+[INFO][ DUT][101978750 ns] FSM: S_DELAY -> S_ACK
+[INFO][ DUT][101979010 ns] FSM: S_ACK -> S_IDLE
+[INFO][UART][102916380 ns] UART Received: R
+[INFO][UART][103958040 ns] UART Received: E
+[INFO][UART][104999700 ns] UART Received: A
+[INFO][UART][106041360 ns] UART Received: D
+[INFO][UART][107083020 ns] UART Received: +
+[INFO][UART][108124680 ns] UART Received: O
+[INFO][UART][109166340 ns] UART Received: K
+[INFO][UART][110208000 ns] UART Received: :
+[INFO][UART][111249660 ns] UART Received: 0xf4
+[INFO][UART][112291320 ns] UART Received: \r
+[INFO][UART][113332980 ns] UART Received: \n
+[INFO][  TB][113541020 ns] Sending SENSREGW, to write data 0xF5 in register 0x00.
+[INFO][  TB][113541020 ns] Sending: "0x82 0x00 0xF5"...
+[INFO][UART TASK][113541020 ns] Sending UART byte: 0x82
+[INFO][ DUT][114530630 ns] FSM: S_IDLE -> S_DECODE_CMD
+[INFO][ DUT][114530710 ns] Opcode Detected: OPC_SENSREGW
+[INFO][ DUT][114530710 ns] FSM: S_DECODE_CMD -> S_GET_OPDS
+[INFO][UART TASK][114634760 ns] Sending UART byte: 0x00
+[INFO][UART TASK][115728500 ns] Sending UART byte: 0xf5
+[INFO][ DUT][116718170 ns] FSM: S_GET_OPDS -> S_MEM
+[INFO][ DUT][116718190 ns] Bus Write: ADDR: 0x200, DATA: 0xf5
+[INFO][ DUT][116718190 ns] FSM: S_MEM -> S_DELAY
+[INFO][ DUT][116718230 ns] FSM: S_DELAY -> S_ACK
+[INFO][ DUT][116718470 ns] FSM: S_ACK -> S_IDLE
+[INFO][UART][117655860 ns] UART Received: W
+[INFO][UART][118697520 ns] UART Received: R
+[INFO][UART][119739180 ns] UART Received: I
+[INFO][UART][120780840 ns] UART Received: T
+[INFO][UART][121822500 ns] UART Received: E
+[INFO][UART][122864160 ns] UART Received: +
+[INFO][UART][123905820 ns] UART Received: O
+[INFO][UART][124947480 ns] UART Received: K
+[INFO][UART][125989140 ns] UART Received: \r
+[INFO][UART][127030800 ns] UART Received: \n
+[INFO][  TB][128280500 ns] Sending SENSREGR, to read data from register 0x00.
+[INFO][  TB][128280500 ns] Sending: "0x91 0x00"...
+[INFO][UART TASK][128280500 ns] Sending UART byte: 0x91
+[INFO][ DUT][129270110 ns] FSM: S_IDLE -> S_DECODE_CMD
+[INFO][ DUT][129270190 ns] Opcode Detected: OPC_SENSREGR
+[INFO][ DUT][129270190 ns] FSM: S_DECODE_CMD -> S_GET_OPDS
+[INFO][UART TASK][129374250 ns] Sending UART byte: 0x00
+[INFO][ DUT][130363930 ns] FSM: S_GET_OPDS -> S_MEM
+[INFO][ DUT][130363950 ns] FSM: S_MEM -> S_DELAY
+[INFO][ DUT][130363990 ns] FSM: S_DELAY -> S_ACK
+[INFO][ DUT][130364250 ns] FSM: S_ACK -> S_IDLE
+[INFO][UART][131301620 ns] UART Received: R
+[INFO][UART][132343280 ns] UART Received: E
+[INFO][UART][133384940 ns] UART Received: A
+[INFO][UART][134426600 ns] UART Received: D
+[INFO][UART][135468260 ns] UART Received: +
+[INFO][UART][136509920 ns] UART Received: O
+[INFO][UART][137551580 ns] UART Received: K
+[INFO][UART][138593240 ns] UART Received: :
+[INFO][UART][139634900 ns] UART Received: 0xf5
+[INFO][UART][140676560 ns] UART Received: \r
+[INFO][UART][141718220 ns] UART Received: \n
+[INFO][  TB][141926250 ns] Sending GETMEASNUM, to read data from register NMEAS.
+[INFO][  TB][141926250 ns] Sending: "0xA0"...
+[INFO][UART TASK][141926250 ns] Sending UART byte: 0xa0
+[INFO][ DUT][142915870 ns] FSM: S_IDLE -> S_DECODE_CMD
+[INFO][ DUT][142915950 ns] Opcode Detected: OPC_GETMEASNUM
+[INFO][ DUT][142915950 ns] FSM: S_DECODE_CMD -> S_MEM
+[INFO][ DUT][142915970 ns] FSM: S_MEM -> S_DELAY
+[INFO][ DUT][142916010 ns] FSM: S_DELAY -> S_ACK
+[INFO][ DUT][142916270 ns] FSM: S_ACK -> S_IDLE
+[INFO][UART][143853640 ns] UART Received: R
+[INFO][UART][144895300 ns] UART Received: E
+[INFO][UART][145936960 ns] UART Received: A
+[INFO][UART][146978620 ns] UART Received: D
+[INFO][UART][148020280 ns] UART Received: +
+[INFO][UART][149061940 ns] UART Received: O
+[INFO][UART][150103600 ns] UART Received: K
+[INFO][UART][151145260 ns] UART Received: :
+[INFO][UART][152186920 ns] UART Received: 0x04
+[INFO][UART][153228580 ns] UART Received: \r
+[INFO][UART][154270240 ns] UART Received: \n
+[INFO][  TB][154478250 ns] Sending GETMEAS, to read data from register 0x04.
+[INFO][  TB][154478250 ns] Sending: "0xB0"...
+[INFO][UART TASK][154478250 ns] Sending UART byte: 0xb1
+[INFO][ DUT][155467870 ns] FSM: S_IDLE -> S_DECODE_CMD
+[INFO][ DUT][155467950 ns] Opcode Detected: OPC_GETMEAS
+[INFO][ DUT][155467950 ns] FSM: S_DECODE_CMD -> S_GET_OPDS
+[INFO][UART TASK][155572000 ns] Sending UART byte: 0x04
+[INFO][ DUT][156561670 ns] FSM: S_GET_OPDS -> S_MEM
+[INFO][ DUT][156561690 ns] FSM: S_MEM -> S_DELAY
+[INFO][ DUT][156561730 ns] FSM: S_DELAY -> S_ACK
+[INFO][ DUT][156561990 ns] FSM: S_ACK -> S_IDLE
+[INFO][UART][157499360 ns] UART Received: R
+[INFO][UART][158541020 ns] UART Received: E
+[INFO][UART][159582680 ns] UART Received: A
+[INFO][UART][160624340 ns] UART Received: D
+[INFO][UART][161666000 ns] UART Received: +
+[INFO][UART][162707660 ns] UART Received: O
+[INFO][UART][163749320 ns] UART Received: K
+[INFO][UART][164790980 ns] UART Received: :
+[INFO][UART][165832640 ns] UART Received: 0x01
+[INFO][UART][166874300 ns] UART Received: \r
+[INFO][UART][167915960 ns] UART Received: \n
+[INFO][  TB][168124000 ns] Sending GETALLMEAS, to read data from all registers with measurements in Sensor Block.
+[INFO][  TB][168124000 ns] Sending: "0xC0"...
+[INFO][UART TASK][168124000 ns] Sending UART byte: 0xc0
+[INFO][ DUT][169113610 ns] FSM: S_IDLE -> S_DECODE_CMD
+[INFO][ DUT][169113690 ns] Opcode Detected: OPC_GETALLMEAS
+[INFO][ DUT][169113690 ns] FSM: S_DECODE_CMD -> S_MEM
+[INFO][ DUT][169113710 ns] FSM: S_MEM -> S_DELAY
+[INFO][ DUT][169113750 ns] FSM: S_DELAY -> S_ACK
+[INFO][ DUT][169114210 ns] FSM: S_ACK -> S_IDLE
+[INFO][UART][170051500 ns] UART Received: M
+[INFO][UART][171093160 ns] UART Received: E
+[INFO][UART][172134820 ns] UART Received: A
+[INFO][UART][173176480 ns] UART Received: S
+[INFO][UART][174218140 ns] UART Received: +
+[INFO][UART][175259800 ns] UART Received: O
+[INFO][UART][176301460 ns] UART Received: K
+[INFO][UART][177343120 ns] UART Received: :
+[INFO][UART][178384780 ns] UART Received: 0x00
+[INFO][UART][179426440 ns] UART Received: ,
+[INFO][UART][180468100 ns] UART Received: 0x01
+[INFO][UART][181509760 ns] UART Received: ,
+[INFO][UART][182551420 ns] UART Received: 0x02
+[INFO][UART][183593080 ns] UART Received: \r
+[INFO][UART][184634740 ns] UART Received: \n
+[INFO][  TB][190050940 ns] Sending RTMEAS, to read data from register A_GETMEAS.
+[INFO][  TB][190050940 ns] Sending: "0xD0"...
+[INFO][UART TASK][190050940 ns] Sending UART byte: 0xd0
+[INFO][ DUT][191040550 ns] FSM: S_IDLE -> S_DECODE_CMD
+[INFO][ DUT][191040630 ns] Opcode Detected: OPC_RTMEAS
+[INFO][ DUT][191040630 ns] FSM: S_DECODE_CMD -> S_MEM
+[INFO][ DUT][191040650 ns] FSM: S_MEM -> S_DELAY
+[INFO][ DUT][191040690 ns] FSM: S_DELAY -> S_ACK
+[INFO][ DUT][191040950 ns] FSM: S_ACK -> S_IDLE
+[INFO][UART][191978320 ns] UART Received: R
+[INFO][UART][193019980 ns] UART Received: E
+[INFO][UART][194061640 ns] UART Received: A
+[INFO][UART][195103300 ns] UART Received: D
+[INFO][UART][196144960 ns] UART Received: +
+[INFO][UART][197186620 ns] UART Received: O
+[INFO][UART][198228280 ns] UART Received: K
+[INFO][UART][199269940 ns] UART Received: :
+[INFO][UART][200311600 ns] UART Received: 0xfa
+[INFO][UART][201353260 ns] UART Received: \r
+[INFO][UART][202394920 ns] UART Received: \n
+[INFO][  TB][202602950 ns] Sending DISPLAYIMG, to send 10 image data to display.
+[INFO][  TB][202602950 ns] Sending: "0xEF 0x0A 0x00 0x01 ... 0x09"...
+[INFO][UART TASK][202602950 ns] Sending UART byte: 0xef
+[INFO][ DUT][203592550 ns] FSM: S_IDLE -> S_DECODE_CMD
+[INFO][ DUT][203592630 ns] Opcode Detected: OPC_DISPLAYIMG
+[INFO][ DUT][203592630 ns] FSM: S_DECODE_CMD -> S_GET_OPDS
+[INFO][UART TASK][203696690 ns] Sending UART byte: 0x0A (\n)
+[INFO][UART TASK][204790430 ns] Sending UART byte: 0x00
+[INFO][ DUT][205780090 ns] Image Data: 0x00
+[INFO][UART TASK][205884170 ns] Sending UART byte: 0x01
+[INFO][ DUT][206873830 ns] Image Data: 0x01
+[INFO][UART TASK][206977920 ns] Sending UART byte: 0x02
+[INFO][ DUT][207967570 ns] Image Data: 0x02
+[INFO][UART TASK][208071660 ns] Sending UART byte: 0x03
+[INFO][ DUT][209061310 ns] Image Data: 0x03
+[INFO][UART TASK][209165400 ns] Sending UART byte: 0x04
+[INFO][ DUT][210155050 ns] Image Data: 0x04
+[INFO][UART TASK][210259150 ns] Sending UART byte: 0x05
+[INFO][ DUT][211248810 ns] Image Data: 0x05
+[INFO][UART TASK][211352890 ns] Sending UART byte: 0x06
+[INFO][ DUT][212342550 ns] Image Data: 0x06
+[INFO][UART TASK][212446630 ns] Sending UART byte: 0x07
+[INFO][ DUT][213436290 ns] Image Data: 0x07
+[INFO][UART TASK][213540380 ns] Sending UART byte: 0x08
+[INFO][ DUT][214530030 ns] Image Data: 0x08
+[INFO][UART TASK][214634120 ns] Sending UART byte: 0x09
+[INFO][ DUT][215623770 ns] Image Data: 0x09
+[INFO][ DUT][215623790 ns] FSM: S_GET_OPDS -> S_MEM
+[INFO][ DUT][215623810 ns] FSM: S_MEM -> S_DELAY
+[INFO][ DUT][215623830 ns] FSM: S_DELAY -> S_ACK
+[INFO][ DUT][215623970 ns] FSM: S_ACK -> S_IDLE
+[INFO][UART][216561460 ns] UART Received: E
+[INFO][UART][217603120 ns] UART Received: O
+[INFO][UART][218644780 ns] UART Received: I
+[INFO][UART][219686440 ns] UART Received: \r
+[INFO][UART][220728100 ns] UART Received: \n
+[INFO][  TB][226144460 ns] Testing Commands... Done.
+[INFO][  TB][226144560 ns] Testbench finished.
+TEST PASSED!
+- test/processor_tb.sv:442: Verilog $finish
+- S i m u l a t i o n   R e p o r t: Verilator 5.033 devel
+- Verilator: $finish at 226ms; walltime 10.594 s; speed 21.485 ms/s
+- Verilator: cpu 10.526 s on 1 threads; alloced 238 MB

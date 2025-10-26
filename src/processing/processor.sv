@@ -8,7 +8,7 @@
 // ----------------------------------------------------------------------------
 `timescale 1ns / 100ps
 
-module proc_if_ext #(
+module processor #(
     parameter ADDR_WIDTH = 8,
     parameter DATA_WIDTH = 8
 )(
@@ -46,68 +46,20 @@ module proc_if_ext #(
     input  logic [23:0] regs_opds_time_count,
     input  logic [23:0] regs_delay_time_count
 );
-
-    // ------------------------------------------------------------------------
-    // Opcode definitions
-    // ------------------------------------------------------------------------
-    localparam logic [7:0] OPC_INTERREGW   = 8'b0000_0010;
-    localparam logic [7:0] OPC_INTERREGR   = 8'b0001_0001;
-    localparam logic [7:0] OPC_GLOBALREGW  = 8'b0010_0010;
-    localparam logic [7:0] OPC_GLOBALREGR  = 8'b0011_0001;
-    localparam logic [7:0] OPC_JPEGREGW    = 8'b0100_0010;
-    localparam logic [7:0] OPC_JPEGREGR    = 8'b0101_0001;
-    localparam logic [7:0] OPC_DISPLAYREGW = 8'b0110_0010;
-    localparam logic [7:0] OPC_DISPLAYREGR = 8'b0111_0001;
-    localparam logic [7:0] OPC_SENSREGW    = 8'b1000_0010;
-    localparam logic [7:0] OPC_SENSREGR    = 8'b1001_0001;
-    localparam logic [7:0] OPC_GETMEASNUM  = 8'b1010_0000;
-    localparam logic [7:0] OPC_GETMEAS     = 8'b1011_0001;
-    localparam logic [7:0] OPC_GETALLMEAS  = 8'b1100_0000;
-    localparam logic [7:0] OPC_RTMEAS      = 8'b1101_0000;
-    localparam logic [7:0] OPC_DISPLAYIMG  = 8'b1110_1111;
-
-    // ------------------------------------------------------------------------
-    // Block address offset definitions
-    // ------------------------------------------------------------------------
-    localparam logic [1:0] B_GLOBAL_OFFSET  = 2'b00;
-    localparam logic [1:0] B_JPEG_OFFSET    = 2'b01;
-    localparam logic [1:0] B_SENS_OFFSET    = 2'b10;
-    localparam logic [1:0] B_DISPLAY_OFFSET = 2'b11;
-    
-    // ------------------------------------------------------------------------
-    // Specific address definitions
-    // ------------------------------------------------------------------------
-    localparam logic [7:0] A_NMEAS = `A_NMEAS;
-    localparam logic [7:0] A_ALLMEAS = `A_ALLMEAS;
-    localparam logic [7:0] A_GETMEAS = `A_GETMEAS;
-    localparam logic [7:0] ALLMEAS_SIZE = `ALLMEAS_SIZE;
+    import processor_types_pkg::*;
+    import ei_mem_pkg::*;
 
     // ------------------------------------------------------------------------
     // FSM States
     // ------------------------------------------------------------------------
-    typedef enum logic [2:0] {
-        S_DISCONNECTED,
-        S_IDLE,
-        S_DECODE_CMD,
-        S_GET_OPDS,
-        S_MEM,
-        S_DELAY,
-        S_ACK
-    } state_t;
+    processor_state_t state, next_state;
 
-    state_t state, next_state;
-
-    // ------------------------------------------------------------------------
-    // Internal buffers & counters
-    // ------------------------------------------------------------------------
-    localparam int MAX_OPDS = 2;
-
-    logic [7:0] cmd_opcode;
+    opcode_t cmd_opcode;
     logic [7:0] opds_buf [0:MAX_OPDS-1];
-    integer     opds_expected;    // how many operand bytes expected for this opcode
-    integer     opds_received;    // current count
-    integer     image_bytes_left; // for DISPLAYIMG
-    logic       cmd_valid;
+    integer  opds_expected;    // how many operand bytes expected for this opcode
+    integer  opds_received;    // current count
+    integer  image_bytes_left; // for DISPLAYIMG
+    logic    cmd_valid;
 
     // memory/reg access temp signals
     logic [7:0] mem_addr;
@@ -135,9 +87,9 @@ module proc_if_ext #(
     logic   bus_write_done;
     logic   got_all_meas;
     integer all_meas_idx;
+    logic   got_cmd;
 
     // Use both interfaces; selecting between them by 'mem_target' flag.
-    typedef enum logic [1:0] { TARGET_NONE, TARGET_SPECIAL, TARGET_BUS } mem_target_t;
     mem_target_t mem_target;
 
     // ------------------------------------------------------------------------
@@ -154,14 +106,14 @@ module proc_if_ext #(
     // ------------------------------------------------------------------------
     // Determine how many operands expected for each opcode
     // ------------------------------------------------------------------------
-    function automatic int opcode_opds_count(input logic [7:0] op);
+    function automatic int opcode_opds_count(input opcode_t op);
         case (op)
             OPC_INTERREGW, OPC_GLOBALREGW, OPC_JPEGREGW,
             OPC_DISPLAYREGW, OPC_SENSREGW: opcode_opds_count = 2; // DATA, ADDR
             OPC_INTERREGR, OPC_GLOBALREGR, OPC_JPEGREGR,
             OPC_DISPLAYREGR, OPC_SENSREGR: opcode_opds_count = 1; // ADDR
-            OPC_GETMEASNUM, OPC_GETALLMEAS: opcode_opds_count = 0;
-            OPC_GETMEAS, OPC_RTMEAS: opcode_opds_count = 1; // ADDR
+            OPC_GETMEASNUM, OPC_GETALLMEAS, OPC_RTMEAS: opcode_opds_count = 0;
+            OPC_GETMEAS: opcode_opds_count = 1; // ADDR
             OPC_DISPLAYIMG: opcode_opds_count = 1; // first op indicates N (image length) but actually dynamic
             default: opcode_opds_count = -1; // invalid/unknown
         endcase
@@ -174,11 +126,9 @@ module proc_if_ext #(
     always_comb begin
         // defaults
         next_state = state;
-        last_opds = (opds_received >= opds_expected) && 
-        ((opc_is_displayimg() && image_bytes_left == 0) || !opc_is_displayimg());
-        ack_ready = special_read_done || bus_read_done || 
-                    special_write_done || bus_write_done ||
-                    opc_is_displayimg();
+        last_opds = ( opds_received >= opds_expected) && 
+                    ((opc_is_displayimg() && image_bytes_left == 0) ||
+                     !opc_is_displayimg());
         special_read_done  = mem_read_pending  && 
                              (mem_target == TARGET_SPECIAL) && 
                              if_special_regs.data_ready;
@@ -191,6 +141,9 @@ module proc_if_ext #(
         bus_write_done     = !mem_read_pending &&
                              (mem_target == TARGET_BUS) &&
                              if_bus.write_done;
+        ack_ready = special_read_done || bus_read_done || 
+                    special_write_done || bus_write_done ||
+                    opc_is_displayimg();
         case (state)
             S_DISCONNECTED: begin
                 if (connect) next_state = S_IDLE;
@@ -202,10 +155,12 @@ module proc_if_ext #(
             end
 
             S_DECODE_CMD: begin
-                if (cmd_valid) begin
-                    if (opds_expected == 0) next_state = S_MEM;
-                    else next_state = S_GET_OPDS;
-                end else next_state = S_IDLE;
+                if (got_cmd) begin
+                    if (cmd_valid) begin
+                        if (opds_expected == 0) next_state = S_MEM;
+                        else next_state = S_GET_OPDS;
+                    end else next_state = S_IDLE;
+                end
             end
 
             S_GET_OPDS: begin
@@ -242,7 +197,7 @@ module proc_if_ext #(
     // ------------------------------------------------------------------------
     always_ff @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
-            cmd_opcode <= 8'd0;
+            cmd_opcode <= OPC_NOP;
             cmd_valid <= 1'b0;
             opds_expected <= 0;
             opds_received <= 0;
@@ -251,9 +206,11 @@ module proc_if_ext #(
             collecting_opds <= 1'b0;
             img_data_valid <= 1'b0;
             get_data <= 1'b0;
+            got_cmd <= 1'b0;
         end else begin
             if (state == S_DECODE_CMD) begin
                 // capture opcode from data_byte (one-cycle handshake)
+                got_cmd <= 1'b0;
                 get_data <= 1'b0;
                 collecting_opds <= 1'b0;
                 if (data_valid && !collecting_cmd) begin
@@ -262,11 +219,12 @@ module proc_if_ext #(
                     collecting_cmd <= 1'b1;
                 end else if (collecting_cmd && data_ready) begin
                     collecting_cmd <= 1'b0;
-                    cmd_opcode <= data_byte;
-                    opds_expected <= opcode_opds_count(data_byte);
+                    cmd_opcode <= opcode_t'(data_byte);
+                    opds_expected <= opcode_opds_count(opcode_t'(data_byte));
                     cmd_valid <= (opds_expected == -1) ? 1'b0 : 1'b1;
                     opds_received <= 0;
                     image_bytes_left <= 0;
+                    got_cmd <= 1'b1;
                 end
             end else if (state == S_GET_OPDS) begin
                 get_data <= 1'b0;
@@ -278,8 +236,8 @@ module proc_if_ext #(
                     collecting_opds <= 1'b0;
                     opds_received <= opds_received + 1;
                     if (opc_is_displayimg() && opds_received == 0) begin
-                        image_bytes_left <= data_byte;
-                        opds_expected <= 1 + data_byte;
+                        image_bytes_left <= {($bits(image_bytes_left)-$bits(data_byte))'(0),data_byte};
+                        opds_expected <= 1 + {($bits(opds_expected)-$bits(data_byte))'(0),data_byte};
                     end else if (opc_is_displayimg()) begin
                         image_bytes_left <= image_bytes_left - 1;
                         image_data <= data_byte;
@@ -300,24 +258,28 @@ module proc_if_ext #(
     // This block performs the requested operation based on cmd_opcode and opds_buf
     // ------------------------------------------------------------------------
     assign if_special_regs.write_data = opds_buf[1];
-    assign if_special_regs.addr = opds_buf[0];
+    assign if_special_regs.addr = $bits(if_special_regs.addr)'(opds_buf[0]);
     assign if_bus.write_data = opds_buf[1];
+
+    logic [7:0] all_meas_addr;
+    logic [7:0] meas_addr;
+    assign all_meas_addr = A_ALLMEAS + meas_addr;
     
     always_comb begin
         case (cmd_opcode)
-            OPC_GLOBALREGW:  if_bus.addr = {B_GLOBAL_OFFSET , opds_buf[0]};
-            OPC_GLOBALREGR:  if_bus.addr = {B_GLOBAL_OFFSET , opds_buf[0]};
-            OPC_JPEGREGW:    if_bus.addr = {B_JPEG_OFFSET   , opds_buf[0]};
-            OPC_JPEGREGR:    if_bus.addr = {B_JPEG_OFFSET   , opds_buf[0]};
-            OPC_DISPLAYREGW: if_bus.addr = {B_DISPLAY_OFFSET, opds_buf[0]};
-            OPC_DISPLAYREGR: if_bus.addr = {B_DISPLAY_OFFSET, opds_buf[0]};
-            OPC_SENSREGW:    if_bus.addr = {B_SENS_OFFSET   , opds_buf[0]};
-            OPC_SENSREGR:    if_bus.addr = {B_SENS_OFFSET   , opds_buf[0]};
-            OPC_GETMEASNUM:  if_bus.addr = {B_SENS_OFFSET   , A_NMEAS};
-            OPC_GETMEAS:     if_bus.addr = {B_SENS_OFFSET   , opds_buf[0]};
-            OPC_GETALLMEAS:  if_bus.addr = {B_SENS_OFFSET   , A_ALLMEAS};
-            OPC_RTMEAS:      if_bus.addr = {B_SENS_OFFSET   , A_GETMEAS};
-            default: 
+            OPC_GLOBALREGW:  if_bus.addr = {B_GLOBAL_OFFSET,    opds_buf[0]};
+            OPC_GLOBALREGR:  if_bus.addr = {B_GLOBAL_OFFSET,    opds_buf[0]};
+            OPC_JPEGREGW:    if_bus.addr = {B_JPEG_OFFSET,      opds_buf[0]};
+            OPC_JPEGREGR:    if_bus.addr = {B_JPEG_OFFSET,      opds_buf[0]};
+            OPC_DISPLAYREGW: if_bus.addr = {B_DISPLAY_OFFSET,   opds_buf[0]};
+            OPC_DISPLAYREGR: if_bus.addr = {B_DISPLAY_OFFSET,   opds_buf[0]};
+            OPC_SENSREGW:    if_bus.addr = {B_SENS_OFFSET,      opds_buf[0]};
+            OPC_SENSREGR:    if_bus.addr = {B_SENS_OFFSET,      opds_buf[0]};
+            OPC_GETMEASNUM:  if_bus.addr = {B_SENS_OFFSET,      A_NMEAS};
+            OPC_GETMEAS:     if_bus.addr = {B_SENS_OFFSET,      opds_buf[0]};
+            OPC_GETALLMEAS:  if_bus.addr = {B_SENS_OFFSET,      all_meas_addr};
+            OPC_RTMEAS:      if_bus.addr = {B_SENS_OFFSET,      A_GETMEAS};
+            default: if_bus.addr = '0;
         endcase
     end
     
@@ -325,7 +287,7 @@ module proc_if_ext #(
         if (!rst_n) begin
             mem_target <= TARGET_NONE;
             mem_read_pending <= 1'b0;
-            for (i=0; i<2; i=i+1) opds_buf[i] <= 8'd0;
+            for (int i=0; i<2; i=i+1) opds_buf[i] <= 8'd0;
             if_special_regs.write_en   <= 1'b0;
             if_special_regs.read_en    <= 1'b0;
             if_bus.write_en   <= 1'b0;
@@ -369,7 +331,7 @@ module proc_if_ext #(
 
                     OPC_GETMEASNUM, OPC_GETMEAS, OPC_GETALLMEAS, OPC_RTMEAS: begin
                         mem_target <= TARGET_BUS;
-                        if_special_regs.read_en <= 1'b1;
+                        if_bus.read_en <= 1'b1;
                         mem_read_pending <= 1'b1;
                     end
 
@@ -387,7 +349,10 @@ module proc_if_ext #(
                         if_bus.read_en    <= 1'b0;
                     end
                 endcase
-            end 
+            end else if ((state == S_DELAY || state == S_ACK) && cmd_opcode == OPC_GETALLMEAS) begin
+                mem_target <= TARGET_BUS;
+                if_bus.read_en <= (bus_read_done && !got_all_meas) ? 1'b1 : 1'b0;
+            end
         end
     end
 
@@ -402,10 +367,13 @@ module proc_if_ext #(
             ack_idx <= 0;
             ack_sent <= 1'b0;
             all_meas_idx <= 0;
+            ack_valid <= 1'b0;
+            meas_addr <= 8'h00;
         end else begin
-            ack_valid <= 1'b1;
+            ack_valid <= 1'b0;
             ack_sent <= 1'b0;
             if (state == S_DELAY) begin
+                meas_addr <= 8'h00;
                 // if read completed from special regs
                 if (special_read_done) begin
                     ack_len <= 11;
@@ -423,7 +391,7 @@ module proc_if_ext #(
                 end
 
                 // if read completed from bus
-                if (bus_read_done && opcode != OPC_GETALLMEAS) begin
+                if (bus_read_done && cmd_opcode != OPC_GETALLMEAS) begin
                     ack_len <= 11;
                     ack_buf[ 0] <= "R";
                     ack_buf[ 1] <= "E";
@@ -440,7 +408,7 @@ module proc_if_ext #(
                 
                 // if write completed
                 if (special_write_done || bus_write_done) begin
-                    ack_len <= 11;
+                    ack_len <= 10;
                     ack_buf[0] <= "W";
                     ack_buf[1] <= "R";
                     ack_buf[2] <= "I";
@@ -453,8 +421,7 @@ module proc_if_ext #(
                     ack_buf[9] <= 8'h0A; // LF
                 end
                 
-                if (bus_read_done && opcode == OPC_GETALLMEAS) begin
-                    ack_len <= 27;
+                if (bus_read_done && cmd_opcode == OPC_GETALLMEAS) begin
                     ack_buf[0] <= "M";
                     ack_buf[1] <= "E";
                     ack_buf[2] <= "A";
@@ -466,6 +433,7 @@ module proc_if_ext #(
                     ack_buf[8] <= if_bus.read_data;
                     ack_buf[9] <= ",";
                     all_meas_idx <= 1;
+                    meas_addr <= 8'h01;
                 end
 
                 if (opc_is_displayimg()) begin
@@ -491,14 +459,19 @@ module proc_if_ext #(
                     ack_buf[8] <= 8'h0A; // LF
                 end
             end else if (state == S_ACK) begin
-                if (opcode == OPC_GETALLMEAS && !got_all_meas) begin
-                    if (all_meas_idx < ALLMEAS_SIZE) begin
-                        ack_buf[8+(all_meas_idx*2)] <= if_bus.read_data;
-                        ack_buf[9+(all_meas_idx*2)] <= ",";
-                        all_meas_idx <= all_meas_idx + 1;
-                    end else begin
-                        ack_buf[]
-                        got_all_meas <= 1'b1;
+                if (cmd_opcode == OPC_GETALLMEAS && !got_all_meas) begin
+                    if (bus_read_done) begin
+                        if (all_meas_idx < ALLMEAS_SIZE) begin
+                            ack_buf[8+(all_meas_idx*2)] <= if_bus.read_data;
+                            ack_buf[9+(all_meas_idx*2)] <= ",";
+                            all_meas_idx <= all_meas_idx + 1;
+                            meas_addr <= meas_addr + 1;
+                        end else begin
+                            ack_buf[7+(all_meas_idx*2)] <= 8'h0D; // CR (overwrite last ',')
+                            ack_buf[8+(all_meas_idx*2)] <= 8'h0A;
+                            got_all_meas <= 1'b1;
+                            ack_len <= 10 + (2*ALLMEAS_SIZE - 1);
+                        end
                     end
                 end else if (ack_idx < ack_len && !tx_full) begin
                     ack_byte <= ack_buf[ack_idx];
@@ -536,6 +509,7 @@ module proc_if_ext #(
         end else if (state == S_DELAY) begin
             if_timer.time_count = regs_delay_time_count;
             if_timer.clear = 1'b0;
+            if_timer.enable = 1'b1;
             delay_timeout = if_timer.done;
         end
     end

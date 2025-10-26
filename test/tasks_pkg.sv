@@ -114,7 +114,15 @@ package tasks_pkg;
             end else if (data == 8'h0A) begin
                 DEBUG_INFO("UART TASK", "Sending UART byte: 0x0A (\\n)");
             end else begin
-                DEBUG_INFO("UART TASK", $sformatf("Sending UART byte: %h (%c)", data, data));
+                if ((data >= "a" && data <= "z") ||
+                    (data >= "A" && data <= "Z") || 
+                    (data >= "0" && data <= "9") ||
+                    (data == " ") || (data == "!") ||
+                    (data == "+")) begin
+                    DEBUG_INFO("UART TASK", $sformatf("Sending UART byte: %h (%c)", data, data));
+                end else begin
+                    DEBUG_INFO("UART TASK", $sformatf("Sending UART byte: 0x%h", data));
+                end
             end
             rx_serial = 0; // Start bit
             #(bit_period); // Wait for 1 bit period
