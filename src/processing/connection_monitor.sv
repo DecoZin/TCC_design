@@ -32,8 +32,8 @@ module connection_monitor (
     output logic timeout,       // pulse/level if advertisement timed out
 
     // Timer parameters
-    input  logic [23:0] reg_adv_time_count,  // advertisement timeout
-    input  logic [23:0] reg_conn_time_count  // connected inactivity timeout
+    input  logic [23:0] regs_adv_time_count,  // advertisement timeout
+    input  logic [23:0] regs_conn_time_count  // connected inactivity timeout
 );
     import conn_monitor_types_pkg::*;
     import ei_mem_pkg::*;
@@ -45,7 +45,7 @@ module connection_monitor (
     conn_monitor_state_t state, next_state;
 
     // Rolling buffers (monitor small window and mac accumulation)
-    logic [7:0] rx_monitor_buffer [0:6]; // last 7 chars for pattern OK+CONN / OK+DISC
+    logic [7:0] rx_monitor_buffer [0:8]; // last 9 chars for pattern OK+CONN / OK+DISC\r\n
     logic [7:0] rx_mac_buffer     [0:14]; // rolling 15-char buffer for ":XXXXXXXXXXXX\r\n"
 
     // flags derived from buffers
@@ -132,7 +132,7 @@ module connection_monitor (
         // defaults
         clear_tmr = 1'b0;
         if_tmr.enable = 1'b0;
-        if_tmr.time_count = reg_adv_time_count;
+        if_tmr.time_count = regs_adv_time_count;
         if_tmr.mode = 1'b0; // one-shot by default
         connect = 1'b0;
         mac_write_in_progress = 1'b0;
@@ -146,13 +146,13 @@ module connection_monitor (
 
             S_WAIT_EVENT: begin
                 // start advertisement timer
-                if_tmr.time_count = reg_adv_time_count;
+                if_tmr.time_count = regs_adv_time_count;
                 if_tmr.enable = 1'b1;
             end
 
             S_PARSE_MAC: begin
                 // keep advertisement timer running while parsing
-                if_tmr.time_count = reg_adv_time_count;
+                if_tmr.time_count = regs_adv_time_count;
                 if_tmr.enable = 1'b1;
                 // request bytes when available
             end
@@ -164,7 +164,7 @@ module connection_monitor (
 
             S_CONNECTED: begin
                 // enable connected inactivity timer
-                if_tmr.time_count = reg_conn_time_count;
+                if_tmr.time_count = regs_conn_time_count;
                 if_tmr.enable = 1'b1;
                 connect = 1'b1;
             end
@@ -186,7 +186,7 @@ module connection_monitor (
         if (!rst_n || state == S_IDLE) begin
             integer i;
             get_ack_byte <= 1'b0;
-            for (i=0; i<7; i=i+1) rx_monitor_buffer[i] <= 8'd0;
+            for (i=0; i<9; i=i+1) rx_monitor_buffer[i] <= 8'd0;
             for (i=0; i<15; i=i+1) rx_mac_buffer[i] <= 8'd0;
             reading_byte <= 1'b0;
         end else begin
@@ -210,8 +210,8 @@ module connection_monitor (
                 rx_mac_buffer[14] <= ack_byte;
 
                 // shift rx_monitor_buffer
-                for (j=0; j<6; j=j+1) rx_monitor_buffer[j] <= rx_monitor_buffer[j+1];
-                rx_monitor_buffer[6] <= ack_byte;
+                for (j=0; j<8; j=j+1) rx_monitor_buffer[j] <= rx_monitor_buffer[j+1];
+                rx_monitor_buffer[8] <= ack_byte;
 
                 reading_byte <= 1'b0;
             end
@@ -221,14 +221,15 @@ module connection_monitor (
     // ------------------------------------------------------------------------
     // Pattern detectors (combinational)
     // ------------------------------------------------------------------------
-    function automatic logic is_conn_found(input logic [7:0] w [0:6]);
-        return (w[0] == "O" && w[1] == "K" && w[2] == "+" &&
-                w[3] == "C" && w[4] == "O" && w[5] == "N" && w[6] == "N");
+    function automatic logic is_conn_found(input logic [7:0] w [0:8]);
+        return (w[2] == "O" && w[3] == "K" && w[4] == "+" &&
+                w[5] == "C" && w[6] == "O" && w[7] == "N" && w[8] == "N");
     endfunction
 
-    function automatic logic is_disc_found(input logic [7:0] w [0:6]);
+    function automatic logic is_disc_found(input logic [7:0] w [0:8]);
         return (w[0] == "O" && w[1] == "K" && w[2] == "+" &&
-                w[3] == "D" && w[4] == "I" && w[5] == "S" && w[6] == "C");
+                w[3] == "D" && w[4] == "I" && w[5] == "S" && 
+                w[6] == "C" && w[7] == 8'h0D && w[8] == 8'h0A);
     endfunction
 
     // check if rx_mac_buffer holds pattern : + 12 hex chars + CR LF

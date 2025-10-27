@@ -350,10 +350,16 @@
 [INFO][UART][218644780 ns] UART Received: I
 [INFO][UART][219686440 ns] UART Received: \r
 [INFO][UART][220728100 ns] UART Received: \n
-[INFO][  TB][226144460 ns] Testing Commands... Done.
-[INFO][  TB][226144560 ns] Testbench finished.
+[INFO][  TB][226144460 ns] Sending invalid opcode.
+[INFO][  TB][226144460 ns] Sending: "0x00"...
+[INFO][UART TASK][226144460 ns] Sending UART byte: 0x00
+[INFO][ DUT][227134070 ns] FSM: S_IDLE -> S_DECODE_CMD
+[WARN][ DUT][227134150 ns] Opcode invalid: 0x00
+[INFO][ DUT][227134150 ns] FSM: S_DECODE_CMD -> S_IDLE
+[INFO][  TB][227342370 ns] Testing Commands... Done.
+[INFO][  TB][227342470 ns] Testbench finished.
 TEST PASSED!
-- test/processor_tb.sv:442: Verilog $finish
+- test/processor_tb.sv:447: Verilog $finish
 - S i m u l a t i o n   R e p o r t: Verilator 5.033 devel
-- Verilator: $finish at 226ms; walltime 10.594 s; speed 21.485 ms/s
-- Verilator: cpu 10.526 s on 1 threads; alloced 238 MB
+- Verilator: $finish at 227ms; walltime 10.385 s; speed 22.016 ms/s
+- Verilator: cpu 10.326 s on 1 threads; alloced 238 MB

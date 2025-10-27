@@ -69,8 +69,8 @@ module conn_monitor_tb;
         .disconnect(disconnect),
         .timeout(timeout),
         // Timer parameters
-        .reg_adv_time_count(reg_adv_time_count),
-        .reg_conn_time_count(reg_conn_time_count)
+        .regs_adv_time_count(regs_adv_time_count),
+        .regs_conn_time_count(regs_conn_time_count)
     );
 
     // Timer Instantiation
@@ -91,8 +91,8 @@ module conn_monitor_tb;
         .rst_n(rst_n)
     );
 
-    logic [23:0] reg_adv_time_count;
-    logic [23:0] reg_conn_time_count;
+    logic [23:0] regs_adv_time_count;
+    logic [23:0] regs_conn_time_count;
     
     always_comb begin
         if_top_link.mode_mask = '0; // All registers are Read-Write
@@ -102,10 +102,10 @@ module conn_monitor_tb;
         if_top_link.regi[EIR_CONN_TMR0] = 8'(15*BIT_PERIOD/1000);
         if_top_link.regi[EIR_CONN_TMR1] = 8'((15*BIT_PERIOD/1000) >> 8);
         if_top_link.regi[EIR_CONN_TMR2] = 8'((15*BIT_PERIOD/1000) >> 16);
-        reg_adv_time_count = {if_top_link.rego[EIR_ADV_TMR2],
+        regs_adv_time_count = {if_top_link.rego[EIR_ADV_TMR2],
                               if_top_link.rego[EIR_ADV_TMR1],
                               if_top_link.rego[EIR_ADV_TMR0]};
-        reg_conn_time_count = {if_top_link.rego[EIR_CONN_TMR2],
+        regs_conn_time_count = {if_top_link.rego[EIR_CONN_TMR2],
                                if_top_link.rego[EIR_CONN_TMR1],
                                if_top_link.rego[EIR_CONN_TMR0]};
     end

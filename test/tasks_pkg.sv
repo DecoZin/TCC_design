@@ -117,9 +117,9 @@ package tasks_pkg;
                 if ((data >= "a" && data <= "z") ||
                     (data >= "A" && data <= "Z") || 
                     (data >= "0" && data <= "9") ||
-                    (data == " ") || (data == "!") ||
-                    (data == "+")) begin
-                    DEBUG_INFO("UART TASK", $sformatf("Sending UART byte: %h (%c)", data, data));
+                    (data == ",") || (data == "!") ||
+                    (data == "+") || (data == ":")) begin
+                    DEBUG_INFO("UART TASK", $sformatf("Sending UART byte: 0x%h (%c)", data, data));
                 end else begin
                     DEBUG_INFO("UART TASK", $sformatf("Sending UART byte: 0x%h", data));
                 end

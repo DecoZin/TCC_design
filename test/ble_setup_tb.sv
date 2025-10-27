@@ -20,7 +20,7 @@ module ble_setup_tb;
     localparam int DATA_DEPTH = CMD_DEPTH*CMD_WIDTH;
     localparam real BAUD_RATE = 9600; // Baud rate
     localparam int BIT_PERIOD = $rtoi(1e9 / BAUD_RATE); // = 104_166.66 ns (when timescale is 1ns)
-    localparam logic [23:0] ACK_TIMEOUT_US = 24'd2_100; // 20 bits at 9600 baud
+    localparam logic [23:0] regs_ack_time_count = 24'd2_100; // 20 bits at 9600 baud
 
     // SIMULATION TIMEOUT
     localparam int SIMULATION_TIMEOUT = 500*BIT_PERIOD;
@@ -51,13 +51,12 @@ module ble_setup_tb;
     logic setup_done;
 
     ble_setup #(
-        .ACK_TIMEOUT_US(ACK_TIMEOUT_US),
         .CMD_WIDTH(CMD_WIDTH)
-        ) 
-        dut (
-        // Interfaces
+        ) dut (
+            // Interfaces
         .if_regs_inst(if_regs_inst.master),
         .if_tmr_inst(if_tmr_inst.controller),
+        .regs_ack_time_count(regs_ack_time_count),
         // Clock and Reset
         .clk(clk),
         .rst_n(rst_n),

@@ -426,7 +426,12 @@ module processor_tb;
         DEBUG_INFO("TB", "Sending DISPLAYIMG, to send 10 image data to display.");
         DEBUG_INFO("TB", "Sending: \"0xEF 0x0A 0x00 0x01 ... 0x09\"...");
         send_uart_stream(ble_rx_pin, {OPC_DISPLAYIMG, 8'h0A, 8'h00, 8'h01, 8'h02, 8'h03, 8'h04, 8'h05, 8'h06, 8'h07, 8'h08, 8'h09}, 12, BIT_PERIOD);
-        #(10*BYTE_PERIOD);
+        #(10*BYTE_PERIOD);        
+
+        DEBUG_INFO("TB", "Sending invalid opcode.");
+        DEBUG_INFO("TB", "Sending: \"0x00\"...");
+        send_uart_stream(ble_rx_pin, {OPC_NOP}, 1, BIT_PERIOD);
+        #(BIT_PERIOD);
         
         DEBUG_INFO("TB", "Testing Commands... Done.");
 

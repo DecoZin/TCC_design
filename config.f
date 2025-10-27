@@ -19,7 +19,7 @@ lint.vlt
 
 // dump as FST(Waveform compressed(VCD))
 --trace-fst
---trace-max-array 256
+--trace-max-array 512
 
 //dump structs as Human-Readable format
 --trace-structs

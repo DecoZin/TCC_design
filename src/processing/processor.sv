@@ -115,6 +115,7 @@ module processor #(
             OPC_GETMEASNUM, OPC_GETALLMEAS, OPC_RTMEAS: opcode_opds_count = 0;
             OPC_GETMEAS: opcode_opds_count = 1; // ADDR
             OPC_DISPLAYIMG: opcode_opds_count = 1; // first op indicates N (image length) but actually dynamic
+            OPC_NOP: opcode_opds_count = -1;
             default: opcode_opds_count = -1; // invalid/unknown
         endcase
         return opcode_opds_count;
@@ -221,7 +222,7 @@ module processor #(
                     collecting_cmd <= 1'b0;
                     cmd_opcode <= opcode_t'(data_byte);
                     opds_expected <= opcode_opds_count(opcode_t'(data_byte));
-                    cmd_valid <= (opds_expected == -1) ? 1'b0 : 1'b1;
+                    cmd_valid <= (opcode_opds_count(opcode_t'(data_byte)) == -1) ? 1'b0 : 1'b1;
                     opds_received <= 0;
                     image_bytes_left <= 0;
                     got_cmd <= 1'b1;

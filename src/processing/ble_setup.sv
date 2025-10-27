@@ -10,12 +10,12 @@
 `define BLE_SETUP_SV
 
 module ble_setup #(
-    parameter logic [23:0] ACK_TIMEOUT_US = 24'd2_100,  // 20 bits at 9600 baud
     parameter CMD_WIDTH = 32
-) (
-    // Interfaces
-    regs_if if_regs_inst,       // Interface instance to get the commands
-    tmr_if if_tmr_inst,         // Interface instance for the timer
+    ) (
+        // Interfaces
+    regs_if if_regs_inst, // Interface instance to get the commands
+    tmr_if if_tmr_inst,   // Interface instance for the timer
+    input  logic [23:0] regs_ack_time_count,  // 20 bits at 9600 baud
 
     // Clock and Reset
     input  logic clk,           // Clock signal
@@ -86,7 +86,7 @@ module ble_setup #(
                     cmd_counter <= '0;      // Reset command counter
                     byte_counter <= '0;     // Reset byte counter
                     pre_evaluate <= 1'b0;
-                    if (setting_up) begin
+                    if (setting_up && !setup_done) begin
                         if_regs_inst.read_en <= 1'b1;   // Enable read from registers
                         if_regs_inst.addr <= '0;        // Start reading from address 0
                         state <= GET_CMD_NUMBER;
@@ -235,7 +235,7 @@ module ble_setup #(
 
     // Timer Handler
     assign if_tmr_inst.mode = 1'b0;    // Set timer to one-shot mode
-    assign if_tmr_inst.time_count = ACK_TIMEOUT_US;
+    assign if_tmr_inst.time_count = regs_ack_time_count;
     
     always_latch begin
         if_tmr_inst.enable = 1'b0;
