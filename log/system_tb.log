@@ -1,0 +1,268 @@
+[INFO][  TB][        0 ns] Testbench started!.
+[INFO][TASK][       20 ns] Resetting system.
+[INFO][  TB][       60 ns] Testing BLE setup...
+[INFO][UART][  1041820 ns] UART Received: A
+[INFO][UART][  2083480 ns] UART Received: T
+[INFO][UART][  3125140 ns] UART Received: \r
+[INFO][UART][  4166800 ns] UART Received: \n
+[INFO][  TB][  4583460 ns] Simulating BLE erro response...
+[INFO][UART TASK][  4583460 ns] Sending UART byte: 0x45 (E)
+[INFO][UART TASK][  5677210 ns] Sending UART byte: 0x52 (R)
+[INFO][UART TASK][  6770950 ns] Sending UART byte: 0x52 (R)
+[INFO][UART TASK][  7864690 ns] Sending UART byte: 0x4f (O)
+[INFO][UART TASK][  8958440 ns] Sending UART byte: 0x52 (R)
+[INFO][UART TASK][ 10052180 ns] Sending UART byte: 0x0D (\r)
+[INFO][UART TASK][ 11145920 ns] Sending UART byte: 0x0A (\n)
+[INFO][  TB][ 12239660 ns] Simulating BLE erro response... Done.
+[INFO][UART][ 16197220 ns] UART Received: A
+[INFO][UART][ 17238880 ns] UART Received: T
+[INFO][UART][ 18280540 ns] UART Received: \r
+[INFO][UART][ 19322200 ns] UART Received: \n
+[INFO][  TB][ 19738860 ns] Simulating BLE response...
+[INFO][UART TASK][ 19738860 ns] Sending UART byte: 0x4f (O)
+[INFO][UART TASK][ 20832610 ns] Sending UART byte: 0x4b (K)
+[INFO][UART TASK][ 21926350 ns] Sending UART byte: 0x0D (\r)
+[INFO][UART TASK][ 23020090 ns] Sending UART byte: 0x0A (\n)
+[INFO][  TB][ 24113840 ns] Simulating BLE response... Done.
+[INFO][UART][ 28071400 ns] UART Received: A
+[INFO][UART][ 29113060 ns] UART Received: T
+[INFO][UART][ 30154720 ns] UART Received: +
+[INFO][UART][ 31196380 ns] UART Received: N
+[INFO][UART][ 32238040 ns] UART Received: A
+[INFO][UART][ 33279700 ns] UART Received: M
+[INFO][UART][ 34321360 ns] UART Received: E
+[INFO][UART][ 35363020 ns] UART Received: \r
+[INFO][UART][ 36404680 ns] UART Received: \n
+[INFO][  TB][ 36821340 ns] Simulating BLE response...
+[INFO][UART TASK][ 36821340 ns] Sending UART byte: 0x4f (O)
+[INFO][UART TASK][ 37915090 ns] Sending UART byte: 0x4b (K)
+[INFO][UART TASK][ 39008830 ns] Sending UART byte: 0x0D (\r)
+[INFO][UART TASK][ 40102570 ns] Sending UART byte: 0x0A (\n)
+[INFO][  TB][ 41196320 ns] Simulating BLE response... Done.
+[INFO][UART][ 45153880 ns] UART Received: A
+[INFO][UART][ 46195540 ns] UART Received: T
+[INFO][UART][ 47237200 ns] UART Received: +
+[INFO][UART][ 48278860 ns] UART Received: P
+[INFO][UART][ 49320520 ns] UART Received: I
+[INFO][UART][ 50362180 ns] UART Received: N
+[INFO][UART][ 51403840 ns] UART Received: \r
+[INFO][UART][ 52445500 ns] UART Received: \n
+[INFO][  TB][ 52862160 ns] Simulating BLE response...
+[INFO][UART TASK][ 52862160 ns] Sending UART byte: 0x4f (O)
+[INFO][UART TASK][ 53955910 ns] Sending UART byte: 0x4b (K)
+[INFO][UART TASK][ 55049650 ns] Sending UART byte: 0x0D (\r)
+[INFO][UART TASK][ 56143390 ns] Sending UART byte: 0x0A (\n)
+[INFO][  TB][ 57237140 ns] Simulating BLE response... Done.
+[INFO][UART][ 61194700 ns] UART Received: A
+[INFO][UART][ 62236360 ns] UART Received: T
+[INFO][UART][ 63278020 ns] UART Received: +
+[INFO][UART][ 64319680 ns] UART Received: B
+[INFO][UART][ 65361340 ns] UART Received: A
+[INFO][UART][ 66403000 ns] UART Received: U
+[INFO][UART][ 67444660 ns] UART Received: D
+[INFO][UART][ 68486320 ns] UART Received: \r
+[INFO][UART][ 69527980 ns] UART Received: \n
+[INFO][  TB][ 69944640 ns] Simulating BLE response...
+[INFO][UART TASK][ 69944640 ns] Sending UART byte: 0x4f (O)
+[INFO][UART TASK][ 71038390 ns] Sending UART byte: 0x4b (K)
+[INFO][UART TASK][ 72132130 ns] Sending UART byte: 0x0D (\r)
+[INFO][UART TASK][ 73225870 ns] Sending UART byte: 0x0A (\n)
+[INFO][  TB][ 74319620 ns] Simulating BLE response... Done.
+[INFO][UART][ 78277180 ns] UART Received: A
+[INFO][UART][ 79318840 ns] UART Received: T
+[INFO][UART][ 80360500 ns] UART Received: +
+[INFO][UART][ 81402160 ns] UART Received: R
+[INFO][UART][ 82443820 ns] UART Received: O
+[INFO][UART][ 83485480 ns] UART Received: L
+[INFO][UART][ 84527140 ns] UART Received: E
+[INFO][UART][ 85568800 ns] UART Received: 0
+[INFO][UART][ 86610460 ns] UART Received: \r
+[INFO][UART][ 87652120 ns] UART Received: \n
+[INFO][  TB][ 88068780 ns] Simulating BLE response...
+[INFO][UART TASK][ 88068780 ns] Sending UART byte: 0x4f (O)
+[INFO][UART TASK][ 89162530 ns] Sending UART byte: 0x4b (K)
+[INFO][UART TASK][ 90256270 ns] Sending UART byte: 0x0D (\r)
+[INFO][UART TASK][ 91350010 ns] Sending UART byte: 0x0A (\n)
+[INFO][  TB][ 92443760 ns] Simulating BLE response... Done.
+[INFO][UART][ 96401320 ns] UART Received: A
+[INFO][UART][ 97442980 ns] UART Received: T
+[INFO][UART][ 98484640 ns] UART Received: +
+[INFO][UART][ 99526300 ns] UART Received: R
+[INFO][UART][100567960 ns] UART Received: E
+[INFO][UART][101609620 ns] UART Received: S
+[INFO][UART][102651280 ns] UART Received: E
+[INFO][UART][103692940 ns] UART Received: T
+[INFO][UART][104734600 ns] UART Received: \r
+[INFO][UART][105776260 ns] UART Received: \n
+[INFO][  TB][106192920 ns] Simulating BLE response...
+[INFO][UART TASK][106192920 ns] Sending UART byte: 0x4f (O)
+[INFO][UART TASK][107286670 ns] Sending UART byte: 0x4b (K)
+[INFO][UART TASK][108380410 ns] Sending UART byte: 0x0D (\r)
+[INFO][UART TASK][109474150 ns] Sending UART byte: 0x0A (\n)
+[INFO][  TB][110567900 ns] Simulating BLE response... Done.
+[INFO][UART][114525460 ns] UART Received: A
+[INFO][UART][115567120 ns] UART Received: T
+[INFO][UART][116608780 ns] UART Received: +
+[INFO][UART][117650440 ns] UART Received: A
+[INFO][UART][118692100 ns] UART Received: D
+[INFO][UART][119733760 ns] UART Received: V
+[INFO][UART][120775420 ns] UART Received: E
+[INFO][UART][121817080 ns] UART Received: N
+[INFO][UART][122858740 ns] UART Received: \r
+[INFO][UART][123900400 ns] UART Received: \n
+[INFO][  TB][124317060 ns] Simulating BLE response...
+[INFO][UART TASK][124317060 ns] Sending UART byte: 0x4f (O)
+[INFO][UART TASK][125410810 ns] Sending UART byte: 0x4b (K)
+[INFO][UART TASK][126504550 ns] Sending UART byte: 0x0D (\r)
+[INFO][UART TASK][127598290 ns] Sending UART byte: 0x0A (\n)
+[INFO][  TB][128692040 ns] Simulating BLE response... Done.
+[INFO][SETUP][131711950 ns] BLE setup done!
+[INFO][  TB][131711950 ns] Testing BLE setup... Done.
+[INFO][  TB][131711950 ns] Testing Connection...
+[INFO][  TB][131711950 ns] Sending: "OK+CONN:010203040506\r\n...
+[INFO][UART TASK][131711950 ns] Sending UART byte: 0x4f (O)
+[INFO][UART TASK][132805690 ns] Sending UART byte: 0x4b (K)
+[INFO][UART TASK][133899430 ns] Sending UART byte: 0x2b (+)
+[INFO][UART TASK][134993170 ns] Sending UART byte: 0x43 (C)
+[INFO][UART TASK][136086920 ns] Sending UART byte: 0x4f (O)
+[INFO][UART TASK][137180660 ns] Sending UART byte: 0x4e (N)
+[INFO][UART TASK][138274400 ns] Sending UART byte: 0x4e (N)
+[INFO][UART TASK][139368150 ns] Sending UART byte: 0x3a (:)
+[INFO][UART TASK][140461890 ns] Sending UART byte: 0x30 (0)
+[INFO][UART TASK][141555630 ns] Sending UART byte: 0x31 (1)
+[INFO][UART TASK][142649380 ns] Sending UART byte: 0x30 (0)
+[INFO][UART TASK][143743120 ns] Sending UART byte: 0x32 (2)
+[INFO][UART TASK][144836860 ns] Sending UART byte: 0x30 (0)
+[INFO][UART TASK][145930600 ns] Sending UART byte: 0x33 (3)
+[INFO][UART TASK][147024350 ns] Sending UART byte: 0x30 (0)
+[INFO][UART TASK][148118090 ns] Sending UART byte: 0x34 (4)
+[INFO][UART TASK][149211830 ns] Sending UART byte: 0x30 (0)
+[INFO][UART TASK][150305580 ns] Sending UART byte: 0x35 (5)
+[INFO][UART TASK][151399320 ns] Sending UART byte: 0x30 (0)
+[INFO][UART TASK][152493060 ns] Sending UART byte: 0x36 (6)
+[INFO][UART TASK][153586810 ns] Sending UART byte: 0x0D (\r)
+[INFO][UART TASK][154680550 ns] Sending UART byte: 0x0A (\n)
+[INFO][SPEC REGS][155670250 ns] Special Registers Write: ADDR: 0x0a, DATA: 0x01
+[INFO][SPEC REGS][155670270 ns] Special Registers Write: ADDR: 0x0b, DATA: 0x02
+[INFO][SPEC REGS][155670290 ns] Special Registers Write: ADDR: 0x0c, DATA: 0x03
+[INFO][SPEC REGS][155670310 ns] Special Registers Write: ADDR: 0x0d, DATA: 0x04
+[INFO][SPEC REGS][155670330 ns] Special Registers Write: ADDR: 0x0e, DATA: 0x05
+[INFO][SPEC REGS][155670350 ns] Special Registers Write: ADDR: 0x0f, DATA: 0x06
+[INFO][CONN MONITOR][155670370 ns] BLE Connected!
+[INFO][  TB][155774290 ns] Testing Connection... Done.
+[INFO][  TB][155774290 ns] Testing Commands...
+[INFO][  TB][155774290 ns] Sending INTERREGW, to write data 0xF1 in register EIR_TEST.
+[INFO][  TB][155774290 ns] Sending: "0x02 0x00 0xF1"...
+[INFO][UART TASK][155774290 ns] Sending UART byte: 0x02
+[INFO][CORE][156763990 ns] Opcode Detected: OPC_INTERREGW
+[INFO][UART TASK][156868030 ns] Sending UART byte: 0x00
+[INFO][UART TASK][157961780 ns] Sending UART byte: 0xf1
+[INFO][SPEC REGS][158951470 ns] Special Registers Write: ADDR: 0x00, DATA: 0xf1
+[INFO][UART][159889140 ns] UART Received: W
+[INFO][UART][160930800 ns] UART Received: R
+[INFO][UART][161972460 ns] UART Received: I
+[INFO][UART][163014120 ns] UART Received: T
+[INFO][UART][164055780 ns] UART Received: E
+[INFO][UART][165097440 ns] UART Received: +
+[INFO][UART][166139100 ns] UART Received: O
+[INFO][UART][167180760 ns] UART Received: K
+[INFO][UART][168222420 ns] UART Received: \r
+[INFO][UART][169264080 ns] UART Received: \n
+[INFO][  TB][170513780 ns] Sending INTERREGR, to read data from register EIR_TEST.
+[INFO][  TB][170513780 ns] Sending: "0x11 0x00"...
+[INFO][UART TASK][170513780 ns] Sending UART byte: 0x11
+[INFO][CORE][171503470 ns] Opcode Detected: OPC_INTERREGR
+[INFO][UART TASK][171607520 ns] Sending UART byte: 0x00
+[INFO][UART][173534880 ns] UART Received: R
+[INFO][UART][174576540 ns] UART Received: E
+[INFO][UART][175618200 ns] UART Received: A
+[INFO][UART][176659860 ns] UART Received: D
+[INFO][UART][177701520 ns] UART Received: +
+[INFO][UART][178743180 ns] UART Received: O
+[INFO][UART][179784840 ns] UART Received: K
+[INFO][UART][180826500 ns] UART Received: :
+[INFO][UART][181868160 ns] UART Received: 0xf1
+[INFO][UART][182909820 ns] UART Received: \r
+[INFO][UART][183951480 ns] UART Received: \n
+[INFO][  TB][184159530 ns] Sending GETALLMEAS, to read data from all registers with measurements in Sensor Block.
+[INFO][  TB][184159530 ns] Sending: "0xC0"...
+[INFO][UART TASK][184159530 ns] Sending UART byte: 0xc0
+[INFO][CORE][185149230 ns] Opcode Detected: OPC_GETALLMEAS
+[INFO][UART][186087040 ns] UART Received: M
+[INFO][UART][187128700 ns] UART Received: E
+[INFO][UART][188170360 ns] UART Received: A
+[INFO][UART][189212020 ns] UART Received: S
+[INFO][UART][190253680 ns] UART Received: +
+[INFO][UART][191295340 ns] UART Received: O
+[INFO][UART][192337000 ns] UART Received: K
+[INFO][UART][193378660 ns] UART Received: :
+[INFO][UART][194420320 ns] UART Received: 0x00
+[INFO][UART][195461980 ns] UART Received: ,
+[INFO][UART][196503640 ns] UART Received: 0x01
+[INFO][UART][197545300 ns] UART Received: ,
+[INFO][UART][198586960 ns] UART Received: 0x02
+[INFO][UART][199628620 ns] UART Received: \r
+[INFO][UART][200670280 ns] UART Received: \n
+[INFO][  TB][201919830 ns] Sending DISPLAYIMG, to send 10 image data to display.
+[INFO][  TB][201919830 ns] Sending: "0xEF 0x0A 0x00 0x01 ... 0x09"...
+[INFO][UART TASK][201919830 ns] Sending UART byte: 0xef
+[INFO][CORE][202909530 ns] Opcode Detected: OPC_DISPLAYIMG
+[INFO][UART TASK][203013570 ns] Sending UART byte: 0x0A (\n)
+[INFO][UART TASK][204107320 ns] Sending UART byte: 0x00
+[INFO][CORE][205096970 ns] Image Data: 0x00
+[INFO][UART TASK][205201060 ns] Sending UART byte: 0x01
+[INFO][CORE][206190710 ns] Image Data: 0x01
+[INFO][UART TASK][206294800 ns] Sending UART byte: 0x02
+[INFO][CORE][207284450 ns] Image Data: 0x02
+[INFO][UART TASK][207388540 ns] Sending UART byte: 0x03
+[INFO][CORE][208378190 ns] Image Data: 0x03
+[INFO][UART TASK][208482290 ns] Sending UART byte: 0x04
+[INFO][CORE][209471950 ns] Image Data: 0x04
+[INFO][UART TASK][209576030 ns] Sending UART byte: 0x05
+[INFO][CORE][210565690 ns] Image Data: 0x05
+[INFO][UART TASK][210669770 ns] Sending UART byte: 0x06
+[INFO][CORE][211659430 ns] Image Data: 0x06
+[INFO][UART TASK][211763520 ns] Sending UART byte: 0x07
+[INFO][CORE][212753170 ns] Image Data: 0x07
+[INFO][UART TASK][212857260 ns] Sending UART byte: 0x08
+[INFO][CORE][213846910 ns] Image Data: 0x08
+[INFO][UART TASK][213951000 ns] Sending UART byte: 0x09
+[INFO][CORE][214940650 ns] Image Data: 0x09
+[INFO][UART][215878340 ns] UART Received: E
+[INFO][UART][216920000 ns] UART Received: O
+[INFO][UART][217961660 ns] UART Received: I
+[INFO][UART][219003320 ns] UART Received: \r
+[INFO][UART][220044980 ns] UART Received: \n
+[INFO][  TB][221294710 ns] Sending invalid opcode.
+[INFO][  TB][221294710 ns] Sending: "0x00"...
+[INFO][UART TASK][221294710 ns] Sending UART byte: 0x00
+[WARN][CORE][222284390 ns] Opcode invalid: 0x00
+[INFO][  TB][222492610 ns] Testing Commands... Done.
+[INFO][  TB][222596780 ns] Testing Disconnection...
+[INFO][  TB][222596780 ns] Sending: "OK+DISC\r\n...
+[INFO][UART TASK][222596780 ns] Sending UART byte: 0x4f (O)
+[WARN][CORE][223586470 ns] Opcode invalid: 0x4f
+[INFO][UART TASK][223690520 ns] Sending UART byte: 0x4b (K)
+[WARN][CORE][224680210 ns] Opcode invalid: 0x4b
+[INFO][UART TASK][224784270 ns] Sending UART byte: 0x2b (+)
+[WARN][CORE][225773970 ns] Opcode invalid: 0x2b
+[INFO][UART TASK][225878010 ns] Sending UART byte: 0x44 (D)
+[WARN][CORE][226867710 ns] Opcode invalid: 0x44
+[INFO][UART TASK][226971750 ns] Sending UART byte: 0x49 (I)
+[WARN][CORE][227961450 ns] Opcode invalid: 0x49
+[INFO][UART TASK][228065500 ns] Sending UART byte: 0x53 (S)
+[WARN][CORE][229055190 ns] Opcode invalid: 0x53
+[INFO][UART TASK][229159240 ns] Sending UART byte: 0x43 (C)
+[WARN][CORE][230148930 ns] Opcode invalid: 0x43
+[INFO][UART TASK][230252980 ns] Sending UART byte: 0x0D (\r)
+[WARN][CORE][231242670 ns] Opcode invalid: 0x0d
+[INFO][UART TASK][231346720 ns] Sending UART byte: 0x0A (\n)
+[WARN][CORE][232336410 ns] Opcode invalid: 0x0a
+[WARN][CONN MONITOR][232336410 ns] BLE Disconnected!
+[INFO][  TB][232440470 ns] Testing Disconnection... Done.
+[INFO][  TB][232440570 ns] Testbench finished.
+TEST PASSED!
+- test/system_tb.sv:652: Verilog $finish
+- S i m u l a t i o n   R e p o r t: Verilator 5.033 devel
+- Verilator: $finish at 232ms; walltime 114.800 s; speed 2.026 ms/s
+- Verilator: cpu 114.720 s on 1 threads; alloced 234 MB

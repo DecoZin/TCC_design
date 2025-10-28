@@ -56,10 +56,9 @@ module processor_tb;
 
     tmr_if if_processor_tmr(.clk(clk), .rst_n(rst_n));;
 
-    // Connection Monitor module Instantiation
+    // Processor module Instantiation
     logic connect = 1'b0;
     logic disconnect = 1'b0;
-    logic setup_done = 1'b0;
     logic [7:0] image_data;
     logic img_data_valid;
     

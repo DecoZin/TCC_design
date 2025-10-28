@@ -63,6 +63,8 @@ module conn_monitor_tb;
         .ack_valid(valid_rx),
         .ack_ready(rx_fifo_ready),
         .get_ack_byte(rd_en_ble),
+        // UART TX
+        .tx_done(tx_done),
         // Signals
         .setup_done(setup_done),
         .connect(connect),

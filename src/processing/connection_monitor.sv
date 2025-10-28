@@ -25,6 +25,9 @@ module connection_monitor (
     input  logic       ack_ready, // signal from RX indicating data has been accepted
     output logic       get_ack_byte, // request/rd_en to sample the next RX byte
 
+    // UART TX
+    input  logic tx_done,       // Character of the command sent successfully
+    
     // Control signals
     input  logic setup_done,    // asserted by BLE setup when advertisement begins
     output logic connect,       // asserted when connected
@@ -126,7 +129,7 @@ module connection_monitor (
     // ------------------------------------------------------------------------
     // FSM outputs and timer control
     // ------------------------------------------------------------------------
-    assign if_tmr.clear = clear_tmr || state != next_state || ack_ready;
+    assign if_tmr.clear = clear_tmr || state != next_state || ack_ready || tx_done;
 
     always_comb begin
         // defaults

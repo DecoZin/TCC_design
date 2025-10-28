@@ -4,7 +4,8 @@ lint.vlt
 
 // User commands
 --timing
-
+--flatten
+--hierarchical
 
 // Strict Warnings
 -Wall
@@ -19,7 +20,7 @@ lint.vlt
 
 // dump as FST(Waveform compressed(VCD))
 --trace-fst
---trace-max-array 512
+--trace-max-array 1024
 
 //dump structs as Human-Readable format
 --trace-structs

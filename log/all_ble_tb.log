@@ -148,5 +148,5 @@
 TEST PASSED!
 - test/all_ble_tb.sv:446: Verilog $finish
 - S i m u l a t i o n   R e p o r t: Verilator 5.033 devel
-- Verilator: $finish at 151ms; walltime 17.274 s; speed 8.740 ms/s
-- Verilator: cpu 17.227 s on 1 threads; alloced 234 MB
+- Verilator: $finish at 151ms; walltime 15.321 s; speed 9.861 ms/s
+- Verilator: cpu 15.269 s on 1 threads; alloced 234 MB

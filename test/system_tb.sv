@@ -1,17 +1,18 @@
 // ---------------------------------------------------------
-// Module: All BLE modules testbench
-// Description: Testbench for the All BLE modules
+// Module: System testbench
+// Description: Testbench for the high-level system
 // Author: André Lamego
-// Date: 2025-10-26
+// Date: 2025-10-27
 // ---------------------------------------------------------
 `timescale 1ns / 100ps
 
-module all_ble_tb;
+module system_tb;
     import tasks_pkg::*;	
     import ei_mem_pkg::*;
     import cmd_mem_pkg::*;
     import ble_ctrl_types_pkg::*;
     import ble_setup_types_pkg::*;
+    import processor_types_pkg::*;
     import conn_monitor_types_pkg::*;
 
     // Local Parameters
@@ -19,7 +20,7 @@ module all_ble_tb;
     localparam int CLK_PERIOD_NS  = 1_000_000_000 / CLK_FREQ_HZ;
     localparam int DATA_WIDTH     = 8;
     localparam int CMD_WIDTH      = 32;
-    localparam int CMD_DEPTH = 16;
+    localparam int CMD_DEPTH      = 16;
     localparam int CMD_DATA_DEPTH = CMD_DEPTH*CMD_WIDTH;
     localparam int SR_DATA_DEPTH  = 43;
     localparam int BUS_DATA_DEPTH = 1024;
@@ -43,21 +44,42 @@ module all_ble_tb;
     regs_if #(
         .DATA_DEPTH(SR_DATA_DEPTH),
         .DATA_WIDTH(DATA_WIDTH)
-    ) if_spec_regs(.clk(clk), .rst_n(rst_n));
-
+    ) if_spec_regs(.clk(clk), .rst_n(rst_n));    
+        
+    regs_if #(
+        .DATA_DEPTH(SR_DATA_DEPTH),
+        .DATA_WIDTH(DATA_WIDTH)
+    ) if_spec_regs_processor(.clk(clk), .rst_n(rst_n));
+            
+    regs_if #(
+        .DATA_DEPTH(SR_DATA_DEPTH),
+        .DATA_WIDTH(DATA_WIDTH)
+    ) if_spec_regs_conn_monitor(.clk(clk), .rst_n(rst_n));
+        
     regs_if #(
         .DATA_DEPTH(CMD_DATA_DEPTH),
         .DATA_WIDTH(DATA_WIDTH)
     ) if_cmd_mem(.clk(clk), .rst_n(rst_n));
-
+        
     regs_int_if #(
         .DATA_DEPTH(SR_DATA_DEPTH),
         .DATA_WIDTH(DATA_WIDTH)
     ) if_top_link(.clk(clk), .rst_n(rst_n));
+        
+    regs_if #(
+        .DATA_DEPTH(BUS_DATA_DEPTH),
+        .DATA_WIDTH(DATA_WIDTH)
+    ) if_bus(.clk(clk), .rst_n(rst_n));
+
+    regs_int_if #(
+        .DATA_DEPTH(BUS_DATA_DEPTH),
+        .DATA_WIDTH(DATA_WIDTH)
+    ) if_int_bus(.clk(clk), .rst_n(rst_n));
 
     tmr_if if_ds_timer(.clk(clk), .rst_n(rst_n));
     tmr_if if_ack_timer(.clk(clk), .rst_n(rst_n));;
     tmr_if if_conn_monitor_tmr(.clk(clk), .rst_n(rst_n));;
+    tmr_if if_processor_tmr(.clk(clk), .rst_n(rst_n));;
 
     // UART Instantiation
     logic baud = 1'b0;            // Signal toggling at baud rate
@@ -103,37 +125,37 @@ module all_ble_tb;
     );
 
     // UART Mux
-    logic [7:0] m_tx_data;
-    logic m_valid_tx;
+    logic [7:0] tx_ble_data;
+    logic [7:0] tx_processor_data;
+    logic ble_valid_tx;
+    logic processor_valid_tx;
     wire sel_tx_setup;
     wire [7:0] tx_controller_data;
     wire tx_controller_valid;
     wire [7:0] tx_setup_data;
     wire tx_setup_valid;
 
-    assign tx_sys_data = m_tx_data;
-    assign valid_tx = m_valid_tx;
-    assign m_tx_data  = sel_tx_setup ? tx_controller_data : tx_setup_data;
-    assign m_valid_tx = sel_tx_setup ? tx_controller_valid : tx_setup_valid;
+    assign tx_sys_data = mux_transceiver ? tx_processor_data : tx_ble_data;
+    assign valid_tx = mux_transceiver ? processor_valid_tx : ble_valid_tx;
+    assign tx_ble_data  = sel_tx_setup ? tx_controller_data : tx_setup_data;
+    assign ble_valid_tx = sel_tx_setup ? tx_controller_valid : tx_setup_valid;
 
-    logic m_rd_en_setup;
+    logic rd_en_setup;
     logic rd_en_processor;
     wire [1:0] sel_rx_setup;
     wire rd_en_conn;
     wire rd_en_ble;
     wire rd_en_cmd;
 
-    assign rd_fifo_rd_en = mux_transceiver ? rd_en_processor : m_rd_en_setup;
+    assign rd_fifo_rd_en = mux_transceiver ? rd_en_processor : rd_en_setup;
     always_comb begin : rx_setup_mux
         case (sel_rx_setup)
-            0: m_rd_en_setup = rd_en_ble;
-            1: m_rd_en_setup = rd_en_cmd;
-            2: m_rd_en_setup = rd_en_conn; 
-            4: m_rd_en_setup = 1'b0;
+            0: rd_en_setup = rd_en_ble;
+            1: rd_en_setup = rd_en_cmd;
+            2: rd_en_setup = rd_en_conn; 
+            4: rd_en_setup = 1'b0;
         endcase
     end
-    // Simulation of other module reading UART
-    assign rd_en_processor = valid_rx;
 
     // BLE Setup Controller module instantiation
     wire en_cmd_mem_wr;
@@ -246,7 +268,7 @@ module all_ble_tb;
 
     connection_monitor monitor (
         // Interfaces
-        .if_regs_inst(if_spec_regs.master),
+        .if_regs_inst(if_spec_regs_conn_monitor.master),
         .if_tmr(if_conn_monitor_tmr.controller),
         // Clock and Reset
         .clk(clk),
@@ -258,7 +280,7 @@ module all_ble_tb;
         .get_ack_byte(rd_en_conn),
         // UART TX
         .tx_done(tx_done),
-                // Signals
+        // Signals
         .setup_done(setup_done),
         .connect(connect),
         .disconnect(disconnect),
@@ -275,6 +297,55 @@ module all_ble_tb;
         .rst_n(rst_n)
     );
 
+    // Processor module Instantiation
+    logic [7:0] image_data;
+    logic img_data_valid;
+    
+    processor core (
+        // clock / reset
+        .clk(clk),
+        .rst_n(rst_n),
+        // Interfaces regs (master modport)
+        .if_special_regs(if_spec_regs_processor.master), 
+        .if_bus(if_bus.master),
+        // timer interface (controller modport)
+        .if_timer(if_processor_tmr.controller),
+        // connection signals (from connection monitor)
+        .connect(connect),
+        .disconnect(disconnect),
+        // UART RX (from external interface)
+        .data_valid(valid_rx),
+        .data_ready(rx_fifo_ready),
+        .data_byte(rx_sys_data),
+        .get_data(rd_en_processor),
+        // UART TX (to external interface)
+        .tx_full(tx_full),
+        .ack_byte(tx_processor_data),
+        .ack_valid(processor_valid_tx),
+        // Image path (to cornea_opaca)
+        .image_data(image_data),
+        .img_data_valid(img_data_valid),
+        // timing config (from regs)
+        .regs_opds_time_count(regs_opds_time_count),
+        .regs_delay_time_count(regs_delay_time_count)
+    );
+
+    // Processor Timer Instantiation
+    timer #(.CLOCK_F(CLK_FREQ_HZ)) processor_timer (
+        .if_t(if_processor_tmr.timer),
+        .clk(clk),
+        .rst_n(rst_n)
+    );
+
+    // Register Interface Multiplexer Instantiation
+    tri_regs_if_mux regs_mux (
+        .clk(clk),
+        .sel(mux_transceiver),
+        .if_out(if_spec_regs),
+        .if_in1(if_spec_regs_processor),
+        .if_in0(if_spec_regs_conn_monitor)
+    );
+
     // "Special Registers" Instantiation (Just a Register File with some default values)
     register_file #(
         .DATA_WIDTH(DATA_WIDTH),
@@ -286,6 +357,15 @@ module all_ble_tb;
         .rst_n(rst_n)
     );
 
+    register_file #(
+        .DATA_WIDTH(DATA_WIDTH),
+        .DATA_DEPTH(BUS_DATA_DEPTH)
+    ) bus (
+        .if_regs_inst(if_bus.slave),
+        .if_top_link(if_int_bus.slave),
+        .clk(clk),
+        .rst_n(rst_n)
+    );
     logic [23:0] regs_ack_time_count;
     logic [23:0] regs_adv_time_count;
     logic [23:0] regs_conn_time_count;
@@ -295,8 +375,17 @@ module all_ble_tb;
     
     always_comb begin
         if_top_link.mode_mask = '0; // All special registers are Read-Write
+        if_int_bus.mode_mask = '0;  // All bus addresses are Read-Write
         if_top_link.load_regs = '0; // We won't load any special registers        
+        if_int_bus.load_regs = '0;  // We won't load any bus registers
         if_top_link.regi = '{default: '0}; // Default values for all special registers
+        if_int_bus.regi = '{default: '0};  // Default values for all bus addresses
+
+        if_int_bus.regi[{B_SENS_OFFSET,A_NMEAS}] = 8'h04;
+        if_int_bus.regi[{B_SENS_OFFSET,A_GETMEAS}] = 8'hFA;
+        if_int_bus.regi[{B_SENS_OFFSET,A_ALLMEAS}] = 8'h00;
+        if_int_bus.regi[{B_SENS_OFFSET,(A_ALLMEAS+8'h01)}] = 8'h01;
+        if_int_bus.regi[{B_SENS_OFFSET,(A_ALLMEAS+8'h02)}] = 8'h02;
 
         if_top_link.regi[EIR_ACK_TMR0] = 8'(TIMEOUT_US);
         if_top_link.regi[EIR_ACK_TMR1] = 8'(TIMEOUT_US >> 8);
@@ -397,11 +486,44 @@ module all_ble_tb;
     // Connection & Disconnection Monitor
     always @(posedge connect or posedge disconnect) begin
         if (connect && disconnect) begin
-            DEBUG_ERR("DUT", "BLE Connected and Disconnected at the same time!", test_fail);
+            DEBUG_ERR("CONN MONITOR", "BLE Connected and Disconnected at the same time!", test_fail);
         end else if (connect) begin
-            DEBUG_INFO("DUT", "BLE Connected!");
+            DEBUG_INFO("CONN MONITOR", "BLE Connected!");
         end else if (disconnect) begin
-            DEBUG_WARN("DUT", "BLE Disconnected!");
+            DEBUG_WARN("CONN MONITOR", "BLE Disconnected!");
+        end
+    end
+
+    // Register Write Monitor
+    always @(posedge clk) begin
+        if (if_spec_regs.write_en) begin
+            DEBUG_INFO("SPEC REGS", $sformatf("Special Registers Write: ADDR: 0x%x, DATA: 0x%x", if_spec_regs.addr, if_spec_regs.write_data));
+        end
+    end
+
+    always @(posedge clk) begin
+        if (if_bus.write_en) begin
+            DEBUG_INFO("BUS", $sformatf("Bus Write: ADDR: 0x%x, DATA: 0x%x", if_bus.addr, if_bus.write_data));
+        end
+    end
+
+    // Opcode Detection Monitor
+    processor_state_t core_prev_state;
+
+    always @(posedge clk) begin
+        core_prev_state <= core.state;
+        if (core_prev_state == S_DECODE_CMD)
+        if (core.state == S_GET_OPDS || core.state == S_MEM) begin
+            DEBUG_INFO("CORE", $sformatf("Opcode Detected: %s", core.cmd_opcode.name()));
+        end else if (core.state == S_IDLE) begin
+            DEBUG_WARN("CORE", $sformatf("Opcode invalid: 0x%x", core.cmd_opcode));
+        end
+    end
+
+    // // Image data Monitor
+    always @(posedge clk) begin
+        if (img_data_valid) begin
+            DEBUG_INFO("CORE", $sformatf("Image Data: 0x%x", image_data));
         end
     end
 
@@ -413,7 +535,12 @@ module all_ble_tb;
         #(CLK_PERIOD_NS);
         
         DEBUG_INFO("TB", "Testing BLE setup...");
-        @(setup.state == SEND_CMD);
+        @(posedge (setup.state == SEND_CMD));
+        @(posedge lf_flag);
+        #(BYTE_PERIOD);
+        DEBUG_INFO("TB", "Simulating BLE erro response...");
+        send_uart_string(rx_serial, $sformatf("ERROR%c\n", 8'h0D), BIT_PERIOD);
+        DEBUG_INFO("TB", "Simulating BLE erro response... Done.");
         for (int i = 0; i < setup.cmd_number; i++) begin
             @(posedge lf_flag);
             #(BYTE_PERIOD);
@@ -422,7 +549,7 @@ module all_ble_tb;
             DEBUG_INFO("TB", "Simulating BLE response... Done.");
         end
         @(posedge setup_done);
-        DEBUG_INFO("DUT", "BLE setup done!");
+        DEBUG_INFO("SETUP", "BLE setup done!");
         DEBUG_INFO("TB", "Testing BLE setup... Done.");
 
         DEBUG_INFO("TB", "Testing Connection...");
@@ -430,6 +557,29 @@ module all_ble_tb;
         send_uart_string(rx_serial, $sformatf("OK+CONN:010203040506%c\n", 8'h0D), BIT_PERIOD);
         DEBUG_INFO("TB", "Testing Connection... Done.");
 
+        DEBUG_INFO("TB", "Testing Commands...");
+        DEBUG_INFO("TB", "Sending INTERREGW, to write data 0xF1 in register EIR_TEST.");
+        DEBUG_INFO("TB", "Sending: \"0x02 0x00 0xF1\"...");
+        send_uart_stream(rx_serial, {OPC_INTERREGW, EIR_TEST, 8'hF1}, 3, BIT_PERIOD);
+        #(11*BYTE_PERIOD);
+        DEBUG_INFO("TB", "Sending INTERREGR, to read data from register EIR_TEST.");
+        DEBUG_INFO("TB", "Sending: \"0x11 0x00\"...");
+        send_uart_stream(rx_serial, {OPC_INTERREGR, EIR_TEST}, 2, BIT_PERIOD);
+        #(11*BYTE_PERIOD);
+        DEBUG_INFO("TB", "Sending GETALLMEAS, to read data from all registers with measurements in Sensor Block.");
+        DEBUG_INFO("TB", "Sending: \"0xC0\"...");
+        send_uart_stream(rx_serial, {OPC_GETALLMEAS}, 1, BIT_PERIOD);
+        #(16*BYTE_PERIOD);
+        DEBUG_INFO("TB", "Sending DISPLAYIMG, to send 10 image data to display.");
+        DEBUG_INFO("TB", "Sending: \"0xEF 0x0A 0x00 0x01 ... 0x09\"...");
+        send_uart_stream(rx_serial, {OPC_DISPLAYIMG, 8'h0A, 8'h00, 8'h01, 8'h02, 8'h03, 8'h04, 8'h05, 8'h06, 8'h07, 8'h08, 8'h09}, 12, BIT_PERIOD);
+        #(6*BYTE_PERIOD);        
+        DEBUG_INFO("TB", "Sending invalid opcode.");
+        DEBUG_INFO("TB", "Sending: \"0x00\"...");
+        send_uart_stream(rx_serial, {OPC_NOP}, 1, BIT_PERIOD);
+        #(BIT_PERIOD);
+        DEBUG_INFO("TB", "Testing Commands... Done.");
+        
         #(BIT_PERIOD);
         DEBUG_INFO("TB", "Testing Disconnection...");
         DEBUG_INFO("TB", "Sending: \"OK+DISC\\r\\n...");
@@ -450,7 +600,7 @@ module all_ble_tb;
 
     initial begin
         $dumpfile("waveform.fst");  // Specify the waveform file name
-        $dumpvars(0, all_ble_tb); // Dump all signals in the testbench
+        $dumpvars(0, system_tb); // Dump all signals in the testbench
     end
 
 endmodule
